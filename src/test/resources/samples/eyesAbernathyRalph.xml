@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PBCoreDescriptionDocument xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:mv="http://www.wizardis.com.au/2005/12/MAVIS" xsi:schemaLocation="http://www.pbcore.org/PBCore/PBCoreNamespace.html http://www.pbcore.org/PBCore/PBCoreSchema.xsd">
+  <pbcoreAssetType>Audio</pbcoreAssetType>
+  <pbcoreAssetType>Moving Image</pbcoreAssetType>
+  <pbcoreAssetDate dateType="CREATED">1985-11-6</pbcoreAssetDate>
+  <pbcoreIdentifier source="MAVIS Title Number">818</pbcoreIdentifier>
+  <pbcoreIdentifier source="Title Appearance Release">Y</pbcoreIdentifier>
+  <pbcoreIdentifier source="Unique Identifier">91417</pbcoreIdentifier>
+  <pbcoreIdentifier source="Series Code">EYES1</pbcoreIdentifier>
+  <pbcoreTitle titleType="Preferred Title: Cataloger Supplied Title">Interview with Ralph Abernathy</pbcoreTitle>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreDescription descriptionType="Original Summary">Interview of the Reverend Ralph Abernathy conducted for Eyes on the Prize. Discussion centers on the Montgomery bus boycott, the March on Washington, and Rev. Abernathy's time working with Dr. Martin Luther King in SCLC. </pbcoreDescription>
+  <pbcoreGenre source="MAVIS Genre Authority List Washington University in St. Louis">Interview</pbcoreGenre>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Ralph Abernathy  Interview with Ralph Abernathy">524</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Ralph Abernathy  Pre-Interview with Ralph Abernathy">2692</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Ralph Abernathy  Pre-interview with Ralph Abernathy">4638</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Contained By Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Eyes on the prize [interviews]">3845</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Contained By Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Ralph Abernathy and Fred Shuttlesworth interviews">14612</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Contained By Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="John Lewis and Ralph Abernathy interviews">14610</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreAnnotation annotationType="Note">Note in Contents database record reads &quot;Good King info.&quot;</pbcoreAnnotation>
+  <pbcoreCreator>
+    <creator>Blackside, Inc.</creator>
+    <creatorRole>Production Company</creatorRole>
+  </pbcoreCreator>
+  <pbcoreCreator>
+    <creator>Team C</creator>
+    <creatorRole>Producer</creatorRole>
+  </pbcoreCreator>
+  <pbcoreContributor>
+    <contributor>Abernathy, Ralph</contributor>
+    <contributorRole>Interviewee</contributorRole>
+  </pbcoreContributor>
+  <pbcoreContributor>
+    <contributor>Crossley, Callie</contributor>
+    <contributorRole>Interviewer</contributorRole>
+  </pbcoreContributor>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-1</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">7678</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.1213RackNo: EYES.1214RackNo: EYES.1215RackNo: EYES.1216RackNo: EYES.1217RackNo: EYES.1218RackNo: EYES.1219RackNo: EYES.1220</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Original negative; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationDuration>1:31:1</instantiationDuration>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 8">818-1-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 8">7685</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25171</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">530</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4461952</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4462754</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">222</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1213</instantiationLocation>
+      <instantiationDuration>0:11:45</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #222&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 8">818-1-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 8">7687</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25174</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4464388</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4465182</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">225</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1214</instantiationLocation>
+      <instantiationDuration>0:11:0</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #225 GOOD KING INFO&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 8">818-1-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 8">7686</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25173</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">S2994544</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">S2995338</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514 / 1515</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">224</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1215</instantiationLocation>
+      <instantiationDuration>0:11:42</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #224 CHANGE TO SOUNDROLL 1515 AT 300' IN.&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 4 of 8">818-1-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 4 of 8">7689</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25176</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">533</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">CS5288567</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">CS5289352</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">227</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1216</instantiationLocation>
+      <instantiationDuration>0:11:40</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #227&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 5 of 8">818-1-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 5 of 8">7688</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25175</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">534</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4444084</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4444881</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">226</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1217</instantiationLocation>
+      <instantiationDuration>0:11:45</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #226&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 6 of 8">818-1-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 6 of 8">7682</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25080</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010039</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">IS6681026</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">IS6681814</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515 / 1516</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">229</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 28.0003</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1218</instantiationLocation>
+      <instantiationDuration>0:10:27</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;CHANGE TO SOUNDROLL 1516 AT 200' IN. Negative Cutter roll #229&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 7 of 8">818-1-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 7 of 8">7683</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25081</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010039</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">536</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">M4182129</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">M4182880</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">228</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 28.0004</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1219</instantiationLocation>
+      <instantiationDuration>0:11:5</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Original Date : 11/061985
+
+Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #228&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 8 of 8">818-1-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 8 of 8">7694</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">7810</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">010041</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">537</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4463578</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4464369</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationIdentifier source="Negative Cutter Roll Number">221</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.1220</instantiationLocation>
+      <instantiationDuration>0:11:37</instantiationDuration>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW&quot;
+
+Contents notes field reads: &quot;Negative Cutter roll #221&quot;
+
+&quot;Square Circle Triangle (1985)&quot; per Colorlab report</instantiationAnnotation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-2</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">7695</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.234A, H12RackNo: EYES.235A, H12RackNo: EYES.233A, H12</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Sprocketed Magnetic film; TechCode: Sprocketed Magnetic Film; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationColors>Sprocketed Magnetic film</instantiationColors>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 3">818-2-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 3">7696</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25923</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BG</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">7001</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">8001</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0005</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">16</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.234A, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW ; Mag Track&quot;
+
+Contents notes field reads: &quot;SYNC REEL 16 GOOD KING INFO&quot;
+
+Contents notes field reads: &quot;SYNC REEL 16 CHANGE TO SOUNDROLL 1515 AT 300' IN.&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 3">818-2-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 3">7698</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25927</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">533</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">6981</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BH</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">534</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6982
+</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7978</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">17</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0006</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.235A, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW ; Mag Track&quot;
+
+Contents notes field reads: &quot;SYNC REEL 17&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 3">818-2-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 3">7697</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25925</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BJ</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">536</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">7001</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7938</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">18</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0004</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.233A, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW Mag Track&quot;
+
+Contents notes field reads: &quot;SYNC REEL 18 CHANGE TO SOUNDROLL 1516 AT 200' IN.&quot;</instantiationAnnotation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-3</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">7699</instantiationIdentifier>
+    <instantiationIdentifier source="Program Number">204</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: 5711</instantiationLocation>
+    <instantiationPhysical>Format: Paper; TypeMaterial: Transcripts; TechCode: Transcription</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="PaperCarrier 1 of 1">818-3-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="PaperCarrier 1 of 1">7700</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">5711</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">98014714</instantiationIdentifier>
+      <instantiationLocation>RackNo: 5711</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Abernathy, Ralph - Interview transcript
+Physical description : letter size files</instantiationAnnotation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-4</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">7701</instantiationIdentifier>
+    <instantiationIdentifier source="Appearance Release">Y</instantiationIdentifier>
+    <instantiationIdentifier source="Program Number">104</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: CAS.0395RackNo: CAS.0396RackNo: 6980RackNo: 6981RackNo: 6982RackNo: CAS.0390RackNo: CAS.0391RackNo: CAS.0393RackNo: CAS.0394RackNo: CAS.0392</instantiationLocation>
+    <instantiationPhysical>Format: Audio Tape; TechCode: Audio Cassette</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Audio</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationAnnotation annotationType="General Notes">Screen direction : R</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 1 of 10">818-4-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 1 of 10">7702</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">26704</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320546</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">530</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0395</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy interview Side A
+Notes : Team C
+Description : Reverend Ralph Abernathy interview Side B</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 2 of 10">818-4-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 2 of 10">7703</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">536</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">538</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">537</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">26705</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320546</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0396</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy interview Side A
+Notes : Team C</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 3 of 10">818-4-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 3 of 10">7704</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6980</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">536</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">538</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">537</instantiationIdentifier>
+      <instantiationLocation>RackNo: 6980</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy interview
+Notes : Sound continued from sound roll 1515.</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 4 of 10">818-4-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 4 of 10">7705</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6981</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">534</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">533</instantiationIdentifier>
+      <instantiationLocation>RackNo: 6981</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy interview
+Notes : Sound continues on sound roll 1516.</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 5 of 10">818-4-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 5 of 10">7706</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6982</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">530</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationLocation>RackNo: 6982</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy interview</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 6 of 10">818-4-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 6 of 10">7707</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">8610</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320423</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0390</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy Pre-Interview. SCLC (Southern Christian Leadership Conference) Side A &amp; B</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 7 of 10">818-4-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 7 of 10">7708</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">8617</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320423</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0391</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : Reverend Ralph Abernathy Pre-Interview. SCLC (Southern Christian Leadership Conference) Part 3 &amp; 4</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 8 of 10">818-4-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 8 of 10">7709</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">8962</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320546</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0393</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : REVEREND RALPH ABERNATHY PRE-INTERVIEW  Side A &amp; B
+Notes : Sent to Clayton Studios for preservation. Checkout date: 6/15/05</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 9 of 10">818-4-9</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 9 of 10">7710</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">8963</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320546</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0394</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Description : REVEREND RALPH ABERNATHY PRE-INTERVIEW  Side A &amp; B
+Notes : Sent to Clayton Studios for preservation. Checkout date: 6/15/05</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 10 of 10">818-4-10</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 10 of 10">39867</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320423</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">8659</instantiationIdentifier>
+      <instantiationLocation>RackNo: CAS.0392</instantiationLocation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-6</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">18455</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: AUD.180RackNo: AUD.181RackNo: AUD.182</instantiationLocation>
+    <instantiationPhysical>Format: Audio Tape; TypeMaterial: Polyester/urethane based audiotape; TechCode: 1/4&quot; Audio Tape</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Audio</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-12</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 1 of 3">818-6-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 1 of 3">78970</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6982</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">530</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: AUD.180</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied To</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier Interview with Ralph Abernathy">818-10-1</instantiationRelationIdentifier>
+      </instantiationRelation>
+      <instantiationAnnotation annotationType="General Notes">Contents Description field reads: &quot;Reverend Ralph Abernathy interview&quot;
+
+Side of container reads: &quot;SR 1514 CR 530, 531, 532&quot;
+
+Front of container reads: &quot;Rev. Ralph Abernathy (Subject); Atlanta, Ga (Location); Sekou Shepard (Soundperson); 1514 (SR#); 'C' (Program #); 6 Nov 85 (Date); 530, 531, 532 (Goes w/CR#); Sync&quot;
+
+Upper right corner on front reads: &quot;NW 11/15&quot;
+
+Back of container reads: '''Eyes on the Prize' Blackside; 6 Nov 85; Sound Roll #1514 Atlanta, Ga.; Cam Roll #530, 531, 532; Rev. Ralph Abernathy (Tails out)&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 2 of 3">818-6-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 2 of 3">78971</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6981</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">533</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">534</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: AUD.181</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied To</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier Interview with Ralph Abernathy">818-10-2</instantiationRelationIdentifier>
+      </instantiationRelation>
+      <instantiationAnnotation annotationType="General Notes">Contents Description field reads: &quot;Reverend Ralph Abernathy interview&quot;
+
+Notes field reads: &quot;Sound continues on sound roll 1516.&quot;
+
+Side of container reads: &quot;SR 1515 CR 532, 533, 534 - 535&quot;
+
+Upper right corner on front reads: &quot;NW 11/15&quot;
+
+Front of container reads: &quot;Rev. Ralph Abernathy (Subject); Atlanta, Ga. (Location); Sekou Shepard (Soundperson); 1515 (SR#); 'C' (Program #); 6 Nov 85 (Date); 532, 533, 534, 535 (Goes w/CR#); Sync&quot;
+
+Back of container reads: &quot;'Eyes on the Prize' Blackside; 6 Nov 85; Sound Roll #1515 Atlanta, Ga; Cam. Roll #532, 533, 534, 535; Rev. Ralph Abernathy; (Tails out)&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier 3 of 3">818-6-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AudioTapeCarrier 3 of 3">18456</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">001138</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">6980</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">535</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">536</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">537</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">538</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1516</instantiationIdentifier>
+      <instantiationLocation>RackNo: AUD.182</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied To</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier Interview with Ralph Abernathy">818-10-3</instantiationRelationIdentifier>
+      </instantiationRelation>
+      <instantiationAnnotation annotationType="General Notes">Contents Description field reads: &quot;Reverend Ralph Abernathy interview&quot;
+
+Contents Notes field reads: &quot;Sound continued from sound roll 1515.&quot;
+
+Side of container reads: &quot;SR 1516 CR 535, 536, 537, 538&quot;
+
+Front of container reads: &quot;Rev Ralph Abernathy (Subject); Atlanta, Ga (Location); Sekou Shepard (Soundperson); 1516 (SR #); 'C' (Program #); 6 Nov 85 (Date); 535, 536, 537, 538 (Goes w/CR#); Sync&quot;
+
+Front upper right corner reads: &quot;NW 11/15&quot;
+
+Back of container reads: &quot;'Eyes on the Prize' Blackside; 6 Nov 85; Sound #1516 Atlanta, GA; Cam Roll #535, 536, 537, 538; Rev. Ralph Abernathy; (Tails out)&quot;</instantiationAnnotation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-7</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">75455</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.233B, H12RackNo: EYES.234B, H12RackNo: EYES.235B, H12</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Positive picture; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 3">818-7-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 3">75456</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">11529</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0005</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">16</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BG</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7000</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4464388</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4465182</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">7001</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">8001</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">S2994544</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">S2995338</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.233B, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents Description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW  ; Workprint&quot;
+
+Contents Notes field reads: &quot;SYNC REEL 16 ; GOOD KING INFO&quot;
+
+Contents Notes field reads: &quot;SYNC REEL 16 ; CHANGE TO SOUNDROLL 1515 AT 300' IN.&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 3">818-7-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 3">75459</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">11529</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0005</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1514</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BG</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7000</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4464388</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4465182</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">532</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">7001</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">8001</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">S2994544</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">S2995338</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">16</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.234B, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW  Workprint&quot;
+
+Contents notes field reads: &quot;SYNC REEL 16 ; GOOD KING INFO&quot;
+
+Contents notes field reads: &quot;SYNC REEL 16 CHANGE TO SOUNDROLL 1515 AT 300' IN.&quot;</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 3">818-7-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 3">75460</instantiationIdentifier>
+      <instantiationIdentifier source="Item Number">25926</instantiationIdentifier>
+      <instantiationIdentifier source="Barcode">320446</instantiationIdentifier>
+      <instantiationIdentifier source="WU Location Barcode">FR 57.0006</instantiationIdentifier>
+      <instantiationIdentifier source="Sync Roll Number">17</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">533</instantiationIdentifier>
+      <instantiationIdentifier source="Sound Roll Number">1515</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Abbreviation">BH</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6000</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">6981</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">CS5288567</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">CS5289352</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">534</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code In">6982</instantiationIdentifier>
+      <instantiationIdentifier source="Edge Code Out">7978</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode In">N4444084</instantiationIdentifier>
+      <instantiationIdentifier source="Keycode Out">N4444881</instantiationIdentifier>
+      <instantiationLocation>RackNo: EYES.235B, H12</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Contents description field reads: &quot;REVEREND RALPH ABERNATHY INTERVIEW ; Workprint&quot;
+
+Contents notes field reads: &quot;SYNC REEL 17&quot;</instantiationAnnotation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-8</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">81030</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.1042RackNo: PE.1043RackNo: PE.1044RackNo: PE.1045RackNo: PE.1046RackNo: PE.1047RackNo: PE.1048RackNo: PE.1049</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Interpositive; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-11</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 8">818-8-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 8">81031</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1042</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 8">818-8-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 8">81034</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1043</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 8">818-8-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 8">81035</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1044</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 4 of 8">818-8-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 4 of 8">81036</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1045</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 5 of 8">818-8-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 5 of 8">81037</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1046</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 6 of 8">818-8-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 6 of 8">81038</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1047</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 7 of 8">818-8-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 7 of 8">81039</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1048</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 8 of 8">818-8-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 8 of 8">81040</instantiationIdentifier>
+      <instantiationIdentifier source="NHPRC Digitization Grant Batch Number">3</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1049</instantiationLocation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-9</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">81041</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.1050RackNo: PE.1051RackNo: PE.1052RackNo: PE.1053RackNo: PE.1054RackNo: PE.1055RackNo: PE.1056RackNo: PE.1057</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Check Print; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 8">818-9-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 8">81042</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1050</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 8">818-9-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 8">81045</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationIdentifier source="Camera Roll Number">531</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1051</instantiationLocation>
+      <instantiationAnnotation annotationType="General Notes">Leader mislabled: &quot;Wash Univ. Eyes interviews R. Abernathy CR #532 Heads&quot; Actually CR# 531</instantiationAnnotation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 8">818-9-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 8">81046</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1052</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 4 of 8">818-9-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 4 of 8">81047</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1053</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 5 of 8">818-9-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 5 of 8">81048</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1054</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 6 of 8">818-9-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 6 of 8">81049</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1055</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 7 of 8">818-9-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 7 of 8">81050</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1056</instantiationLocation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 8 of 8">818-9-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 8 of 8">81051</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1057</instantiationLocation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-10</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">81052</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.1076RackNo: PE.1077RackNo: PE.1078</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Sprocketed Magnetic film; TechCode: Sprocketed Magnetic Film; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationColors>Sprocketed Magnetic film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 1 of 3">818-10-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 1 of 3">81053</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1076</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied From</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier Interview with Ralph Abernathy">818-6-1</instantiationRelationIdentifier>
+      </instantiationRelation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 2 of 3">818-10-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 2 of 3">81056</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1077</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied From</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier Interview with Ralph Abernathy">818-6-2</instantiationRelationIdentifier>
+      </instantiationRelation>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="AcetateFilmCarrier 3 of 3">818-10-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="AcetateFilmCarrier 3 of 3">81057</instantiationIdentifier>
+      <instantiationIdentifier source="Mellon Preservation Grant Batch">11</instantiationIdentifier>
+      <instantiationLocation>RackNo: PE.1078</instantiationLocation>
+      <instantiationRelation>
+        <instantiationRelationType>Copied From</instantiationRelationType>
+        <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="AudioTapeCarrier Interview with Ralph Abernathy">818-6-3</instantiationRelationIdentifier>
+      </instantiationRelation>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-11</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">99751</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="AcetateFilmComponent Interview with Ralph Abernathy">818-8</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-13</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Ralph Abernathy</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 1 of 8">818-11-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 1 of 8">99752</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 2 of 8">818-11-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 2 of 8">99753</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 3 of 8">818-11-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 3 of 8">99754</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 4 of 8">818-11-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 4 of 8">99755</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 5 of 8">818-11-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 5 of 8">99756</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 6 of 8">818-11-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 6 of 8">99757</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 7 of 8">818-11-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 7 of 8">99758</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 8 of 8">818-11-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 8 of 8">99759</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio:</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio:</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-12</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">99760</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Audio/wav</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="AudioTapeComponent Interview with Ralph Abernathy">818-6</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-13</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Ralph Abernathy</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 1 of 3">818-12-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 1 of 3">99761</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Audio</essenceTrackType>
+        <essenceTrackStandard>WAV</essenceTrackStandard>
+        <essenceTrackEncoding>WAV</essenceTrackEncoding>
+        <essenceTrackDataRate>4608</essenceTrackDataRate>
+        <essenceTrackSamplingRate>96 kHz</essenceTrackSamplingRate>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 2 of 3">818-12-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 2 of 3">99762</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Audio</essenceTrackType>
+        <essenceTrackStandard>WAV</essenceTrackStandard>
+        <essenceTrackEncoding>WAV</essenceTrackEncoding>
+        <essenceTrackDataRate>4608</essenceTrackDataRate>
+        <essenceTrackSamplingRate>96 kHz</essenceTrackSamplingRate>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 3 of 3">818-12-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 3 of 3">99763</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Audio</essenceTrackType>
+        <essenceTrackStandard>WAV</essenceTrackStandard>
+        <essenceTrackEncoding>WAV</essenceTrackEncoding>
+        <essenceTrackDataRate>4608</essenceTrackDataRate>
+        <essenceTrackSamplingRate>96 kHz</essenceTrackSamplingRate>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-13</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">99765</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Intermediate copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationDuration>Video: 1:33:55:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-11</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-12</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-14</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Ralph Abernathy</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 1 of 8">818-13-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 1 of 8">99766</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:12:16:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 2 of 8">818-13-2</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 2 of 8">99767</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:11:36:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 3 of 8">818-13-3</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 3 of 8">99768</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:12:8:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 4 of 8">818-13-4</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 4 of 8">99769</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:11:31:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 5 of 8">818-13-5</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 5 of 8">99770</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:11:39:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 6 of 8">818-13-6</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 6 of 8">99771</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:12:19:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 7 of 8">818-13-7</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 7 of 8">99772</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:10:51:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 8 of 8">818-13-8</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 8 of 8">99773</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: Pro Res 422 HQ Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">21</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Interlaced</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>0:11:35:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-14</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">99774</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/mpeg</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Access copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationDuration>Video: 1:30:47:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Ralph Abernathy and Fred Shuttlesworth interviews">14612-7</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Ralph Abernathy">818-13</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Ralph Abernathy</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 1 of 1">818-14-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 1 of 1">99775</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: H.264 Audio: Advanced audio compression</essenceTrackStandard>
+        <essenceTrackEncoding>Video: H.264 Audio: Advanced audio compression</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabits per seconds">5</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackTimeStart>0:0:0:0</essenceTrackTimeStart>
+        <essenceTrackDuration>1:30:47:0</essenceTrackDuration>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">818-15</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">100891</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Eyes on the prize--America's civil rights years, 1954-1965">5426-29</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Reassembly Ins</instantiationAnnotation>
+    <instantiationPart>
+      <instantiationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier 1 of 1">818-15-1</instantiationIdentifier>
+      <instantiationIdentifier source="MAVIS Item ID" annotation="DigitalCarrier 1 of 1">100892</instantiationIdentifier>
+      <instantiationLocation>Unknown</instantiationLocation>
+      <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+      <instantiationColors>Video Colour Type: Color; Video Colour Space: YUV</instantiationColors>
+      <instantiationEssenceTrack>
+        <essenceTrackType>Digital/Video</essenceTrackType>
+        <essenceTrackStandard>Video: HD: Uncompressed 10-bit Audio: Linear PCM</essenceTrackStandard>
+        <essenceTrackEncoding>Video: HD: Uncompressed 10-bit Audio: Linear PCM</essenceTrackEncoding>
+        <essenceTrackDataRate unitsOfMeasure="Megabytes per second">129</essenceTrackDataRate>
+        <essenceTrackFrameSize>1080x1920 Progressive</essenceTrackFrameSize>
+        <essenceTrackSamplingRate>48 kHz</essenceTrackSamplingRate>
+        <essenceTrackFrameRate>23.98 fps</essenceTrackFrameRate>
+        <essenceTrackAspectRatio>16:09 Widescreen TV Frame</essenceTrackAspectRatio>
+      </instantiationEssenceTrack>
+    </instantiationPart>
+  </pbcoreInstantiation>
+</PBCoreDescriptionDocument>
+

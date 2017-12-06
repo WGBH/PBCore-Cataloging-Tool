@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><pbcoreDescriptionDocument xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html" annotation="V_13546133A89A466DB13E1EDA6C654C63">
+    <pbcoreAssetType>Raw video</pbcoreAssetType>
+    <pbcoreAssetDate dateType="Item Date">2000</pbcoreAssetDate>
+    <pbcoreIdentifier source="OpenVault UID">V_13546133A89A466DB13E1EDA6C654C63</pbcoreIdentifier>
+    <pbcoreTitle titleType="Program Number">1205</pbcoreTitle>
+    <pbcoreTitle titleType="Open Vault Title">Interview with author Russell Banks, 1 of 5</pbcoreTitle>
+    <pbcoreTitle titleType="Program">John Brown's Holy War</pbcoreTitle>
+    <pbcoreTitle titleType="Series">American Experience</pbcoreTitle>
+    <pbcoreDescription descriptionType="Program Description">Martyr, madman, murderer, hero: John Brown remains one of history's most controversial and misunderstood figures. In the 1850s, he and his ragtag guerrilla group embarked on a righteous crusade against slavery that was based on religious faith -- yet carried out with shocking violence. His execution at Harpers Ferry sparked a chain of events that led to the Civil War.  </pbcoreDescription>
+    <pbcoreDescription descriptionType="Series Description">
+        As television's longest-running, most-watched history series, American Experience brings to life the incredible characters and epic stories that helped form this nation. Now in its eighteenth season, the series has produced over 180 programs and garnered every major broadcast award.</pbcoreDescription>
+    <pbcoreDescription descriptionType="Asset Description">Banks talks about Early life  -  hand to mouth, tough existence, Early life  -  stories of Bible resonate, children die,  Religion  -  Life of 1830s  -  50s continuation of Bible, Religion  -  John Brown believed life a moral test, shaped destiny, Southern Power  -  think North more likely to secede,      Pottawatomie  -  seems to be defining moment, Southern Power  -  expanding to West, Caribbean, etc.	, "It looked bleak, it looked very bleak",      Religion  -  Biblical and contemporary history merged,  Religion  -  John Brown saw himself as walking in Biblical shoes, Sons  -  modern men, doubters, John Brown didn't question truth, Farmer  -  John Brown agrarian man, physical world, of Bible, Man of times  -  we judge him,  Sanity  -  white Americans today regard John Brown as a fanatic, Owen/Death of John Brown's Mother,  Death of Mother  -  important, John Brown said defining trauma, Personality  -  rage, identified w/ Blacks' sense of loss, Relationships w/Blacks  -  trusted him, matched anger, Personality  -  where did rage come from, Personality  -  charisma, intensity, emotional furnace,  Slave Boy Story, Slave Boy Story true?  enough that John Brown believed it, Slave Boy  -  as orphan, John Brown identifies,      Slave Boy  -  equally clever, John Brown identifies as orphan,  Shepherd  -  John Brown's gift, could care for animals, Shepherd  -  brought affection he rarely showed humans, Shepherd  -  link to the Bible (Abraham, Christ) ennobling,  Shepherd  -  custodial relations, men part of his flock,  Personality  -  contradiction authoritative/custodial</pbcoreDescription>
+    <pbcoreGenre source="Program Topic">Race and Ethnicity</pbcoreGenre>
+    <pbcoreGenre source="Program Genre">Interview</pbcoreGenre>
+    <pbcoreGenre source="Series Topic">History</pbcoreGenre>
+    <pbcoreCreator>
+        <creator>Robert Kenner</creator>
+        <creatorRole>Producer</creatorRole>
+    </pbcoreCreator>
+    <pbcoreContributor>
+        <contributor>Banks, Russell</contributor>
+        <contributorRole>Interviewee</contributorRole>
+    </pbcoreContributor>
+    <pbcorePublisher>
+        <publisher>WGBH Educational Foundation</publisher>
+    </pbcorePublisher>
+    <pbcoreRightsSummary>
+        <rightsSummary>Rights Holder: WGBH Educational Foundation</rightsSummary>
+    </pbcoreRightsSummary>
+    <pbcoreAnnotation annotationType="Duration">0:29:04</pbcoreAnnotation>
+    <pbcoreAnnotation annotationType="Media Type">Video</pbcoreAnnotation>
+    <pbcoreAnnotation annotationType="Thumbnail">YES</pbcoreAnnotation>
+    <pbcoreAnnotation annotationType="Digitized">YES</pbcoreAnnotation>
+    <pbcoreAnnotation annotationType="Special Collection">john-brown</pbcoreAnnotation>
+</pbcoreDescriptionDocument>

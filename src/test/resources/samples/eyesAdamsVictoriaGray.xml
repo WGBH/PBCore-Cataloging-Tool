@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PBCoreDescriptionDocument xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:mv="http://www.wizardis.com.au/2005/12/MAVIS" xsi:schemaLocation="http://www.pbcore.org/PBCore/PBCoreNamespace.html http://www.pbcore.org/PBCore/PBCoreSchema.xsd">
+  <pbcoreAssetType>Audio</pbcoreAssetType>
+  <pbcoreAssetType>Moving Image</pbcoreAssetType>
+  <pbcoreAssetDate dateType="CREATED">1985-11-27</pbcoreAssetDate>
+  <pbcoreIdentifier source="MAVIS Title Number">752</pbcoreIdentifier>
+  <pbcoreIdentifier source="Unique Identifier">91505</pbcoreIdentifier>
+  <pbcoreIdentifier source="Series Code">EYES1</pbcoreIdentifier>
+  <pbcoreIdentifier source="Title Appearance Release">Y</pbcoreIdentifier>
+  <pbcoreTitle titleType="Preferred Title: Cataloger Supplied Title">Interview with Myrlie Evers</pbcoreTitle>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Subject Authority List Washington University in St. Louis" subjectType="Topic"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreSubject source="MAVIS Name Authority List Washington University in St. Louis" subjectType="About"></pbcoreSubject>
+  <pbcoreDescription descriptionType="Original Summary">Interview of Myrlie Evers, widow of Medgar Evers, conducted for Eyes on the Prize. Discussion centers on her childhood in Vicksburg and Tugaloo, MS, and her own experience of segregation.
+
+In her interview, she recalls how she met her future husband on her first day at Alcorn State University in Lorman, MS. She describes Evers, a World War II veteran, as charismatic, a football star, a  &quot;rabble-rouser&quot; and someone who was strong and responsible.
+
+The interview traces Medgar Evers' career from his attempt to gain admission to the University of Mississippi Law School to his investigations into the murder of Emmett Till as field secretary for the NAACP to his activities on behalf of James Meredith, the first African-American to enroll at the University of Mississippi.
+
+Myrlie Evers describes in some detail the atmosphere of fear and frenzy over the desegregation of Ole Miss.  Newspaper editiorials &quot;called for blood to flow in the streets.&quot; Radio stations played rebel songs and yells and broadcast messages from the Governor every few minutes.
+
+While Evers never publicly broke with the NAACP and stayed on the route of non-violence, Myrlie Evers relates that he had a strong inclination to fight back.  She describes his ambivalence with legal remedies.
+
+She recalls the sense of danger and vulnerabilty that grew with each passing year. There was a gun in every room of the house.  Nevertheless, the couple made a pact never to leave each other in anger.  On the last day of his life, Medgar Evers expressed his love for his children as well as his fatigue.
+
+Mrs. Evers his also frank about the hatred she felt toward the white community upon the death of her husband and the spectacle surrounding the two trials of  his assassin, Byron de la Beckwith, both of which ended in hung juries.
+
+Myrlie Evers Interview. Print.
+Myrlie Evers Interview.  E1 &amp; E2
+Myrlie Evers Interview. Mag track.
+Myrlie Evers Interview.  Print.
+Myrlie Evers Interview.  Mag track.
+MYRLIE EVERS INTERVIEW. SIDE A
+MYRLIE EVERS INTERVIEW. SIDE B
+MYRLIE EVERS INTERVIEW. SIDE A ONLY (SIDE 3 OF 3)</pbcoreDescription>
+  <pbcoreGenre source="MAVIS Genre Authority List Washington University in St. Louis">Interview</pbcoreGenre>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Myrlie Evers  Mississippi : Is this America? (1962-64)">3288</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Myrlie Evers  Interview with Myrlie Evers">1908</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreRelation>
+    <relationType>Related Title</relationType>
+    <relationIdentifier source="MAVIS Title Number" annotation="Interview with Myrlie Evers  Pre-interview with Myrlie Evers">1909</relationIdentifier>
+  </pbcoreRelation>
+  <pbcoreAnnotation annotationType="Note">Subject : EVERS, MYRLIE</pbcoreAnnotation>
+  <pbcoreCreator>
+    <creator>Team B</creator>
+    <creatorRole>Producer</creatorRole>
+  </pbcoreCreator>
+  <pbcoreCreator>
+    <creator>Blackside, Inc.</creator>
+    <creatorRole>Production Company</creatorRole>
+  </pbcoreCreator>
+  <pbcoreContributor>
+    <contributor>Evers-Williams, Myrlie</contributor>
+    <contributorRole>Interviewee</contributorRole>
+  </pbcoreContributor>
+  <pbcoreContributor>
+    <contributor>Bagwell, Orlando</contributor>
+    <contributorRole>Interviewer</contributorRole>
+  </pbcoreContributor>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-1</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">6964</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.1045, H14RackNo: EYES.1046, H14RackNo: EYES.1047, H14RackNo: EYES.1048, H14RackNo: EYES.1049, H14RackNo: EYES.1050, H14RackNo: EYES.1051, H14RackNo: EYES.1052, H14</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Original negative; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationDuration>1:6:18</instantiationDuration>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-2</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">6975</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.357A, H5RackNo: EYES.358A, H5RackNo: EYES.359A, H5RackNo: EYES.360A, H5</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Sprocketed Magnetic film; TechCode: Sprocketed Magnetic Film; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationColors>Sprocketed Magnetic film</instantiationColors>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-3</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">6980</instantiationIdentifier>
+    <instantiationIdentifier source="Appearance Release">Y</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: CAS.0448RackNo: CAS.0454</instantiationLocation>
+    <instantiationPhysical>Format: Audio Tape; TypeMaterial: Polyester/urethane based audiotape; TechCode: Audio Cassette</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Reference copy</instantiationGenerations>
+    <instantiationDuration>1:28:22</instantiationDuration>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Audio</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationAnnotation annotationType="General Notes">Screen direction : R</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-4</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">6983</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: DAT.0015RackNo: DAT.0016RackNo: DAT.0017</instantiationLocation>
+    <instantiationPhysical>Format: Audio Tape; TypeMaterial: Polyester/urethane based audiotape; TechCode: Digital Audio Cassette</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Audio</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-5</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">40081</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Audio/wav</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">467683460</instantiationFileSize>
+    <instantiationDuration>Audio: 1:28:22:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-6</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">40087</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Audio/MP3</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Access copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">42426966</instantiationFileSize>
+    <instantiationDuration>Audio: 1:28:22:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-7</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">59184</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.357B, H5RackNo: EYES.358B, H5RackNo: EYES.359B, H5RackNo: EYES.360B, H5</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Positive picture; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-8</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">61659</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.069RackNo: PE.070RackNo: PE.071RackNo: PE.072RackNo: PE.073RackNo: PE.074RackNo: PE.075RackNo: PE.076</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Interpositive; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationDuration>1:31:31</instantiationDuration>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-14</instantiationRelationIdentifier>
+    </instantiationRelation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-9</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">61669</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.077RackNo: PE.078RackNo: PE.079RackNo: PE.080RackNo: PE.081RackNo: PE.082RackNo: PE.083RackNo: PE.084</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Color Film; TechCode: Check Print; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationColors>Color Film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-10</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">61679</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.085RackNo: PE.086RackNo: PE.087RackNo: PE.088</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Sprocketed Magnetic film; TechCode: Sprocketed Magnetic Film; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationColors>Sprocketed Magnetic film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-11</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">77131</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: EYES.225B, H9</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Mixed (Color &amp; B&amp;W); TechCode: Positive picture; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationColors>Mixed (Color &amp; B&amp;W)</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationAnnotation annotationType="Description">Interview with Myrlie Evers - trim</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-12</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">80391</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: AUD.193RackNo: AUD.194RackNo: AUD.195</instantiationLocation>
+    <instantiationPhysical>Format: Audio Tape; TypeMaterial: Polyester/urethane based audiotape; TechCode: 1/4&quot; Audio Tape</instantiationPhysical>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Archival element</instantiationGenerations>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Audio</essenceTrackType>
+    </instantiationEssenceTrack>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-15</instantiationRelationIdentifier>
+    </instantiationRelation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-13</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">82624</instantiationIdentifier>
+    <instantiationLocation>Vault Site: Washington University Film and Media Archive (West Campus); RackNo: PE.1135RackNo: PE.1136RackNo: PE.1137</instantiationLocation>
+    <instantiationPhysical>Format: Safety Film; TypeMaterial: Sprocketed Magnetic film; TechCode: Sprocketed Magnetic Film; Gauge: Standard 16 mm.</instantiationPhysical>
+    <instantiationStandard>Film</instantiationStandard>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation element</instantiationGenerations>
+    <instantiationDuration>0:0:0</instantiationDuration>
+    <instantiationColors>Sprocketed Magnetic film</instantiationColors>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationEssenceTrack>
+      <essenceTrackType>Film</essenceTrackType>
+    </instantiationEssenceTrack>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-14</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">97193</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="AcetateFilmComponent Interview with Myrlie Evers">752-8</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Myrlie Evers</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-15</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">97202</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Audio/wav</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="AudioTapeComponent Interview with Myrlie Evers">752-12</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-16</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Myrlie Evers</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-16</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">97206</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Intermediate copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationDuration>Video: 1:30:20:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Carrier Number" annotation="DigitalCarrier Interview with Robert Carter">861-11-4</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-15</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationRelation>
+      <instantiationRelationType>Copied To</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-17</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Myrlie Evers</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-17</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">97215</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/mpeg</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Access copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">3187591775</instantiationFileSize>
+    <instantiationDuration>Video: 1:19:55:00</instantiationDuration>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Interview with Myrlie Evers">752-16</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Interview with Myrlie Evers</instantiationAnnotation>
+  </pbcoreInstantiation>
+  <pbcoreInstantiation>
+    <instantiationIdentifier source="MAVIS Component Number">752-18</instantiationIdentifier>
+    <instantiationIdentifier source="MAVIS Item ID">100927</instantiationIdentifier>
+    <instantiationLocation>Unknown</instantiationLocation>
+    <instantiationDigital>Video/quicktime</instantiationDigital>
+    <instantiationMediaType>Moving Image</instantiationMediaType>
+    <instantiationGenerations>Category: Preservation copy</instantiationGenerations>
+    <instantiationFileSize unitsOfMeasure="bytes">0</instantiationFileSize>
+    <instantiationLanguage>English</instantiationLanguage>
+    <instantiationRelation>
+      <instantiationRelationType>Copied From</instantiationRelationType>
+      <instantiationRelationIdentifier source="MAVIS Component Number" annotation="DigitalComponent Eyes on the prize--America's civil rights years, 1954-1965">5426-29</instantiationRelationIdentifier>
+    </instantiationRelation>
+    <instantiationAnnotation annotationType="Description">Reassembly Ins</instantiationAnnotation>
+  </pbcoreInstantiation>
+</PBCoreDescriptionDocument>
+
