@@ -1,0 +1,235 @@
+* {
+    scene-bg-color: #ffffff;
+    dialog-bg-color: #ededed;
+
+    primary-text-color: #0b74d3;
+    text-color: #000000;
+    dimmed-text-color: #838383;
+    muted-text-color: #a0a0a0;
+    nice-text-color: #11c115;
+    panic-text-color: #d01f1f;
+
+    toggle-button-bg-color: #a0a0a0;
+    toggle-button-text-color: #c4c4c4;
+
+    toggle-button-bg-color-sel: #838383;
+    toggle-button-text-color-sel: #ffffff;
+
+    icon-button-bg-color: transparent;
+    icon-button-text-color: #585858;
+
+    link-button-bg-color: transparent;
+    link-button-text-color: #0b74d3;
+
+    muted-button-bg-color: #a0a0a0;
+    muted-button-text-color: #ffffff;
+
+    default-button-bg-color: #ffffff;
+    default-button-text-color: #434343;
+
+    primary-button-bg-color: #007aff;
+    primary-button-text-color: #ffffff;
+
+    save-button-bg-color: #11c115;
+    save-button-text-color: #ffffff;
+
+    panic-button-bg-color: #d01f1f;
+    panic-button-text-color: #ffffff;
+}
+
+.root {
+    -fx-font-family: "Arial";
+}
+
+/* TYPOGRAPHY */
+
+.title1 {
+    -fx-font-size: 24px;
+    -fx-text-fill: primary-text-color;
+}
+
+.title2 {
+    -fx-font-size: 24px;
+    -fx-text-fill: text-color;
+}
+
+.title3 {
+    -fx-font-size: 18px;
+    -fx-text-fill: dimmed-text-color;
+}
+
+.title4 {
+    -fx-font-size: 14px;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+}
+
+.title6 {
+    -fx-font-size: 11px;
+    -fx-text-fill: #a0a0a0;
+    -fx-font-weight: bold;
+}
+
+.paragraph {
+    -fx-font-size: 14px;
+    -fx-text-fill: dimmed-text-color;
+}
+
+.formLabel {
+    -fx-font-size: 13px;
+    -fx-text-fill: muted-text-color;
+}
+
+.primaryText {
+    -fx-text-fill: primary-text-color;
+}
+
+.niceText {
+    -fx-text-fill: nice-text-color;
+}
+
+.panicText {
+    -fx-text-fill: panic-text-color;
+}
+
+/* SCENES */
+
+.sceneRoot {
+    -fx-background-color: scene-bg-color;
+}
+
+.dialogRoot {
+    -fx-background-color: dialog-bg-color;
+}
+
+/* SCROLL PANE */
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* CHECKBOX */
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #434343;
+    -fx-border-radius: 3px;
+}
+
+.check-box .label {
+    -fx-padding: 1px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #28a3f4;
+    -fx-border-color: #28a3f4;
+}
+
+/* BUTTON */
+
+.toggle-button {
+    -fx-padding: 2px 5px;
+    -fx-font-size: 12px;
+    -fx-background-color: toggle-button-bg-color;
+    -fx-text-fill: toggle-button-text-color;
+    -fx-background-radius: 3px;
+    -fx-background-insets: 0 0 0 0;
+}
+
+.toggle-button:selected {
+    -fx-background-color: toggle-button-bg-color-sel;
+    -fx-text-fill: toggle-button-text-color-sel;
+}
+
+.toggle-button.leftToggle {
+    -fx-background-radius: 3px 0px 0px 3px;
+}
+
+.toggle-button.rightToggle {
+    -fx-background-radius: 0px 3px 3px 0px;
+}
+
+.button {
+    -fx-border-radius: 3px;
+}
+
+.iconButton {
+    -fx-font-family: "Material Design Icons";
+    -fx-font-size: 13px;
+    -fx-padding: 5px;
+    -fx-background-color: icon-button-bg-color;
+    -fx-text-fill: icon-button-text-color;
+}
+
+.linkButton {
+    -fx-padding: 5px 0px;
+    -fx-font-size: 13px;
+    -fx-background-color: link-button-bg-color;
+    -fx-text-fill: link-button-text-color;
+    -fx-border-width: 0;
+}
+
+.mutedButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-background-color: muted-button-bg-color;
+    -fx-text-fill: muted-button-text-color;
+    -fx-min-width: 80px;
+}
+
+.defaultButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-background-color: default-button-bg-color;
+    -fx-text-fill: default-button-text-color;
+    -fx-min-width: 80px;
+}
+
+.primaryButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-background-color: primary-button-bg-color;
+    -fx-text-fill: primary-button-text-color;
+    -fx-min-width: 80px;
+}
+
+.niceButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-text-fill: save-button-text-color;
+    -fx-background-color: save-button-bg-color;
+    -fx-min-width: 80px;
+}
+
+.panicButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-text-fill: panic-button-text-color;
+    -fx-background-color: panic-button-bg-color;
+    -fx-min-width: 80px;
+}
+
+.panicButton.inverseButton {
+    -fx-text-fill: panic-button-bg-color;
+    -fx-background-color: transparent;
+    -fx-border-color: panic-button-bg-color;
+}
+
+.smallButton {
+    -fx-padding: 2px 5px;
+    -fx-font-size: 11px;
+}
+
+.bigButton {
+    -fx-padding: 10px 15px;
+    -fx-font-size: 16px;
+}

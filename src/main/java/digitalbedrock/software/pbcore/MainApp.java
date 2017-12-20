@@ -3,6 +3,7 @@ package digitalbedrock.software.pbcore;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -22,13 +23,25 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        final Group rootgrp = new Group();
-        final Scene scene = new Scene(rootgrp);
-        rootgrp.getChildren().addAll(createMenu(), FXMLLoader.load(getClass().getResource("/fxml/splash.fxml")));
-        stage.setTitle("PBCore Cataloging Tool");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/search.fxml"));
+        Scene scene = new Scene(root);
+
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
+
         stage.setScene(scene);
+        stage.setTitle("PBCore Cataloging Tool");
         stage.setAlwaysOnTop(true);
         stage.show();
+
+
+//        final Group rootgrp = new Group();
+//        final Scene scene = new Scene(rootgrp);
+//        rootgrp.getChildren().addAll(createMenu(), FXMLLoader.load(getClass().getResource("/fxml/main.fxml")));
+//        stage.setTitle("PBCore Cataloging Tool");
+//        stage.setScene(scene);
+//        stage.setAlwaysOnTop(true);
+//        stage.show();
     }
 
     private MenuBar createMenu() {

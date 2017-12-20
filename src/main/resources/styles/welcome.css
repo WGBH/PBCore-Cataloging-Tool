@@ -1,0 +1,5 @@
+
+.createNewPane {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #d3d3d3;
+}
