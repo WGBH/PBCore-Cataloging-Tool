@@ -13,55 +13,52 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="SettingsCrawlingScene" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0"
-            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-            AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="SettingsCrawlingScene" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsCrawlingController">
     <children>
-        <VBox layoutX="169.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox layoutX="169.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" styleClass="paragraph"
-                      VBox.vgrow="NEVER">
+                <HBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" styleClass="paragraph" VBox.vgrow="NEVER">
                     <children>
-                        <Label text="When searching for files, the app will look into these folders for PBCore records."/>
+                        <Label text="When searching for files, the app will look into these folders for PBCore records." />
                     </children>
                 </HBox>
                 <GridPane hgap="30.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="foldersTableView" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn prefWidth="75.0" text="FOLDERS"/>
+                                <TableColumn editable="false" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" sortable="false" />
+                                <TableColumn fx:id="pathColumn" editable="false" prefWidth="75.0" text="FOLDERS" />
+                                <TableColumn fx:id="lastIndexedColumn" editable="false" prefWidth="75.0" text="LAST INDEXED" />
                             </columns>
                             <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                             <children>
                                 <Label styleClass="title4" text="ADD NEW">
                                     <VBox.margin>
-                                        <Insets bottom="10.0" top="5.0"/>
+                                        <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Button mnemonicParsing="false" styleClass="mutedButton" text="ADD FOLDER"/>
+                                <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButtonClick" styleClass="mutedButton" text="ADD FOLDER" />
                             </children>
                         </VBox>
                     </children>
                 </GridPane>
-                <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0"
-                      VBox.vgrow="NEVER">
+                <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
                     <children>
-                        <Button mnemonicParsing="false" styleClass="defaultButton" text="CANCEL"/>
-                        <Button mnemonicParsing="false" styleClass="primaryButton" text="OK">
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClick" styleClass="defaultButton" text="CANCEL" />
+                        <Button fx:id="okButton" mnemonicParsing="false" onAction="#onOkButtonClick" styleClass="primaryButton" text="OK">
                             <HBox.margin>
-                                <Insets left="10.0"/>
+                                <Insets left="10.0" />
                             </HBox.margin>
                         </Button>
                     </children>
@@ -70,10 +67,10 @@
         </VBox>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <stylesheets>
-        <URL value="@../styles/style.css"/>
-        <URL value="@../styles/settings.css"/>
+        <URL value="@../styles/style.css" />
+        <URL value="@../styles/settings.css" />
     </stylesheets>
 </AnchorPane>

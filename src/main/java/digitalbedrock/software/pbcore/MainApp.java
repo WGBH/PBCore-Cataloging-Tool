@@ -1,76 +1,30 @@
 package digitalbedrock.software.pbcore;
 
+import digitalbedrock.software.pbcore.controllers.MainController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
-import digitalbedrock.software.pbcore.utils.Registry;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/search.fxml"));
-        Scene scene = new Scene(root);
+        final MainController mainController = new MainController(stage);
+        final BorderPane root = new BorderPane();
 
+        root.setTop(mainController.createMenu());
+        root.setCenter(FXMLLoader.load(getClass().getResource("/fxml/splash.fxml")));
+
+        Scene scene = new Scene(root);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
-
         stage.setScene(scene);
         stage.setTitle("PBCore Cataloging Tool");
-        stage.setAlwaysOnTop(true);
+        stage.setOnShown(e->{mainController.initialize(e);});
         stage.show();
-
-
-//        final Group rootgrp = new Group();
-//        final Scene scene = new Scene(rootgrp);
-//        rootgrp.getChildren().addAll(createMenu(), FXMLLoader.load(getClass().getResource("/fxml/main.fxml")));
-//        stage.setTitle("PBCore Cataloging Tool");
-//        stage.setScene(scene);
-//        stage.setAlwaysOnTop(true);
-//        stage.show();
-    }
-
-    private MenuBar createMenu() {
-        final MenuBar menuBar = new MenuBar();
-
-        final Menu file = new Menu("File");
-        final MenuItem quit = new MenuItem("Quit");
-        quit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.META_DOWN));
-        quit.setOnAction((ActionEvent event) -> {
-            Platform.exit();
-        });
-        quit.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/imgs/pbcore-logo-small.png"), 16, 16, false, false)));
-        file.getItems().addAll(quit);
-
-        final Menu search = new Menu("Search");
-        search.setDisable(true);  //temp
-
-        final Menu settings = new Menu("Settings");
-        settings.setDisable(true); //temp
-
-        final Menu help = new Menu("Help");
-        help.setDisable(true);  //temp
-
-        menuBar.getMenus().addAll(file, search, settings, help);
-
-        if (Registry.getInstance().isMac()) {
-            menuBar.setUseSystemMenuBar(true);
-        }
-        return menuBar;
     }
 
     /**
