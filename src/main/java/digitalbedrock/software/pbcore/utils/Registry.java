@@ -16,6 +16,7 @@ import java.util.prefs.Preferences;
 
 public class Registry implements Observer {
 
+    //SYSTEM properties
     private final boolean isMac;
 
     private final Preferences userPreferences;
@@ -24,6 +25,12 @@ public class Registry implements Observer {
     public Registry() {
         isMac = System.getProperty("os.name").toLowerCase().contains("mac");
         userPreferences = Preferences.userNodeForPackage(MainApp.class);
+
+//        Properties pros = System.getProperties();
+//        
+//        pros.entrySet().forEach((entry) -> {
+//            System.out.println(entry.getKey()+" = "+entry.getValue());
+//        });
     }
 
     public void loadSavedSettings() {

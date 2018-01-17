@@ -19,164 +19,152 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane id="SearchScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="1200.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SearchController">
+<AnchorPane id="SearchUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SearchController">
     <children>
-        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <GridPane hgap="30.0" VBox.vgrow="ALWAYS">
+                <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER"/>
-                        <RowConstraints vgrow="ALWAYS"/>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <Label styleClass="title4" text="SEARCH">
                                     <HBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </HBox.margin>
                                     <font>
-                                        <Font name="SF Pro Display Regular" size="13.0"/>
+                                        <Font name="SF Pro Display Regular" size="13.0" />
                                     </font>
                                 </Label>
                             </children>
                             <padding>
-                                <Insets top="1.0"/>
+                                <Insets top="1.0" />
                             </padding>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                             <children>
                                 <Label styleClass="title4" text="RESULTS">
                                     <HBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </HBox.margin>
                                 </Label>
                                 <Label styleClass="formLabel" text="(895 results in 895 files)">
                                     <HBox.margin>
-                                        <Insets left="10.0"/>
+                                        <Insets left="10.0" />
                                     </HBox.margin>
                                 </Label>
                             </children>
                             <padding>
-                                <Insets top="1.0"/>
+                                <Insets top="1.0" />
                             </padding>
                         </HBox>
                         <GridPane GridPane.columnIndex="2">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="TOP"
-                                                vgrow="NEVER"/>
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="TOP" vgrow="NEVER" />
                             </rowConstraints>
                             <children>
                                 <Label styleClass="title4" text="PREVIEW">
                                     <GridPane.margin>
-                                        <Insets top="1.0"/>
+                                        <Insets top="1.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0"
-                                      GridPane.columnIndex="1">
+                                <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                                     <children>
                                         <ToggleButton mnemonicParsing="false" styleClass="leftToggle" text="xml">
                                             <toggleGroup>
-                                                <ToggleGroup fx:id="previewType"/>
+                                                <ToggleGroup fx:id="previewType" />
                                             </toggleGroup>
                                         </ToggleButton>
-                                        <ToggleButton mnemonicParsing="false" selected="true" styleClass="rightToggle"
-                                                      text="Visual Layout" toggleGroup="$previewType"/>
+                                        <ToggleButton mnemonicParsing="false" selected="true" styleClass="rightToggle" text="Visual Layout" toggleGroup="$previewType" />
                                     </children>
                                 </HBox>
                             </children>
                         </GridPane>
-                        <ScrollPane hbarPolicy="NEVER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
-                                    GridPane.vgrow="ALWAYS">
+                        <ScrollPane hbarPolicy="NEVER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                             <content>
                                 <VBox>
                                     <children>
                                         <Label styleClass="formLabel" text="Keyword">
                                             <VBox.margin>
-                                                <Insets bottom="5.0"/>
+                                                <Insets bottom="5.0" />
                                             </VBox.margin>
                                         </Label>
                                         <TextField>
                                             <VBox.margin>
-                                                <Insets/>
+                                                <Insets />
                                             </VBox.margin>
                                         </TextField>
                                         <Button mnemonicParsing="false" styleClass="linkButton" text="Advanced Search">
                                             <VBox.margin>
-                                                <Insets/>
+                                                <Insets />
                                             </VBox.margin>
                                         </Button>
                                         <VBox VBox.vgrow="SOMETIMES">
                                             <children>
                                                 <Label styleClass="title4" text="Elements / Attributes">
                                                     <VBox.margin>
-                                                        <Insets bottom="10.0"/>
+                                                        <Insets bottom="10.0" />
                                                     </VBox.margin>
                                                 </Label>
                                                 <GridPane hgap="5.0">
                                                     <columnConstraints>
-                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-                                                                           prefWidth="100.0"/>
-                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-                                                                           prefWidth="100.0"/>
-                                                        <ColumnConstraints hgrow="NEVER" maxWidth="25.0" minWidth="25.0"
-                                                                           prefWidth="25.0"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
-                                                        <RowConstraints minHeight="10.0" prefHeight="30.0"
-                                                                        vgrow="SOMETIMES"/>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <children>
                                                         <MenuButton mnemonicParsing="false" text="MenuButton">
                                                             <items>
-                                                                <MenuItem mnemonicParsing="false" text="Action 1"/>
-                                                                <MenuItem mnemonicParsing="false" text="Action 2"/>
+                                                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                                <MenuItem mnemonicParsing="false" text="Action 2" />
                                                             </items>
                                                         </MenuButton>
-                                                        <TextField GridPane.columnIndex="1"/>
-                                                        <Button mnemonicParsing="false" styleClass="iconButton" text=""
-                                                                textOverrun="CLIP" GridPane.columnIndex="2"
-                                                                GridPane.hgrow="NEVER"/>
+                                                        <TextField GridPane.columnIndex="1" />
+                                                        <Button mnemonicParsing="false" styleClass="iconButton" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.hgrow="NEVER">
+                                             <graphic>
+                                                <FontIcon iconLiteral="mdi-close-circle-outline" />
+                                             </graphic></Button>
                                                     </children>
                                                     <VBox.margin>
-                                                        <Insets/>
+                                                        <Insets />
                                                     </VBox.margin>
                                                 </GridPane>
-                                                <Button mnemonicParsing="false" styleClass="linkButton"
-                                                        text="add more"/>
+                                                <Button mnemonicParsing="false" styleClass="linkButton" text="add more" />
                                             </children>
                                             <VBox.margin>
-                                                <Insets bottom="5.0" top="10.0"/>
+                                                <Insets bottom="5.0" top="10.0" />
                                             </VBox.margin>
                                         </VBox>
                                         <CheckBox mnemonicParsing="false" text="Case sensitive">
                                             <VBox.margin>
-                                                <Insets bottom="15.0" top="10.0"/>
+                                                <Insets bottom="15.0" top="10.0" />
                                             </VBox.margin>
                                         </CheckBox>
-                                        <HBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0"
-                                              VBox.vgrow="NEVER">
+                                        <HBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="NEVER">
                                             <children>
                                                 <Button mnemonicParsing="false" styleClass="mutedButton" text="SEARCH">
                                                     <HBox.margin>
-                                                        <Insets right="10.0"/>
+                                                        <Insets right="10.0" />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Button mnemonicParsing="false" styleClass="defaultButton"
-                                                        text="RESET SEARCH"/>
+                                                <Button mnemonicParsing="false" styleClass="defaultButton" text="RESET SEARCH" />
                                             </children>
                                         </HBox>
                                     </children>
@@ -185,11 +173,10 @@
                         </ScrollPane>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2"
-                                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0">
 
@@ -198,16 +185,15 @@
                         </ScrollPane>
                     </children>
                     <VBox.margin>
-                        <Insets/>
+                        <Insets />
                     </VBox.margin>
                 </GridPane>
-                <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0"
-                      VBox.vgrow="NEVER">
+                <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
                     <children>
-                        <Button mnemonicParsing="false" styleClass="defaultButton" text="CANCEL"/>
+                        <Button mnemonicParsing="false" styleClass="defaultButton" text="CANCEL" />
                         <Button mnemonicParsing="false" styleClass="primaryButton" text="OPEN">
                             <HBox.margin>
-                                <Insets left="10.0"/>
+                                <Insets left="10.0" />
                             </HBox.margin>
                         </Button>
                     </children>
@@ -216,10 +202,9 @@
         </VBox>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <stylesheets>
-        <URL value="@../styles/style.css"/>
-        <URL value="@../styles/search.css"/>
+        <URL value="@../styles/style.css" />
     </stylesheets>
 </AnchorPane>

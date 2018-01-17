@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="SettingsCrawlingScene" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsCrawlingController">
+<AnchorPane id="SettingsCrawlingUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsCrawlingController">
     <children>
         <VBox layoutX="169.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -22,7 +22,7 @@
                         <Label text="When searching for files, the app will look into these folders for PBCore records." />
                     </children>
                 </HBox>
-                <GridPane hgap="30.0" VBox.vgrow="ALWAYS">
+                <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -33,9 +33,9 @@
                     <children>
                         <TableView fx:id="foldersTableView" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn editable="false" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" sortable="false" />
                                 <TableColumn fx:id="pathColumn" editable="false" prefWidth="75.0" text="FOLDERS" />
                                 <TableColumn fx:id="lastIndexedColumn" editable="false" prefWidth="75.0" text="LAST INDEXED" />
+                                <TableColumn editable="false" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" sortable="false" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -71,6 +71,5 @@
     </padding>
     <stylesheets>
         <URL value="@../styles/style.css" />
-        <URL value="@../styles/settings.css" />
     </stylesheets>
 </AnchorPane>

@@ -1,9 +1,12 @@
 * {
     scene-bg-color: #ffffff;
     dialog-bg-color: #ededed;
+    
+    primary-color: #0b74d3;
 
     primary-text-color: #0b74d3;
     text-color: #000000;
+    inverted-text-color: #ffffff;
     dimmed-text-color: #838383;
     muted-text-color: #a0a0a0;
     nice-text-color: #11c115;
@@ -41,7 +44,16 @@
     -fx-font-family: "Arial";
 }
 
-/* TYPOGRAPHY */
+/* 
+  _______                                      _           
+ |__   __|                                    | |          
+    | |_   _ _ __   ___   __ _ _ __ __ _ _ __ | |__  _   _ 
+    | | | | | '_ \ / _ \ / _` | '__/ _` | '_ \| '_ \| | | |
+    | | |_| | |_) | (_) | (_| | | | (_| | |_) | | | | |_| |
+    |_|\__, | .__/ \___/ \__, |_|  \__,_| .__/|_| |_|\__, |
+        __/ | |           __/ |         | |           __/ |
+       |___/|_|          |___/          |_|          |___/ 
+*/
 
 .title1 {
     -fx-font-size: 24px;
@@ -92,7 +104,35 @@
     -fx-text-fill: panic-text-color;
 }
 
-/* SCENES */
+/*
+  _____                    
+ |_   _|                   
+   | |  ___ ___  _ __  ___ 
+   | | / __/ _ \| '_ \/ __|
+  _| || (_| (_) | | | \__ \
+ |_____\___\___/|_| |_|___/
+*/
+
+.primaryIcon {
+    -fx-icon-color: primary-text-color;
+}
+
+.niceIcon {
+    -fx-icon-color: nice-text-color;
+}
+
+.panicIcon {
+    -fx-icon-color: panic-text-color;
+}
+
+/* 
+   _____                          
+  / ____|                         
+ | (___   ___ ___ _ __   ___  ___ 
+  \___ \ / __/ _ \ '_ \ / _ \/ __|
+  ____) | (_|  __/ | | |  __/\__ \
+ |_____/ \___\___|_| |_|\___||___/
+*/
 
 .sceneRoot {
     -fx-background-color: scene-bg-color;
@@ -102,7 +142,14 @@
     -fx-background-color: dialog-bg-color;
 }
 
-/* SCROLL PANE */
+/*
+   _____                _ _   _____                 
+  / ____|              | | | |  __ \                
+ | (___   ___ _ __ ___ | | | | |__) |_ _ _ __   ___ 
+  \___ \ / __| '__/ _ \| | | |  ___/ _` | '_ \ / _ \
+  ____) | (__| | | (_) | | | | |  | (_| | | | |  __/
+ |_____/ \___|_|  \___/|_|_| |_|   \__,_|_| |_|\___|
+*/
 
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
@@ -113,7 +160,14 @@
     -fx-border-width: 0;
 }
 
-/* CHECKBOX */
+/* 
+   _____ _               _    _               
+  / ____| |             | |  | |              
+ | |    | |__   ___  ___| | _| |__   _____  __
+ | |    | '_ \ / _ \/ __| |/ / '_ \ / _ \ \/ /
+ | |____| | | |  __/ (__|   <| |_) | (_) >  < 
+  \_____|_| |_|\___|\___|_|\_\_.__/ \___/_/\_\
+*/
 
 .check-box .box {
     -fx-background-color: transparent;
@@ -134,7 +188,131 @@
     -fx-border-color: #28a3f4;
 }
 
-/* BUTTON */
+/*
+  _______    _         
+ |__   __|  | |        
+    | | __ _| |__  ___ 
+    | |/ _` | '_ \/ __|
+    | | (_| | |_) \__ \
+    |_|\__,_|_.__/|___/
+*/
+
+.tab-pane .tab-header-area .tab-header-background {
+    /*-fx-opacity: 0;*/
+}
+
+.tab-pane {
+    /*-fx-tab-min-width: 90px;*/
+}
+
+.tab-pane:top *.tab-header-area {
+    /*-fx-background-insets: 0, 0 0 1 0;*/
+    /*-fx-padding: 0.416667em 0.166667em 0.0em 0.0em;*/
+}
+
+.tab {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: muted-text-color;
+    -fx-font-weight: normal;
+}
+
+.tab:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.tab:selected {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-text-fill: text-color;
+    -fx-font-weight: bold;
+}
+
+/*
+  _      _     _    __      ___               
+ | |    (_)   | |   \ \    / (_)              
+ | |     _ ___| |_   \ \  / / _  _____      __
+ | |    | / __| __|   \ \/ / | |/ _ \ \ /\ / /
+ | |____| \__ \ |_     \  /  | |  __/\ V  V / 
+ |______|_|___/\__|     \/   |_|\___| \_/\_/  
+*/
+
+
+
+/*
+  _______             __      ___               
+ |__   __|            \ \    / (_)              
+    | |_ __ ___  ___   \ \  / / _  _____      __
+    | | '__/ _ \/ _ \   \ \/ / | |/ _ \ \ /\ / /
+    | | | |  __/  __/    \  /  | |  __/\ V  V / 
+    |_|_|  \___|\___|     \/   |_|\___| \_/\_/  
+*/
+
+.tree-view, .tree-cell {
+    -fx-text-fill: text-color;
+}
+
+.tree-cell {
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+}
+
+.tree-cell .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: text-color;
+}
+
+.tree-cell .button {
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.tree-cell .button .ikonli-font-icon {
+    -fx-icon-color: rgba(132, 193, 258, 0.85);
+}
+
+.tree-cell .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(29, 29, 29, 0.15);
+}
+
+.tree-cell:selected {
+    -fx-background-color: rgba(11, 116, 211, 0.25);
+    -fx-text-fill: text-color;
+}
+
+.tree-cell:selected .label {
+    
+}
+
+.tree-cell:selected .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(255, 255, 255, 0.35);
+}
+
+.tree-cell:expanded {
+    
+}
+
+.tree-cell:sub-tree-item {
+    
+}
+
+/* 
+  ____        _   _              
+ |  _ \      | | | |             
+ | |_) |_   _| |_| |_ ___  _ __  
+ |  _ <| | | | __| __/ _ \| '_ \ 
+ | |_) | |_| | |_| || (_) | | | |
+ |____/ \__,_|\__|\__\___/|_| |_|
+*/
 
 .toggle-button {
     -fx-padding: 2px 5px;
@@ -163,11 +341,14 @@
 }
 
 .iconButton {
-    -fx-font-family: "Material Design Icons";
     -fx-font-size: 13px;
     -fx-padding: 5px;
     -fx-background-color: icon-button-bg-color;
     -fx-text-fill: icon-button-text-color;
+}
+
+.iconButton .ikonli-font-icon {
+    -fx-icon-color: icon-button-text-color;
 }
 
 .linkButton {
@@ -232,4 +413,306 @@
 .bigButton {
     -fx-padding: 10px 15px;
     -fx-font-size: 16px;
+}
+
+/* 
+   _____      _ _           _   _                _____                _             
+  / ____|    | | |         | | (_)              / ____|              | |            
+ | |     ___ | | | ___  ___| |_ _  ___  _ __   | |     _ __ ___  __ _| |_ ___  _ __ 
+ | |    / _ \| | |/ _ \/ __| __| |/ _ \| '_ \  | |    | '__/ _ \/ _` | __/ _ \| '__|
+ | |___| (_) | | |  __/ (__| |_| | (_) | | | | | |____| | |  __/ (_| | || (_) | |   
+  \_____\___/|_|_|\___|\___|\__|_|\___/|_| |_|  \_____|_|  \___|\__,_|\__\___/|_|   
+*/
+
+#CollectionCreatorUI {
+    
+}
+
+/* 
+  _____                                        _   
+ |  __ \                                      | |  
+ | |  | | ___   ___ _   _ _ __ ___   ___ _ __ | |_ 
+ | |  | |/ _ \ / __| | | | '_ ` _ \ / _ \ '_ \| __|
+ | |__| | (_) | (__| |_| | | | | | |  __/ | | | |_ 
+ |_____/ \___/ \___|\__,_|_| |_| |_|\___|_| |_|\__|
+*/
+
+#DocumentUI .statusBar {
+    -fx-background-color: #ededed;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #d6d6d6;
+}
+
+#DocumentUI .statusBarDocumentType {
+    -fx-font-size: 13px;
+    -fx-text-fill: #000000;
+}
+
+#DocumentUI .statusBarSeparator {
+    -fx-icon-color: #0b74d3;
+}
+
+#DocumentUI .statusBarDocumentName {
+    -fx-font-size: 14px;
+    -fx-text-fill: #585858;
+    -fx-font-style: italic;
+}
+
+#DocumentUI .statusBarStatusIndicatorIcon {
+    -fx-icon-color: panic-text-color;
+}
+
+#DocumentUI .elementsTitleBar {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #8bc2ee;
+}
+
+#DocumentUI .elementsListView {
+    -fx-background-color: transparent;
+}
+
+#DocumentUI .elementsListView .tree-cell {
+    -fx-background-color: transparent;
+}
+
+#DocumentUI .elementsListView .tree-cell {
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+}
+
+#DocumentUI .elementsListView .tree-cell .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: text-color;
+}
+
+#DocumentUI .elementsListView .tree-cell .button {
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+#DocumentUI .elementsListView .tree-cell .button .ikonli-font-icon {
+    -fx-icon-color: rgba(132, 193, 258, 0.85);
+}
+
+#DocumentUI .elementsListView .tree-cell .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(29, 29, 29, 0.15);
+}
+
+#DocumentUI .elementsListView .tree-cell:selected {
+    -fx-background-color: primary-color;
+}
+
+#DocumentUI .elementsListView .tree-cell:selected .label {
+    -fx-text-fill: inverted-text-color;
+}
+
+#DocumentUI .elementsListView .tree-cell:selected .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(255, 255, 255, 0.35);
+}
+
+#DocumentUI .elementValueTitleBar {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #0b74d3;
+}
+
+#DocumentUI .elementValueTitleBar .label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #0b74d3;
+}
+
+#DocumentUI .elementValueTextArea {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0, 0, 0, 0;
+    
+    -fx-box-border: none;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-text-box-border: -fx-control-inner-background;
+    -fx-border-width: -1;
+}
+
+#DocumentUI .elementValueTextArea .content {
+    -fx-background-color: transparent;
+}
+
+#DocumentUI .elementValueTextArea:focused .content {
+    -fx-background-color: transparent;
+}
+
+#DocumentUI .elementAttributesTitleBar {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: nice-text-color;
+}
+
+#DocumentUI .elementAttributesTitleBar .label {
+    -fx-font-size: 12px;
+    -fx-text-fill: nice-text-color;
+}
+
+/* 
+  _____                       _   _        _ _           _         _      _     _     _____ _                 
+ |  __ \                 /\  | | | |      (_) |         | |       | |    (_)   | |   |_   _| |                
+ | |  | | ___   ___     /  \ | |_| |_ _ __ _| |__  _   _| |_ ___  | |     _ ___| |_    | | | |_ ___ _ __ ___  
+ | |  | |/ _ \ / __|   / /\ \| __| __| '__| | '_ \| | | | __/ _ \ | |    | / __| __|   | | | __/ _ \ '_ ` _ \ 
+ | |__| | (_) | (__   / ____ \ |_| |_| |  | | |_) | |_| | ||  __/ | |____| \__ \ |_   _| |_| ||  __/ | | | | |
+ |_____/ \___/ \___| /_/    \_\__|\__|_|  |_|_.__/ \__,_|\__\___| |______|_|___/\__| |_____|\__\___|_| |_| |_|
+*/
+
+#DocumentAttributeListItemUI {
+    
+}
+
+#DocumentAttributeListItemUI .label {
+    
+}
+
+#DocumentAttributeListItemUI .textInput {
+    
+}
+
+/* 
+  _____               ______ _                           _     _      _     _     _____ _                 
+ |  __ \             |  ____| |                         | |   | |    (_)   | |   |_   _| |                
+ | |  | | ___   ___  | |__  | | ___ _ __ ___   ___ _ __ | |_  | |     _ ___| |_    | | | |_ ___ _ __ ___  
+ | |  | |/ _ \ / __| |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __| | |    | / __| __|   | | | __/ _ \ '_ ` _ \ 
+ | |__| | (_) | (__  | |____| |  __/ | | | | |  __/ | | | |_  | |____| \__ \ |_   _| |_| ||  __/ | | | | |
+ |_____/ \___/ \___| |______|_|\___|_| |_| |_|\___|_| |_|\__| |______|_|___/\__| |_____|\__\___|_| |_| |_|
+*/
+
+#DocumentElementListItemUI {
+    
+}
+
+/*
+  ______    _ _ _             
+ |  ____|  | (_) |            
+ | |__   __| |_| |_ ___  _ __ 
+ |  __| / _` | | __/ _ \| '__|
+ | |___| (_| | | || (_) | |   
+ |______\__,_|_|\__\___/|_|   
+*/
+
+#EditorUI .editorTopBar {
+    -fx-background-color: #434343;
+}
+
+#EditorUI .editorTopBarIcon {
+    -fx-icon-color: nice-text-color;
+}
+
+#EditorUI .editorTopBarTitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff;
+}
+
+#EditorUI .editorTopBarExpandCollapse .ikonli-font-icon {
+    -fx-icon-color: #a0a0a0;
+}
+
+/*
+  ______ _                           _      _____      _           _             
+ |  ____| |                         | |    / ____|    | |         | |            
+ | |__  | | ___ _ __ ___   ___ _ __ | |_  | (___   ___| | ___  ___| |_ ___  _ __ 
+ |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __|  \___ \ / _ \ |/ _ \/ __| __/ _ \| '__|
+ | |____| |  __/ | | | | |  __/ | | | |_   ____) |  __/ |  __/ (__| || (_) | |   
+ |______|_|\___|_| |_| |_|\___|_| |_|\__| |_____/ \___|_|\___|\___|\__\___/|_|   
+*/
+
+#ElementSelectorUI {
+    
+}
+
+/*
+  __  __       _       
+ |  \/  |     (_)      
+ | \  / | __ _ _ _ __  
+ | |\/| |/ _` | | '_ \ 
+ | |  | | (_| | | | | |
+ |_|  |_|\__,_|_|_| |_|
+*/
+
+#MainUI {
+    
+}
+
+/*
+   _____                     _     
+  / ____|                   | |    
+ | (___   ___  __ _ _ __ ___| |__  
+  \___ \ / _ \/ _` | '__/ __| '_ \ 
+  ____) |  __/ (_| | | | (__| | | |
+ |_____/ \___|\__,_|_|  \___|_| |_|
+*/
+
+#SearchUI {
+    
+}
+
+/*
+   _____       _           _     
+  / ____|     | |         | |    
+ | (___  _ __ | | __ _ ___| |__  
+  \___ \| '_ \| |/ _` / __| '_ \ 
+  ____) | |_) | | (_| \__ \ | | |
+ |_____/| .__/|_|\__,_|___/_| |_|
+        | |                      
+        |_|                      
+*/
+
+#SplashUI {
+    
+}
+
+/*
+   _____      _   _   _                 
+  / ____|    | | | | (_)                
+ | (___   ___| |_| |_ _ _ __   __ _ ___ 
+  \___ \ / _ \ __| __| | '_ \ / _` / __|
+  ____) |  __/ |_| |_| | | | | (_| \__ \
+ |_____/ \___|\__|\__|_|_| |_|\__, |___/
+                               __/ |    
+                              |___/     
+*/
+
+#SettingsUI {
+    
+}
+
+/*
+   _____      _   _   _                    _____                    _ _             
+  / ____|    | | | | (_)                  / ____|                  | (_)            
+ | (___   ___| |_| |_ _ _ __   __ _ ___  | |     _ __ __ ___      _| |_ _ __   __ _ 
+  \___ \ / _ \ __| __| | '_ \ / _` / __| | |    | '__/ _` \ \ /\ / / | | '_ \ / _` |
+  ____) |  __/ |_| |_| | | | | (_| \__ \ | |____| | | (_| |\ V  V /| | | | | | (_| |
+ |_____/ \___|\__|\__|_|_| |_|\__, |___/  \_____|_|  \__,_| \_/\_/ |_|_|_| |_|\__, |
+                               __/ |                                           __/ |
+                              |___/                                           |___/ 
+*/
+
+#SettingsCrawlingUI {
+    
+}
+
+/*
+   _____      _   _   _                  __      __             _           _            _           
+  / ____|    | | | | (_)                 \ \    / /            | |         | |          (_)          
+ | (___   ___| |_| |_ _ _ __   __ _ ___   \ \  / /__   ___ __ _| |__  _   _| | __ _ _ __ _  ___  ___ 
+  \___ \ / _ \ __| __| | '_ \ / _` / __|   \ \/ / _ \ / __/ _` | '_ \| | | | |/ _` | '__| |/ _ \/ __|
+  ____) |  __/ |_| |_| | | | | (_| \__ \    \  / (_) | (_| (_| | |_) | |_| | | (_| | |  | |  __/\__ \
+ |_____/ \___|\__|\__|_|_| |_|\__, |___/     \/ \___/ \___\__,_|_.__/ \__,_|_|\__,_|_|  |_|\___||___/
+                               __/ |                                                                 
+                              |___/                                                                  
+*/
+
+#SettingsVocabulariesUI {
+    
 }

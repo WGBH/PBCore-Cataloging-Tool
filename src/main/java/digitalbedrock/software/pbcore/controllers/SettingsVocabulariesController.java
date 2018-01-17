@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class SettingsVocabulariesController extends AbsController {
 
-    // elements
+    // requiredDocumentElements
     @FXML
     private ToggleGroup typeRadio;
 
