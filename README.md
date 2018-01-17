@@ -1,5 +1,16 @@
 # PBCore-Cataloging-Tool
 
+Disclaimer:  
+
+This code is still in the early stages and not a completed product. 
+
+Version 4  - 1/17/2018
+---------
+
+Changes from previous versions are  in the directory crawling and searching code.
+
+ 
+
 Second Commit - 12/21/2017
 
 To just view the FontEnd.
