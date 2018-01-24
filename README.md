@@ -9,6 +9,8 @@ Version 5   1/24/2018
 
 First cut of UI for  Description and Instantiation Document Windows.   PBCore XML can be edited using Controlled Vocabularies.   Files are not read or written from disk quite yet.
 
+This version only currently runs on a Mac. Will run on Windows in the next release.
+
 Version 4  - 1/17/2018
 ---------
 
