@@ -4,6 +4,11 @@ Disclaimer:
 
 This code is still in the early stages and not a completed product. 
 
+Version 5   1/24/2018
+--------- 
+
+First cut of UI for  Description and Instantiation Document Windows.   PBCore XML can be edited using Controlled Vocabularies.   Files are not read or written from disk quite yet.
+
 Version 4  - 1/17/2018
 ---------
 

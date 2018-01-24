@@ -1,15 +1,36 @@
 * {
     scene-bg-color: #ffffff;
     dialog-bg-color: #ededed;
-    
-    primary-color: #0b74d3;
 
-    primary-text-color: #0b74d3;
+    white-bg: #ffffff;
+    gray-bg: #ededed;
+
+    tabs-bg-color: #a0a0a0;
+    tab-bg-color: #d3d3d3;
+    tab-selected-bg-color: #ededed;
+
+    lighter-border-color: #d6d6d6;
+    light-border-color: #c4c4c4;
+    dark-border-color: #434343;
+
+    primary-color: #0b74d3;
+    dark-color: #585858;
+    dimmed-color: #838383;
+    muted-color: #a0a0a0;
+    nice-color: #11c115;
+    warning-color: #FFBE05;
+    panic-color: #d01f1f;
+    info-color: #8bc2ee;
+    focus-color: #28a3f4;
+
     text-color: #000000;
     inverted-text-color: #ffffff;
+    primary-text-color: #0b74d3;
+    dark-text-color: #585858;
     dimmed-text-color: #838383;
     muted-text-color: #a0a0a0;
     nice-text-color: #11c115;
+    warning-text-color: #FFBE05;
     panic-text-color: #d01f1f;
 
     toggle-button-bg-color: #a0a0a0;
@@ -44,15 +65,28 @@
     -fx-font-family: "Arial";
 }
 
-/* 
-  _______                                      _           
- |__   __|                                    | |          
-    | |_   _ _ __   ___   __ _ _ __ __ _ _ __ | |__  _   _ 
+/*
+                _        ______ _ _ _
+     /\        | |      |  ____(_) | |
+    /  \  _   _| |_ ___ | |__   _| | |
+   / /\ \| | | | __/ _ \|  __| | | | |
+  / ____ \ |_| | || (_) | |    | | | |
+ /_/    \_\__,_|\__\___/|_|    |_|_|_|
+*/
+
+.autofill-text {
+    -fx-skin: "digitalbedrock.software.pbcore.components.AutoFillTextBoxPBCoreElementSkin";
+}
+
+/*
+  _______                                      _
+ |__   __|                                    | |
+    | |_   _ _ __   ___   __ _ _ __ __ _ _ __ | |__  _   _
     | | | | | '_ \ / _ \ / _` | '__/ _` | '_ \| '_ \| | | |
     | | |_| | |_) | (_) | (_| | | | (_| | |_) | | | | |_| |
     |_|\__, | .__/ \___/ \__, |_|  \__,_| .__/|_| |_|\__, |
         __/ | |           __/ |         | |           __/ |
-       |___/|_|          |___/          |_|          |___/ 
+       |___/|_|          |___/          |_|          |___/
 */
 
 .title1 {
@@ -72,13 +106,13 @@
 
 .title4 {
     -fx-font-size: 14px;
-    -fx-text-fill: #585858;
+    -fx-text-fill: dark-text-color;
     -fx-font-weight: bold;
 }
 
 .title6 {
     -fx-font-size: 11px;
-    -fx-text-fill: #a0a0a0;
+    -fx-text-fill: muted-color;
     -fx-font-weight: bold;
 }
 
@@ -100,35 +134,43 @@
     -fx-text-fill: nice-text-color;
 }
 
+.warningText {
+    -fx-text-fill: warning-text-color;
+}
+
 .panicText {
     -fx-text-fill: panic-text-color;
 }
 
 /*
-  _____                    
- |_   _|                   
-   | |  ___ ___  _ __  ___ 
+  _____
+ |_   _|
+   | |  ___ ___  _ __  ___
    | | / __/ _ \| '_ \/ __|
   _| || (_| (_) | | | \__ \
  |_____\___\___/|_| |_|___/
 */
 
 .primaryIcon {
-    -fx-icon-color: primary-text-color;
+    -fx-icon-color: primary-color;
 }
 
 .niceIcon {
-    -fx-icon-color: nice-text-color;
+    -fx-icon-color: nice-color;
+}
+
+.warningIcon {
+    -fx-icon-color: warning-color;
 }
 
 .panicIcon {
-    -fx-icon-color: panic-text-color;
+    -fx-icon-color: panic-color;
 }
 
-/* 
-   _____                          
-  / ____|                         
- | (___   ___ ___ _ __   ___  ___ 
+/*
+   _____
+  / ____|
+ | (___   ___ ___ _ __   ___  ___
   \___ \ / __/ _ \ '_ \ / _ \/ __|
   ____) | (_|  __/ | | |  __/\__ \
  |_____/ \___\___|_| |_|\___||___/
@@ -143,9 +185,9 @@
 }
 
 /*
-   _____                _ _   _____                 
-  / ____|              | | | |  __ \                
- | (___   ___ _ __ ___ | | | | |__) |_ _ _ __   ___ 
+   _____                _ _   _____
+  / ____|              | | | |  __ \
+ | (___   ___ _ __ ___ | | | | |__) |_ _ _ __   ___
   \___ \ / __| '__/ _ \| | | |  ___/ _` | '_ \ / _ \
   ____) | (__| | | (_) | | | | |  | (_| | | | |  __/
  |_____/ \___|_|  \___/|_|_| |_|   \__,_|_| |_|\___|
@@ -160,18 +202,18 @@
     -fx-border-width: 0;
 }
 
-/* 
-   _____ _               _    _               
-  / ____| |             | |  | |              
+/*
+   _____ _               _    _
+  / ____| |             | |  | |
  | |    | |__   ___  ___| | _| |__   _____  __
  | |    | '_ \ / _ \/ __| |/ / '_ \ / _ \ \/ /
- | |____| | | |  __/ (__|   <| |_) | (_) >  < 
+ | |____| | | |  __/ (__|   <| |_) | (_) >  <
   \_____|_| |_|\___|\___|_|\_\_.__/ \___/_/\_\
 */
 
 .check-box .box {
     -fx-background-color: transparent;
-    -fx-border-color: #434343;
+    -fx-border-color: dark-border-color;
     -fx-border-radius: 3px;
 }
 
@@ -184,14 +226,14 @@
 }
 
 .check-box:selected .box {
-    -fx-background-color: #28a3f4;
-    -fx-border-color: #28a3f4;
+    -fx-background-color: focus-color;
+    -fx-border-color: focus-color;
 }
 
 /*
-  _______    _         
- |__   __|  | |        
-    | | __ _| |__  ___ 
+  _______    _
+ |__   __|  | |
+    | | __ _| |__  ___
     | |/ _` | '_ \/ __|
     | | (_| | |_) \__ \
     |_|\__,_|_.__/|___/
@@ -199,6 +241,7 @@
 
 .tab-pane .tab-header-area .tab-header-background {
     /*-fx-opacity: 0;*/
+    -fx-background-color: tabs-bg-color;
 }
 
 .tab-pane {
@@ -206,14 +249,13 @@
 }
 
 .tab-pane:top *.tab-header-area {
-    /*-fx-background-insets: 0, 0 0 1 0;*/
-    /*-fx-padding: 0.416667em 0.166667em 0.0em 0.0em;*/
+    -fx-padding: 0 0 0 0;
 }
 
 .tab {
-    -fx-background-color: transparent;
-    -fx-font-size: 14px;
-    -fx-text-fill: muted-text-color;
+    -fx-background-color: tab-bg-color;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0, 0;
     -fx-font-weight: normal;
 }
 
@@ -223,30 +265,46 @@
 }
 
 .tab:selected {
+    -fx-background-color: tab-selected-bg-color;
     -fx-faint-focus-color: transparent;
     -fx-focus-color: transparent;
     -fx-text-fill: text-color;
-    -fx-font-weight: bold;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: tab-selected-bg-color;
+}
+
+.tab .tab-label {
+    -fx-padding: 0 5 0 5;
+    -fx-font-size: 13px;
+    -fx-text-fill: dark-text-color;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: text-color;
+}
+
+.tab .tab-close-button {
+    -fx-padding: 0 5 0 5;
 }
 
 /*
-  _      _     _    __      ___               
- | |    (_)   | |   \ \    / (_)              
+  _      _     _    __      ___
+ | |    (_)   | |   \ \    / (_)
  | |     _ ___| |_   \ \  / / _  _____      __
  | |    | / __| __|   \ \/ / | |/ _ \ \ /\ / /
- | |____| \__ \ |_     \  /  | |  __/\ V  V / 
- |______|_|___/\__|     \/   |_|\___| \_/\_/  
+ | |____| \__ \ |_     \  /  | |  __/\ V  V /
+ |______|_|___/\__|     \/   |_|\___| \_/\_/
 */
 
 
 
 /*
-  _______             __      ___               
- |__   __|            \ \    / (_)              
+  _______             __      ___
+ |__   __|            \ \    / (_)
     | |_ __ ___  ___   \ \  / / _  _____      __
     | | '__/ _ \/ _ \   \ \/ / | |/ _ \ \ /\ / /
-    | | | |  __/  __/    \  /  | |  __/\ V  V / 
-    |_|_|  \___|\___|     \/   |_|\___| \_/\_/  
+    | | | |  __/  __/    \  /  | |  __/\ V  V /
+    |_|_|  \___|\___|     \/   |_|\___| \_/\_/
 */
 
 .tree-view, .tree-cell {
@@ -254,9 +312,7 @@
 }
 
 .tree-cell {
-    -fx-min-height: 25px;
-    -fx-pref-height: 25px;
-    -fx-max-height: 25px;
+
 }
 
 .tree-cell .label {
@@ -277,7 +333,7 @@
 }
 
 .tree-cell .button .ikonli-font-icon {
-    -fx-icon-color: rgba(132, 193, 258, 0.85);
+    -fx-icon-color: info-color;
 }
 
 .tree-cell .button.removeButton .ikonli-font-icon {
@@ -290,7 +346,7 @@
 }
 
 .tree-cell:selected .label {
-    
+
 }
 
 .tree-cell:selected .button.removeButton .ikonli-font-icon {
@@ -298,18 +354,14 @@
 }
 
 .tree-cell:expanded {
-    
+
 }
 
-.tree-cell:sub-tree-item {
-    
-}
-
-/* 
-  ____        _   _              
- |  _ \      | | | |             
- | |_) |_   _| |_| |_ ___  _ __  
- |  _ <| | | | __| __/ _ \| '_ \ 
+/*
+  ____        _   _
+ |  _ \      | | | |
+ | |_) |_   _| |_| |_ ___  _ __
+ |  _ <| | | | __| __/ _ \| '_ \
  | |_) | |_| | |_| || (_) | | | |
  |____/ \__,_|\__|\__\___/|_| |_|
 */
@@ -415,46 +467,48 @@
     -fx-font-size: 16px;
 }
 
-/* 
-   _____      _ _           _   _                _____                _             
-  / ____|    | | |         | | (_)              / ____|              | |            
- | |     ___ | | | ___  ___| |_ _  ___  _ __   | |     _ __ ___  __ _| |_ ___  _ __ 
+/*
+   _____      _ _           _   _                _____                _
+  / ____|    | | |         | | (_)              / ____|              | |
+ | |     ___ | | | ___  ___| |_ _  ___  _ __   | |     _ __ ___  __ _| |_ ___  _ __
  | |    / _ \| | |/ _ \/ __| __| |/ _ \| '_ \  | |    | '__/ _ \/ _` | __/ _ \| '__|
- | |___| (_) | | |  __/ (__| |_| | (_) | | | | | |____| | |  __/ (_| | || (_) | |   
-  \_____\___/|_|_|\___|\___|\__|_|\___/|_| |_|  \_____|_|  \___|\__,_|\__\___/|_|   
+ | |___| (_) | | |  __/ (__| |_| | (_) | | | | | |____| | |  __/ (_| | || (_) | |
+  \_____\___/|_|_|\___|\___|\__|_|\___/|_| |_|  \_____|_|  \___|\__,_|\__\___/|_|
 */
 
 #CollectionCreatorUI {
-    
+
 }
 
-/* 
-  _____                                        _   
- |  __ \                                      | |  
- | |  | | ___   ___ _   _ _ __ ___   ___ _ __ | |_ 
+/*
+  _____                                        _
+ |  __ \                                      | |
+ | |  | | ___   ___ _   _ _ __ ___   ___ _ __ | |_
  | |  | |/ _ \ / __| | | | '_ ` _ \ / _ \ '_ \| __|
- | |__| | (_) | (__| |_| | | | | | |  __/ | | | |_ 
+ | |__| | (_) | (__| |_| | | | | | |  __/ | | | |_
  |_____/ \___/ \___|\__,_|_| |_| |_|\___|_| |_|\__|
 */
 
+/* STATUS BAR */
+
 #DocumentUI .statusBar {
-    -fx-background-color: #ededed;
+    -fx-background-color: gray-bg;
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: #d6d6d6;
+    -fx-border-color: lighter-border-color;
 }
 
 #DocumentUI .statusBarDocumentType {
     -fx-font-size: 13px;
-    -fx-text-fill: #000000;
+    -fx-text-fill: text-color;
 }
 
 #DocumentUI .statusBarSeparator {
-    -fx-icon-color: #0b74d3;
+    -fx-icon-color: primary-color;
 }
 
 #DocumentUI .statusBarDocumentName {
     -fx-font-size: 14px;
-    -fx-text-fill: #585858;
+    -fx-text-fill: dark-text-color;
     -fx-font-style: italic;
 }
 
@@ -462,9 +516,11 @@
     -fx-icon-color: panic-text-color;
 }
 
+/* ELEMENTS */
+
 #DocumentUI .elementsTitleBar {
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: #8bc2ee;
+    -fx-border-color: info-color;
 }
 
 #DocumentUI .elementsListView {
@@ -473,37 +529,9 @@
 
 #DocumentUI .elementsListView .tree-cell {
     -fx-background-color: transparent;
-}
-
-#DocumentUI .elementsListView .tree-cell {
     -fx-min-height: 25px;
     -fx-pref-height: 25px;
     -fx-max-height: 25px;
-}
-
-#DocumentUI .elementsListView .tree-cell .label {
-    -fx-font-size: 14px;
-    -fx-text-fill: text-color;
-}
-
-#DocumentUI .elementsListView .tree-cell .button {
-    -fx-min-width: 25px;
-    -fx-pref-width: 25px;
-    -fx-max-width: 25px;
-    -fx-min-height: 25px;
-    -fx-pref-height: 25px;
-    -fx-max-height: 25px;
-    -fx-padding: 0;
-    -fx-background-color: transparent;
-    -fx-border-width: 0 0 0 0;
-}
-
-#DocumentUI .elementsListView .tree-cell .button .ikonli-font-icon {
-    -fx-icon-color: rgba(132, 193, 258, 0.85);
-}
-
-#DocumentUI .elementsListView .tree-cell .button.removeButton .ikonli-font-icon {
-    -fx-icon-color: rgba(29, 29, 29, 0.15);
 }
 
 #DocumentUI .elementsListView .tree-cell:selected {
@@ -518,35 +546,43 @@
     -fx-icon-color: rgba(255, 255, 255, 0.35);
 }
 
+/* VALUE */
+
 #DocumentUI .elementValueTitleBar {
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: #0b74d3;
+    -fx-border-color: primary-color;
 }
 
 #DocumentUI .elementValueTitleBar .label {
     -fx-font-size: 12px;
-    -fx-text-fill: #0b74d3;
+    -fx-text-fill: primary-color;
 }
 
-#DocumentUI .elementValueTextArea {
-    -fx-background-insets: 0;
-    -fx-background-color: transparent;
-    -fx-background-radius: 0, 0, 0, 0;
-    
-    -fx-box-border: none;
-    -fx-focus-color: -fx-control-inner-background;
-    -fx-faint-focus-color: -fx-control-inner-background;
-    -fx-text-box-border: -fx-control-inner-background;
-    -fx-border-width: -1;
+#DocumentUI .elementValueContainer {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: light-border-color;
 }
 
-#DocumentUI .elementValueTextArea .content {
+#DocumentUI .elementValueTextArea .text-field {
     -fx-background-color: transparent;
+    -fx-border-width: 0;
 }
 
-#DocumentUI .elementValueTextArea:focused .content {
-    -fx-background-color: transparent;
+#DocumentUI .elementValueTextArea .list-view {
+    -fx-background-color: #ff0000;
 }
+
+#DocumentUI .elementValueTextArea .list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+}
+
+#DocumentUI .elementValueCombo {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* ATTRIBUTES */
 
 #DocumentUI .elementAttributesTitleBar {
     -fx-border-width: 0 0 1 0;
@@ -558,51 +594,92 @@
     -fx-text-fill: nice-text-color;
 }
 
-/* 
-  _____                       _   _        _ _           _         _      _     _     _____ _                 
- |  __ \                 /\  | | | |      (_) |         | |       | |    (_)   | |   |_   _| |                
- | |  | | ___   ___     /  \ | |_| |_ _ __ _| |__  _   _| |_ ___  | |     _ ___| |_    | | | |_ ___ _ __ ___  
- | |  | |/ _ \ / __|   / /\ \| __| __| '__| | '_ \| | | | __/ _ \ | |    | / __| __|   | | | __/ _ \ '_ ` _ \ 
+#DocumentUI .attributesListView {
+    -fx-background-color: transparent;
+}
+
+/*
+  _____                       _   _        _ _           _         _      _     _     _____ _
+ |  __ \                 /\  | | | |      (_) |         | |       | |    (_)   | |   |_   _| |
+ | |  | | ___   ___     /  \ | |_| |_ _ __ _| |__  _   _| |_ ___  | |     _ ___| |_    | | | |_ ___ _ __ ___
+ | |  | |/ _ \ / __|   / /\ \| __| __| '__| | '_ \| | | | __/ _ \ | |    | / __| __|   | | | __/ _ \ '_ ` _ \
  | |__| | (_) | (__   / ____ \ |_| |_| |  | | |_) | |_| | ||  __/ | |____| \__ \ |_   _| |_| ||  __/ | | | | |
  |_____/ \___/ \___| /_/    \_\__|\__|_|  |_|_.__/ \__,_|\__\___| |______|_|___/\__| |_____|\__\___|_| |_| |_|
 */
 
 #DocumentAttributeListItemUI {
-    
+    -fx-background-color: transparent;
+    -fx-min-height: 60px;
+    -fx-pref-height: 60px;
+    -fx-max-height: 60px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: light-border-color;
 }
 
 #DocumentAttributeListItemUI .label {
-    
+    -fx-font-size: 13px;
+    -fx-text-fill: muted-text-color;
 }
 
-#DocumentAttributeListItemUI .textInput {
-    
+#DocumentAttributeListItemUI .attributeValueTextBox .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
 }
 
-/* 
-  _____               ______ _                           _     _      _     _     _____ _                 
- |  __ \             |  ____| |                         | |   | |    (_)   | |   |_   _| |                
- | |  | | ___   ___  | |__  | | ___ _ __ ___   ___ _ __ | |_  | |     _ ___| |_    | | | |_ ___ _ __ ___  
- | |  | |/ _ \ / __| |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __| | |    | / __| __|   | | | __/ _ \ '_ ` _ \ 
+/*
+  _____               ______ _                           _     _      _     _     _____ _
+ |  __ \             |  ____| |                         | |   | |    (_)   | |   |_   _| |
+ | |  | | ___   ___  | |__  | | ___ _ __ ___   ___ _ __ | |_  | |     _ ___| |_    | | | |_ ___ _ __ ___
+ | |  | |/ _ \ / __| |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __| | |    | / __| __|   | | | __/ _ \ '_ ` _ \
  | |__| | (_) | (__  | |____| |  __/ | | | | |  __/ | | | |_  | |____| \__ \ |_   _| |_| ||  __/ | | | | |
  |_____/ \___/ \___| |______|_|\___|_| |_| |_|\___|_| |_|\__| |______|_|___/\__| |_____|\__\___|_| |_| |_|
 */
 
 #DocumentElementListItemUI {
-    
+
+}
+
+#DocumentElementListItemUI .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: text-color;
+}
+
+#DocumentElementListItemUI .button {
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+#DocumentElementListItemUI .button .ikonli-font-icon {
+    -fx-icon-color: info-color;
+}
+
+#DocumentElementListItemUI .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(29, 29, 29, 0.15);
 }
 
 /*
-  ______    _ _ _             
- |  ____|  | (_) |            
- | |__   __| |_| |_ ___  _ __ 
+  ______    _ _ _
+ |  ____|  | (_) |
+ | |__   __| |_| |_ ___  _ __
  |  __| / _` | | __/ _ \| '__|
- | |___| (_| | | || (_) | |   
- |______\__,_|_|\__\___/|_|   
+ | |___| (_| | | || (_) | |
+ |______\__,_|_|\__\___/|_|
 */
 
+#EditorUI {
+    -fx-border-width: 1;
+    -fx-border-color: lighter-border-color;
+}
+
 #EditorUI .editorTopBar {
-    -fx-background-color: #434343;
+    -fx-background-color: dark-border-color;
 }
 
 #EditorUI .editorTopBarIcon {
@@ -611,108 +688,138 @@
 
 #EditorUI .editorTopBarTitle {
     -fx-font-size: 13px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: inverted-text-color;
 }
 
 #EditorUI .editorTopBarExpandCollapse .ikonli-font-icon {
-    -fx-icon-color: #a0a0a0;
+    -fx-icon-color: muted-color;
 }
 
 /*
-  ______ _                           _      _____      _           _             
- |  ____| |                         | |    / ____|    | |         | |            
- | |__  | | ___ _ __ ___   ___ _ __ | |_  | (___   ___| | ___  ___| |_ ___  _ __ 
+  ______ _                           _      _____      _           _
+ |  ____| |                         | |    / ____|    | |         | |
+ | |__  | | ___ _ __ ___   ___ _ __ | |_  | (___   ___| | ___  ___| |_ ___  _ __
  |  __| | |/ _ \ '_ ` _ \ / _ \ '_ \| __|  \___ \ / _ \ |/ _ \/ __| __/ _ \| '__|
- | |____| |  __/ | | | | |  __/ | | | |_   ____) |  __/ |  __/ (__| || (_) | |   
- |______|_|\___|_| |_| |_|\___|_| |_|\__| |_____/ \___|_|\___|\___|\__\___/|_|   
+ | |____| |  __/ | | | | |  __/ | | | |_   ____) |  __/ |  __/ (__| || (_) | |
+ |______|_|\___|_| |_| |_|\___|_| |_|\__| |_____/ \___|_|\___|\___|\__\___/|_|
 */
 
 #ElementSelectorUI {
-    
+
 }
 
 /*
-  __  __       _       
- |  \/  |     (_)      
- | \  / | __ _ _ _ __  
- | |\/| |/ _` | | '_ \ 
+  __  __       _
+ |  \/  |     (_)
+ | \  / | __ _ _ _ __
+ | |\/| |/ _` | | '_ \
  | |  | | (_| | | | | |
  |_|  |_|\__,_|_|_| |_|
 */
 
 #MainUI {
-    
+
 }
 
 /*
-   _____                     _     
-  / ____|                   | |    
- | (___   ___  __ _ _ __ ___| |__  
-  \___ \ / _ \/ _` | '__/ __| '_ \ 
+   _____                     _
+  / ____|                   | |
+ | (___   ___  __ _ _ __ ___| |__
+  \___ \ / _ \/ _` | '__/ __| '_ \
   ____) |  __/ (_| | | | (__| | | |
  |_____/ \___|\__,_|_|  \___|_| |_|
 */
 
 #SearchUI {
-    
+
 }
 
 /*
-   _____       _           _     
-  / ____|     | |         | |    
- | (___  _ __ | | __ _ ___| |__  
-  \___ \| '_ \| |/ _` / __| '_ \ 
+   _____       _           _
+  / ____|     | |         | |
+ | (___  _ __ | | __ _ ___| |__
+  \___ \| '_ \| |/ _` / __| '_ \
   ____) | |_) | | (_| \__ \ | | |
  |_____/| .__/|_|\__,_|___/_| |_|
-        | |                      
-        |_|                      
+        | |
+        |_|
 */
 
 #SplashUI {
-    
+
 }
 
 /*
-   _____      _   _   _                 
-  / ____|    | | | | (_)                
- | (___   ___| |_| |_ _ _ __   __ _ ___ 
+   _____      _   _   _
+  / ____|    | | | | (_)
+ | (___   ___| |_| |_ _ _ __   __ _ ___
   \___ \ / _ \ __| __| | '_ \ / _` / __|
   ____) |  __/ |_| |_| | | | | (_| \__ \
  |_____/ \___|\__|\__|_|_| |_|\__, |___/
-                               __/ |    
-                              |___/     
+                               __/ |
+                              |___/
 */
 
 #SettingsUI {
-    
+
+}
+
+#SettingsUI .tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+#SettingsUI .tab-pane .tab-content-area {
+    -fx-padding: 5 0 0 0;
+}
+
+#SettingsUI .tab {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: muted-text-color;
+    -fx-font-weight: normal;
+}
+
+#SettingsUI .tab:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+#SettingsUI .tab:selected {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-text-fill: text-color;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 0 0;
 }
 
 /*
-   _____      _   _   _                    _____                    _ _             
-  / ____|    | | | | (_)                  / ____|                  | (_)            
- | (___   ___| |_| |_ _ _ __   __ _ ___  | |     _ __ __ ___      _| |_ _ __   __ _ 
+   _____      _   _   _                    _____                    _ _
+  / ____|    | | | | (_)                  / ____|                  | (_)
+ | (___   ___| |_| |_ _ _ __   __ _ ___  | |     _ __ __ ___      _| |_ _ __   __ _
   \___ \ / _ \ __| __| | '_ \ / _` / __| | |    | '__/ _` \ \ /\ / / | | '_ \ / _` |
   ____) |  __/ |_| |_| | | | | (_| \__ \ | |____| | | (_| |\ V  V /| | | | | | (_| |
  |_____/ \___|\__|\__|_|_| |_|\__, |___/  \_____|_|  \__,_| \_/\_/ |_|_|_| |_|\__, |
                                __/ |                                           __/ |
-                              |___/                                           |___/ 
+                              |___/                                           |___/
 */
 
 #SettingsCrawlingUI {
-    
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: light-border-color;
 }
 
 /*
-   _____      _   _   _                  __      __             _           _            _           
-  / ____|    | | | | (_)                 \ \    / /            | |         | |          (_)          
- | (___   ___| |_| |_ _ _ __   __ _ ___   \ \  / /__   ___ __ _| |__  _   _| | __ _ _ __ _  ___  ___ 
+   _____      _   _   _                  __      __             _           _            _
+  / ____|    | | | | (_)                 \ \    / /            | |         | |          (_)
+ | (___   ___| |_| |_ _ _ __   __ _ ___   \ \  / /__   ___ __ _| |__  _   _| | __ _ _ __ _  ___  ___
   \___ \ / _ \ __| __| | '_ \ / _` / __|   \ \/ / _ \ / __/ _` | '_ \| | | | |/ _` | '__| |/ _ \/ __|
   ____) |  __/ |_| |_| | | | | (_| \__ \    \  / (_) | (_| (_| | |_) | |_| | | (_| | |  | |  __/\__ \
  |_____/ \___|\__|\__|_|_| |_|\__, |___/     \/ \___/ \___\__,_|_.__/ \__,_|_|\__,_|_|  |_|\___||___/
-                               __/ |                                                                 
-                              |___/                                                                  
+                               __/ |
+                              |___/
 */
 
 #SettingsVocabulariesUI {
-    
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: light-border-color;
 }

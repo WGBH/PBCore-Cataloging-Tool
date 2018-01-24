@@ -6,14 +6,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.web.WebView?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane id="EditorUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="EditorUI" prefHeight="500.0" prefWidth="580.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
     </padding>
@@ -27,7 +29,7 @@
                 <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <GridPane styleClass="editorTopBar">
+                <GridPane fx:id="topBar" styleClass="editorTopBar">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,11 +40,11 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                        <FontIcon iconLiteral="mdi-code-not-equal-variant" iconSize="22" styleClass="editorTopBarIcon">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </FontIcon>
+                                <FontIcon iconLiteral="mdi-code-not-equal-variant" iconSize="22" styleClass="editorTopBarIcon">
+                                    <HBox.margin>
+                                        <Insets right="5.0" />
+                                    </HBox.margin>
+                                </FontIcon>
                                 <Label styleClass="editorTopBarTitle" text="PREVIEW" />
                             </children>
                             <padding>
@@ -54,9 +56,13 @@
                                 <Insets right="5.0" />
                             </padding>
                             <children>
-                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="leftToggle" text="xml" />
-                                <ToggleButton mnemonicParsing="false" styleClass="rightToggle" text="Visual Layout" />
-                                <Button mnemonicParsing="false">
+                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="leftToggle" text="xml">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="typeRadio" />
+                                    </toggleGroup>
+                                </ToggleButton>
+                                <ToggleButton mnemonicParsing="false" styleClass="rightToggle" text="Visual Layout" toggleGroup="$typeRadio" />
+                                <Button fx:id="closeButton" mnemonicParsing="false">
                                     <HBox.margin>
                                         <Insets left="5.0" />
                                     </HBox.margin>
@@ -64,18 +70,19 @@
                                         <String fx:value="iconButton" />
                                         <String fx:value="editorTopBarExpandCollapse" />
                                     </styleClass>
-                           <graphic>
-                              <FontIcon iconLiteral="mdi-chevron-down" iconSize="20" />
-                           </graphic>
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi-chevron-down" iconSize="20" />
+                                    </graphic>
                                 </Button>
                             </children>
                         </HBox>
                     </children>
                 </GridPane>
+                <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
             </children>
         </GridPane>
     </children>
     <stylesheets>
         <URL value="@../styles/style.css" />
     </stylesheets>
-</AnchorPane>
+</fx:root>

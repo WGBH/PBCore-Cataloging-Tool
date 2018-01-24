@@ -1,14 +1,16 @@
 package digitalbedrock.software.pbcore.core;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import org.xml.sax.SAXException;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.net.URL;
 
 public class PBcoreValidator {
 
@@ -32,6 +34,10 @@ public class PBcoreValidator {
 
     public void validate(File xml) throws SAXException, IOException {
         validator.validate(new StreamSource(xml));
+    }
+
+    public void validate(String xml) throws SAXException, IOException {
+        validator.validate(new StreamSource(new StringReader(xml)));
     }
 
 }

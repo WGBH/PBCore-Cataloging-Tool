@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="SettingsVocabulariesUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsVocabulariesController">
+<AnchorPane id="SettingsVocabulariesUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsVocabulariesController">
     <children>
         <VBox layoutX="450.0" layoutY="99.0" prefHeight="200.0" prefWidth="534.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -35,7 +35,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="NEVER">
                                     <children>
-                                        <RadioButton mnemonicParsing="false" text="Elements">
+                                        <RadioButton mnemonicParsing="false" onAction="#showElements" selected="true" text="Elements">
                                             <HBox.margin>
                                                 <Insets right="10.0" />
                                             </HBox.margin>
@@ -43,10 +43,10 @@
                                                 <ToggleGroup fx:id="typeRadio" />
                                             </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton mnemonicParsing="false" text="Attributes" toggleGroup="$typeRadio" />
+                                        <RadioButton mnemonicParsing="false" onAction="#showAttributes" text="Attributes" toggleGroup="$typeRadio" />
                                     </children>
                                 </HBox>
-                                <TreeView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                <TreeView fx:id="treelist" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
@@ -113,7 +113,7 @@
         </VBox>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="0.0" left="0.0" right="0.0" top="20.0" />
     </padding>
     <stylesheets>
         <URL value="@../styles/style.css" />

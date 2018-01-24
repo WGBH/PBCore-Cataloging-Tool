@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="ElementSelectorUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="750.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.ElementSelectorController">
+<AnchorPane id="ElementSelectorUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="750.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.AttributeSelectorController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -60,7 +60,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="lblElementAlreadyAdded" styleClass="panicText" text="Element already added" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+                  <Label fx:id="lblAttributeAlreadyAdded" styleClass="panicText" text="Attribute already added to element" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="5.0" />
                      </GridPane.margin>

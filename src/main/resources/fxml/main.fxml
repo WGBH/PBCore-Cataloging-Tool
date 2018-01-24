@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<StackPane id="MainUI" styleClass="sceneRoot" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0"
-           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="digitalbedrock.software.pbcore.controllers.MainAppController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane id="MainUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.MainAppController">
    <children>
-      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <tabs>
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
             <!--<Tab text="Untitled Tab 1">-->
             <!--<content>-->
             <!--<AnchorPane>-->
@@ -21,28 +22,27 @@
             <!--</content>-->
             <!--</Tab>-->
          </tabs>
-      </TabPane>
-      <AnchorPane fx:id="splash" id="SplashUI" styleClass="sceneRoot" maxHeight="-Infinity" maxWidth="-Infinity"
-                  minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0"
-                  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-         <children>
-            <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            </TabPane>
+            <AnchorPane id="SplashUI" fx:id="splash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" styleClass="sceneRoot">
                <children>
-                  <ImageView pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/splash_image.png"/>
-                     </image>
-                  </ImageView>
+                  <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imgs/splash_image.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+               <stylesheets>
+                  <URL value="@../styles/style.css" />
+               </stylesheets>
+            </AnchorPane>
          </children>
-         <stylesheets>
-            <URL value="@../styles/style.css"/>
-         </stylesheets>
-      </AnchorPane>
+      </StackPane>
    </children>
    <stylesheets>
-      <URL value="@../styles/style.css"/>
+      <URL value="@../styles/style.css" />
    </stylesheets>
-</StackPane>
+</AnchorPane>

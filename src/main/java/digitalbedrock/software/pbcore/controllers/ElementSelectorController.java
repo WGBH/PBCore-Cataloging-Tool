@@ -21,11 +21,14 @@ public class ElementSelectorController extends AbsController {
     private Button btnCancel;
     @FXML
     private Button btnAdd;
+    @FXML
+    private Label lblElementAlreadyAdded;
 
     @FXML
     private TreeView<PBCoreElement> treeElements;
 
     private PBCoreElement pbCoreElement;
+    private PBCoreElement selectedElement;
 
     @Override
     public void setMainController(MainController mainController) {
@@ -42,35 +45,65 @@ public class ElementSelectorController extends AbsController {
             PBCoreElement value = newValue.getValue();
             lblDescription.setText(value.getDescription());
             lblOptional.setText((value.isRequired() ? "required" : "optional"));
-            lblRepeatable.setText((value.isRepeatable() ? "repeatable" : ""));
+            lblRepeatable.setText((value.isRepeatable() ? ", repeatable" : ""));
+            lblElementAlreadyAdded.setVisible(false);
+            btnAdd.setDisable(false);
+            if (!newValue.getValue().isRepeatable() && containsSubElement(selectedElement, value)) {
+                btnAdd.setDisable(true);
+                lblElementAlreadyAdded.setVisible(true);
+            }
         };
         treeElements.getSelectionModel().selectedItemProperty().addListener(listener);
         treeElements.getSelectionModel().select(0);
-
     }
 
-    public void setElementSelectionListener(ElementSelectionListener elementSelectionListener) {
-        btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> elementSelectionListener.onElementSelected(null));
+    private boolean containsSubElement(PBCoreElement pbCoreElement, PBCoreElement value) {
+        for (PBCoreElement coreElement : pbCoreElement.getSubElements()) {
+            if (coreElement.getName().equals(value.getName())) {
+                return true;
+            } else {
+                if (containsSubElement(coreElement, value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setElementSelectionListener(int index, ElementSelectionListener elementSelectionListener) {
+        btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> elementSelectionListener.onElementSelected(index, null));
         btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             TreeItem<PBCoreElement> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            if (selectedItem.getParent().getParent() != null) {//in this case we are not looking at a root element so we should return the full parent
-                elementSelectionListener.onElementSelected(selectedItem.getParent().getValue().clone());
-            } else {
-                elementSelectionListener.onElementSelected(selectedItem.getValue().clone());
+            PBCoreElement selectedElement = selectedItem.getValue().copy();
+            TreeItem<PBCoreElement> item = selectedItem.getParent();
+            while (item.getParent() != null) {
+                item.getValue().clearOptionalSubElements();
+                if (!selectedElement.isRequired()) {
+                    item.getValue().addSubElement(selectedElement);
+                }
+                selectedElement = item.getValue().copy();
+                item = item.getParent();
             }
+            item.getValue().clearOptionalSubElements();
+            if (!selectedElement.isRequired()) {
+                item.getValue().addSubElement(selectedElement);
+            }
+            elementSelectionListener.onElementSelected(index, item.getParent() == null ? selectedElement.copy(false) : item.getValue().copy(false));
+            /*}*/
         });
     }
 
     private TreeItem<PBCoreElement> getTreeItem(PBCoreElement rootElement) {
         TreeItem<PBCoreElement> pbCoreElementTreeItem = new TreeItem<>(rootElement);
-        for (PBCoreElement pbCoreElement : rootElement.getSubElements()) {
-            pbCoreElementTreeItem.getChildren().add(getTreeItem(pbCoreElement));
+        for (PBCoreElement coreElement : rootElement.getOrderedSubElements()) {
+            pbCoreElementTreeItem.getChildren().add(getTreeItem(coreElement));
         }
         return pbCoreElementTreeItem;
     }
 
     public void setPbCoreElement(PBCoreElement pbCoreElement) {
-        this.pbCoreElement = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
+        this.pbCoreElement = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath()).copy();
+        this.selectedElement = pbCoreElement;
     }
 
     private class PBCoreTreeCell extends TreeCell<PBCoreElement> {

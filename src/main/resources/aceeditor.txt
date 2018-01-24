@@ -1,0 +1,4 @@
+editor/ace/ace.js
+editor/ace/mode-xml.js
+editor/ace/theme-pbcore.js
+editor/ace/editor.html

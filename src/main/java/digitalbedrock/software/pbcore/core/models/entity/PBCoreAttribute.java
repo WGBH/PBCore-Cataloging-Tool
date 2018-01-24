@@ -1,5 +1,10 @@
 package digitalbedrock.software.pbcore.core.models.entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import java.util.UUID;
+
 public class PBCoreAttribute {
 
     private Long id;
@@ -7,24 +12,40 @@ public class PBCoreAttribute {
     private String name;
     private boolean required;
     private String description;
-    private String value;
+
+    public StringProperty valueProperty = new SimpleStringProperty();
+    boolean readOnly;
 
     public PBCoreAttribute() {
+        id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
     }
 
-    public PBCoreAttribute(Long id, String screenName, String name) {
-        this.id = id;
-        this.screenName = screenName;
-        this.name = name;
-    }
-
-    public PBCoreAttribute(Long id, String screenName, String name, boolean required, String description, String value) {
-        this.id = id;
+    public PBCoreAttribute(String screenName, String name, boolean required, String description, String value) {
+        this();
         this.screenName = screenName;
         this.name = name;
         this.required = required;
         this.description = description;
-        this.value = value;
+        this.valueProperty.setValue(value);
+    }
+
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public String getValue() {
+        return valueProperty.getValue();
+    }
+
+    public void setValue(String value) {
+        if(!readOnly) {
+            this.valueProperty.setValue(value);
+        }
     }
 
     public void setId(Long id) {
@@ -72,14 +93,6 @@ public class PBCoreAttribute {
         this.description = description;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     @Override
     public String toString() {
         return "PBCoreAttribute{" +
@@ -88,13 +101,13 @@ public class PBCoreAttribute {
                 ", name='" + name + '\'' +
                 ", required=" + required +
                 ", description='" + description + '\'' +
-                ", value='" + value + '\'' +
+                ", value='" + getValue() + '\'' +
                 '}';
     }
 
 
-    @Override
-    public PBCoreAttribute clone() {
-        return new PBCoreAttribute(id, screenName, name, required, description, value);
+    public PBCoreAttribute copy() {
+        return new PBCoreAttribute(screenName, name, required, description, getValue());
     }
+
 }

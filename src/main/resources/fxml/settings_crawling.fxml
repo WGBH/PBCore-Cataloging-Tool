@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="SettingsCrawlingUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsCrawlingController">
+<AnchorPane id="SettingsCrawlingUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsCrawlingController">
     <children>
         <VBox layoutX="169.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -66,10 +66,10 @@
             </children>
         </VBox>
     </children>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
     <stylesheets>
         <URL value="@../styles/style.css" />
     </stylesheets>
+   <padding>
+      <Insets bottom="0.0" left="0.0" right="0.0" top="20.0" />
+   </padding>
 </AnchorPane>

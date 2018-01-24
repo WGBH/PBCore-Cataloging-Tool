@@ -2,6 +2,7 @@ package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.core.models.NewDocumentType;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
+import digitalbedrock.software.pbcore.listeners.AttributeSelectionListener;
 import digitalbedrock.software.pbcore.listeners.ElementSelectionListener;
 import digitalbedrock.software.pbcore.listeners.MenuActionListener;
 import digitalbedrock.software.pbcore.utils.Registry;
@@ -14,10 +15,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -26,12 +29,13 @@ import java.util.logging.Logger;
 public class MainController {
 
 
-    private final Registry registry = new Registry();
+    private final Registry registry;
     private final AtomicBoolean isModalUp = new AtomicBoolean(false);
     private final Stage stage;
     private final MenuActionListener menuActionListener;
 
-    public MainController(MenuActionListener menuActionListener, Stage stage) {
+    public MainController(MenuActionListener menuActionListener, Stage stage) throws IOException {
+        this.registry = new Registry();
         this.stage = stage;
         this.menuActionListener = menuActionListener;
     }
@@ -39,10 +43,13 @@ public class MainController {
 
     public void initialize(WindowEvent e) {
         registry.loadSavedSettings();
-   
+        //if (1 == 1) {
+        //showNewDescriptionDocument(NewDocumentType.DESCRIPTION_DOCUMENT);
+        //} else {
         if (registry.getSettings().getDirectories().isEmpty()) {
             showSettings(1);
         }
+        //}
     }
 
     public MenuBar createMenu() {
@@ -52,8 +59,9 @@ public class MainController {
         final Menu file = new Menu("File");
         final MenuItem open = new MenuItem("Open...");
         open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.META_DOWN));
+        //open.setOnAction(e -> openDocument());
 
-        final MenuItem newd = new MenuItem("New Descripion Document");
+        final MenuItem newd = new MenuItem("New Description Document");
         newd.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.META_DOWN));
         newd.setOnAction(e -> showNewDescriptionDocument(NewDocumentType.DESCRIPTION_DOCUMENT));
 
@@ -165,11 +173,23 @@ public class MainController {
         if (isModalUp.get()) {
             return;
         }
-        menuActionListener.newDescriptionDocument();
-   
+        menuActionListener.newDocument(newDocumentType);
     }
 
-    public void showSelectElement(PBCoreElement pbCoreElement, ElementSelectionListener elementSelectionListener) {
+    private void openDocument() {
+        if (isModalUp.get()) {
+            return;
+        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Document");
+        File file = fileChooser.showOpenDialog(stage);
+        if (file == null) {
+            return;
+        }
+        menuActionListener.openDocument(file);
+    }
+
+    public void showSelectElement(int index, PBCoreElement pbCoreElement, ElementSelectionListener elementSelectionListener) {
         if (isModalUp.get()) {
             return;
         }
@@ -188,9 +208,40 @@ public class MainController {
             isModalUp.set(true);
             searchWindow.setOnCloseRequest(e -> isModalUp.set(false));
             searchWindow.show();
-            controller.setElementSelectionListener(element -> {
+            controller.setElementSelectionListener(index, (index1, element) -> {
                 if (elementSelectionListener != null) {
-                    elementSelectionListener.onElementSelected(element);
+                    elementSelectionListener.onElementSelected(index1, element);
+                }
+                isModalUp.set(false);
+                searchWindow.close();
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void showSelectAttribute(PBCoreElement pbCoreElement, AttributeSelectionListener attributeSelectionListener) {
+        if (isModalUp.get()) {
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/attribute_selector.fxml"));
+            Parent parent = loader.load();
+            AttributeSelectorController controller = loader.getController();
+            controller.setPbCoreElement(pbCoreElement);
+            controller.setMainController(this);
+            Scene searchScene = new Scene(parent);
+            Stage searchWindow = new Stage();
+            searchWindow.initOwner(stage);
+            searchWindow.initModality(Modality.APPLICATION_MODAL);
+            searchWindow.setTitle("Add new attribute");
+            searchWindow.setScene(searchScene);
+            isModalUp.set(true);
+            searchWindow.setOnCloseRequest(e -> isModalUp.set(false));
+            searchWindow.show();
+            controller.setAttributeSelectionListener(element -> {
+                if (attributeSelectionListener != null) {
+                    attributeSelectionListener.onAttributeSelected(element);
                 }
                 isModalUp.set(false);
                 searchWindow.close();
@@ -205,4 +256,25 @@ public class MainController {
         return registry;
     }
 
+    /*
+    private void showSearch(int searchIdx) {
+        try {
+            Node tabs = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+            ((TabPane) tabs.lookup("#tabs")).getSelectionModel().select(tab);
+            ((BorderPane) stage.getScene().getRoot()).setCenter(tabs);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
+//    @FXML
+//    public void switchToTwo(ActionEvent event) {
+//        BorderPane root= (BorderPane) stage.getScene().getRoot();
+//        try {
+//            root.setCenter(FXMLLoader.load(getClass().getResource("/fxml/document.fxml")));
+//        }
+//        catch (IOException ex) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println("xx");
+//    }
 }

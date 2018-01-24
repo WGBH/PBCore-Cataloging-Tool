@@ -26,6 +26,7 @@ public class MainApp extends Application {
         }
         MainAppController controller = loader.getController();
         final MainController mainController = new MainController(controller, stage);
+        controller.setMainController(mainController);
         final BorderPane borderPane = new BorderPane();
 
         borderPane.setTop(mainController.createMenu());

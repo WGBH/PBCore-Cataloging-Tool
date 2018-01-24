@@ -1,178 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import digitalbedrock.software.pbcore.components.editor.AceEditor?>
+<?import java.lang.String?>
 <?import java.net.URL?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import np.com.ngopal.control.AutoFillTextBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane id="DocumentUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0"
-            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-            AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
+<AnchorPane id="DocumentUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
    <children>
-      <VBox prefHeight="600.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="600.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane hgap="10.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="statusBar"
-                      VBox.vgrow="NEVER">
+            <GridPane hgap="10.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="statusBar" VBox.vgrow="NEVER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES"/>
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES"/>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <HBox alignment="CENTER_LEFT">
                      <children>
                         <Label styleClass="statusBarDocumentType" text="DESCRIPTION DOCUMENT">
                            <HBox.margin>
-                              <Insets right="5.0"/>
+                              <Insets right="5.0" />
                            </HBox.margin>
                         </Label>
                         <FontIcon iconLiteral="mdi-chevron-right" iconSize="18" styleClass="statusBarSeparator">
-                            <HBox.margin>
-                              <Insets right="5.0"/>
+                           <HBox.margin>
+                              <Insets right="5.0" />
                            </HBox.margin>
                         </FontIcon>
                         <Label styleClass="statusBarDocumentName" text="untitled 0001">
                            <HBox.margin>
-                              <Insets right="5.0"/>
+                              <Insets right="5.0" />
                            </HBox.margin>
                         </Label>
                         <Button mnemonicParsing="false" text="save document">
                            <styleClass>
-                              <String fx:value="panicButton"/>
-                              <String fx:value="inverseButton"/>
-                              <String fx:value="smallButton"/>
+                              <String fx:value="panicButton" />
+                              <String fx:value="inverseButton" />
+                              <String fx:value="smallButton" />
                            </styleClass>
                            <HBox.margin>
-                              <Insets left="5.0"/>
+                              <Insets left="5.0" />
                            </HBox.margin>
                         </Button>
                      </children>
                      <padding>
-                        <Insets left="20.0"/>
+                        <Insets left="20.0" />
                      </padding>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                      </GridPane.margin>
                      <children>
-                        <Label styleClass="panicText" text="Invalid file: missing mandatory values"/>
-                        <FontIcon iconLiteral="mdi-alert-circle" iconSize="18" styleClass="statusBarStatusIndicatorIcon">
-                            <HBox.margin>
-                              <Insets left="5.0"/>
+                        <Label fx:id="documentValidationLbl" styleClass="panicText" text="Invalid file: missing mandatory values" />
+                        <FontIcon fx:id="invalidDocumentIcon" iconLiteral="mdi-alert-circle" iconSize="18" styleClass="panicIcon">
+                           <HBox.margin>
+                              <Insets left="5.0" />
                            </HBox.margin>
                         </FontIcon>
                      </children>
                      <padding>
-                        <Insets right="20.0"/>
+                        <Insets right="20.0" />
                      </padding>
                   </HBox>
                </children>
             </GridPane>
-            <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0"
-                  styleClass="elementsTitleBar">
+            <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" styleClass="elementsTitleBar">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="10.0"/>
+                  <Insets left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <Label styleClass="title4" text="ELEMENTS"/>
+                  <Label styleClass="title4" text="ELEMENTS" />
                </children>
             </HBox>
-            <GridPane hgap="20.0" VBox.vgrow="ALWAYS">
+            <GridPane fx:id="mainGridPane" hgap="20.0" VBox.vgrow="ALWAYS">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                  <ColumnConstraints fx:id="mainGridColumnLeft" hgrow="SOMETIMES" minWidth="10.0" percentWidth="34" prefWidth="100.0" />
+                  <ColumnConstraints fx:id="mainGridColumnCenter" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33" prefWidth="100.0" />
+                  <ColumnConstraints fx:id="mainGridColumnRight" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0"/>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                  <VBox GridPane.columnIndex="1">
                      <children>
                         <GridPane styleClass="elementValueTitleBar">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="ELEMENT VALUE"/>
+                              <FontIcon fx:id="invalidValueIcon" iconLiteral="mdi-alert-circle" iconSize="18" styleClass="panicIcon" GridPane.columnIndex="1" />
+                              <Label text="ELEMENT VALUE" />
                            </children>
-                        </GridPane>
-                        <VBox maxHeight="100.0">
                            <VBox.margin>
-                              <Insets top="10.0"/>
+                              <Insets bottom="10.0" />
                            </VBox.margin>
-                        </VBox>
-                        <TextArea fx:id="taElementValue" styleClass="elementValueTextArea"
-                                  text="George Myers grew up in Hoopeston on a family farm with his widowed mom. He enrolled in the U of I to major in agriculture, thinking he could learn something to make the farm more successful. Myers served on an LST in the Pacific from 1944 to 1946. He didn't get shot at, but he recalls being scared. &amp;amp;ldquo;I still remember the full moon on the water and how it seemed like we were visible to everybody, but we couldn&amp;amp;rsquo;t see a thing,&amp;amp;rdquo; he said. Myers has been president of the national LST Association. Of the some 100 men on his ship, only about 7 are left."
-                                  wrapText="true" VBox.vgrow="ALWAYS"/>
+                        </GridPane>
+                        <StackPane alignment="CENTER_LEFT" styleClass="elementValueContainer">
+                           <children>
+                              <AutoFillTextBox fx:id="taElementValue" maxWidth="1.7976931348623157E308" styleClass="elementValueTextArea" />
+                              <ComboBox fx:id="cbElementValue" maxWidth="1.7976931348623157E308" styleClass="elementValueCombo" />
+                           </children>
+                        </StackPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                  <VBox fx:id="attributesVB" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <GridPane styleClass="elementAttributesTitleBar">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="ELEMENT ATTRIBUTES"/>
-                              <Button mnemonicParsing="false" text="+ ADD ATTRIBUTE" GridPane.columnIndex="1"
-                                      GridPane.halignment="RIGHT">
+                              <Label text="ELEMENT ATTRIBUTES" />
+                              <Button fx:id="addAttributeButton" mnemonicParsing="false" onAction="#onAddAttribute" text="+ ADD ATTRIBUTE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                  <styleClass>
-                                    <String fx:value="linkButton"/>
-                                    <String fx:value="smallButton"/>
+                                    <String fx:value="linkButton" />
+                                    <String fx:value="smallButton" />
                                  </styleClass>
                               </Button>
                            </children>
                         </GridPane>
+                        <TreeView fx:id="attributesTreeView" minHeight="0.0" showRoot="false" styleClass="attributesListView" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
-                  <GridPane vgap="10.0">
+                  <AceEditor fx:id="aceEditor" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+                  <GridPane vgap="10.0" GridPane.rowSpan="2">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="NEVER" />
+                        <RowConstraints vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="rootDocumentLbl" styleClass="title6" text="ROOT ELEMENT"/>
-                              <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsListView"
-                                        VBox.vgrow="SOMETIMES"/>
+                              <Label fx:id="rootDocumentLbl" styleClass="title6" text="ROOT ELEMENT" />
+                              <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                            <children>
-                              <Label fx:id="requiredElementsLbl" styleClass="title6" text="REQUIRED ELEMENTS"/>
-                              <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsListView"
-                                        VBox.vgrow="SOMETIMES"/>
+                              <Label fx:id="requiredElementsLbl" styleClass="title6" text="REQUIRED ELEMENTS" />
+                              <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                            <children>
-                              <Label fx:id="optionalElementsLbl" styleClass="title6" text="OPTIONAL ELEMENTS"/>
-                              <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsListView"
-                                        VBox.vgrow="SOMETIMES"/>
+                              <Label fx:id="optionalElementsLbl" styleClass="title6" text="OPTIONAL ELEMENTS" />
+                              <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                      </children>
@@ -183,9 +189,9 @@
       </VBox>
    </children>
    <padding>
-      <Insets bottom="0.0" left="0.0" right="0.0" top="0.0"/>
+      <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
    </padding>
    <stylesheets>
-      <URL value="@../styles/style.css"/>
+      <URL value="@../styles/style.css" />
    </stylesheets>
 </AnchorPane>
