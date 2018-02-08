@@ -1,5 +1,6 @@
 package digitalbedrock.software.pbcore.core.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import digitalbedrock.software.pbcore.utils.StringUtils;
 import javafx.beans.property.BooleanProperty;
@@ -7,31 +8,39 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PBCoreElement implements Cloneable {
+public class PBCoreElement extends IPBCore implements Serializable {
+
     private final long id;
     private String fullPath;
+    private String pathRepresentation;
     private String screenName;
     private String name;
     private List<PBCoreAttribute> attributes = new ArrayList<>();
     private List<PBCoreElement> subElements = new ArrayList<>();
     private boolean required;
     private boolean repeatable;
+    private boolean choice;
     private String description;
     private PBCoreElementType elementType;
     private boolean hasChildElements;
+    @JsonIgnore
     public BooleanProperty hasMultipleProperty = new SimpleBooleanProperty();
-
+    @JsonIgnore
     public StringProperty valueProperty = new SimpleStringProperty();
 
     private boolean supportsAttributes;
+    @JsonIgnore
     public BooleanProperty validAttributesProperty = new SimpleBooleanProperty(true);
+    @JsonIgnore
     public BooleanProperty validProperty = new SimpleBooleanProperty();
+    @JsonIgnore
     public BooleanProperty fatalErrorProperty = new SimpleBooleanProperty();
 
     private int sequence;
@@ -44,12 +53,21 @@ public class PBCoreElement implements Cloneable {
         id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
     }
 
-    public PBCoreElement(String fullPath, String screenName, String name, boolean required, boolean repeatable, String description, String value, PBCoreElementType elementType, boolean supportsAttributes, boolean valid, int sequence,
-                         ElementValueRestrictionType elementValueRestrictionType,
-                         String patternToFollow,
-                         List<String> enumerationValues, boolean validAttributesProperty, boolean hasChildElements) {
+    public PBCoreElement(String pathRepresentation) {
+        this();
+        this.pathRepresentation = pathRepresentation;
+    }
+
+    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name, boolean required, boolean repeatable, String description, String value, PBCoreElementType elementType,
+            boolean supportsAttributes,
+            boolean valid, boolean fatalError,
+            int sequence,
+            ElementValueRestrictionType elementValueRestrictionType,
+            String patternToFollow,
+            List<String> enumerationValues, boolean hasChildElements, boolean choice) {
         this();
         this.fullPath = fullPath;
+        this.pathRepresentation = pathRepresentation;
         this.screenName = screenName;
         this.name = name;
         this.required = required;
@@ -60,14 +78,12 @@ public class PBCoreElement implements Cloneable {
         this.elementType = elementType;
         this.supportsAttributes = supportsAttributes;
         setValid(valid);
+        this.fatalErrorProperty.setValue(fatalError);
         this.sequence = sequence;
         this.elementValueRestrictionType = elementValueRestrictionType;
         this.patternToFollow = patternToFollow;
         this.enumerationValues = enumerationValues;
-        if (elementValueRestrictionType == ElementValueRestrictionType.SIMPLE && !hasChildElements) {
-            setValid(getValue() != null && !getValue().trim().isEmpty());
-        }
-        //this.validAttributesProperty.setValue(validAttributesProperty);
+        this.choice = choice;
     }
 
     public int getSequence() {
@@ -96,12 +112,14 @@ public class PBCoreElement implements Cloneable {
 
     public void setSubElements(List<PBCoreElement> subElements) {
         this.subElements = subElements;
+        hasChildElements = !subElements.isEmpty();
     }
 
     public void setElementType(PBCoreElementType elementType) {
         this.elementType = elementType;
     }
 
+    @Override
     public String getScreenName() {
         return screenName;
     }
@@ -136,10 +154,10 @@ public class PBCoreElement implements Cloneable {
         return subElements;
     }
 
-
     public List<PBCoreElement> getOrderedSubElements() {
-        subElements.sort(Comparator.comparing(PBCoreElement::getSequence));
-        return subElements;
+        ArrayList<PBCoreElement> pbCoreElements = new ArrayList<>(subElements);
+        pbCoreElements.sort(Comparator.comparing(PBCoreElement::getSequence));
+        return pbCoreElements;
     }
 
     public List<PBCoreElement> getRequiredSubElements() {
@@ -150,6 +168,7 @@ public class PBCoreElement implements Cloneable {
         return subElements.stream().filter(pbCoreElement -> !pbCoreElement.isRequired() && pbCoreElement.getValue() != null).collect(Collectors.toList());
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
@@ -158,6 +177,7 @@ public class PBCoreElement implements Cloneable {
         this.required = required;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
@@ -175,6 +195,7 @@ public class PBCoreElement implements Cloneable {
         return elementType;
     }
 
+    @Override
     public String getValue() {
         return valueProperty.getValue();
     }
@@ -183,6 +204,7 @@ public class PBCoreElement implements Cloneable {
         this.valueProperty.setValue(value);
     }
 
+    @Override
     public boolean isRepeatable() {
         return repeatable;
     }
@@ -199,19 +221,6 @@ public class PBCoreElement implements Cloneable {
         return hasMultipleProperty.getValue();
     }
 
-    @Override
-    public String toString() {
-        return "{fullPath:'" + fullPath + "\', name='" + name + '\'' +
-                ", subElements:" + subElements.size() +
-                ", supportsAttributes:" + supportsAttributes +
-                ", attributes:" + attributes.size() +
-                ", required:" + required +
-                ", repeatable:" + repeatable +
-                ", valid:" + isValid() +
-                ", sequence:" + sequence +
-                ", value:\'" + getValue() + "\'}";
-    }
-
     public void clearOptionalSubElements() {
         List<PBCoreElement> collect = subElements.stream().filter(pbCoreElement -> !pbCoreElement.isRequired()).collect(Collectors.toList());
         this.subElements.removeAll(collect);
@@ -223,32 +232,33 @@ public class PBCoreElement implements Cloneable {
     }
 
     public PBCoreElement copy(boolean withOptionalAttributes) {
-        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, screenName, name, required, repeatable, description, getValue(), elementType, supportsAttributes, isValid(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, isValidAttributes(), hasChildElements);
+        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name, required, repeatable, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
         boolean validAttributes = true;
         for (PBCoreElement subElement : subElements) {
             PBCoreElement copy = subElement.copy(withOptionalAttributes);
             pbCoreElement.addSubElement(copy);
-            validAttributes = !validAttributes || copy.isValidAttributes();
+            validAttributes = validAttributes && copy.isValidAttributes();
         }
         for (PBCoreAttribute attribute : attributes) {
             if (attribute.isRequired() || withOptionalAttributes) {
                 pbCoreElement.addAttribute(attribute.copy());
-                validAttributes = !validAttributes || (attribute.getValue() != null && !attribute.getValue().trim().isEmpty());
+                validAttributes = validAttributes && (attribute.getValue() != null && !attribute.getValue().trim().isEmpty());
             }
         }
         pbCoreElement.setValidAttributes(validAttributes);
         return pbCoreElement;
     }
 
+    @Override
     public boolean isHasChildElements() {
         return hasChildElements;
     }
 
     public void updateStatus() {
-        for (PBCoreElement subElement : subElements) {
+        subElements.forEach((subElement) -> {
             long count = subElements.stream().filter(sub -> sub.getName().equals(subElement.getName())).count();
             subElement.setHasMultiple(count > 1);
-        }
+        });
     }
 
     public void removeSubElement(PBCoreElement pbCoreElement) {
@@ -292,6 +302,7 @@ public class PBCoreElement implements Cloneable {
         element.setHasMultiple(count > 1);
     }
 
+    @Override
     public String getFullPath() {
         return fullPath;
     }
@@ -324,7 +335,7 @@ public class PBCoreElement implements Cloneable {
         }
     }
 
-    public void setValid(boolean valid) {
+    public final void setValid(boolean valid) {
         this.validProperty.setValue(valid);
         switch (elementValueRestrictionType) {
             case PATTERN:
@@ -392,5 +403,32 @@ public class PBCoreElement implements Cloneable {
 
     public void setValidAttributes(boolean validAttributesProperty) {
         this.validAttributesProperty.set(validAttributesProperty);
+    }
+
+    public boolean isChoice() {
+        return choice;
+    }
+
+    public void setChoice(boolean choice) {
+        this.choice = choice;
+    }
+
+    @Override
+    public String getPathRepresentation() {
+        return pathRepresentation;
+    }
+
+    public void setPathRepresentation(String pathRepresentation) {
+        this.pathRepresentation = pathRepresentation;
+    }
+
+    @Override
+    public boolean isAttribute() {
+        return false;
+    }
+
+    @Override
+    public String getType() {
+        return getClass().getSimpleName();
     }
 }

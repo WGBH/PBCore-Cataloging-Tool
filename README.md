@@ -4,6 +4,16 @@ Disclaimer:
 
 This code is still in the early stages and not a completed product. 
 
+Version 6  2/7/2018
+-------------------
+
+Most of the functionality available in this version. 
+
+    Editing and Saving PBCore Files.  
+    Adding Controlled Vocabularies.
+    File indexing.
+    Searching works, but not fully functional.
+
 Version 5   1/24/2018
 --------- 
 

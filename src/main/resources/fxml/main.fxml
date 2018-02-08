@@ -2,47 +2,41 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="MainUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.MainAppController">
-   <children>
-      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-            <!--<Tab text="Untitled Tab 1">-->
-            <!--<content>-->
-            <!--<AnchorPane>-->
-            <!--<fx:include fx:id="" source="document.fxml"/>-->
-            <!--</AnchorPane>-->
-            <!--</content>-->
-            <!--</Tab>-->
-         </tabs>
-            </TabPane>
-            <AnchorPane id="SplashUI" fx:id="splash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" styleClass="sceneRoot">
-               <children>
-                  <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/splash_image.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </HBox>
-               </children>
-               <stylesheets>
-                  <URL value="@../styles/style.css" />
-               </stylesheets>
-            </AnchorPane>
-         </children>
-      </StackPane>
-   </children>
-   <stylesheets>
-      <URL value="@../styles/style.css" />
-   </stylesheets>
+<AnchorPane id="MainUI"
+            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="665.0" prefWidth="1280.0"
+            styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="digitalbedrock.software.pbcore.controllers.MainController">
+    <children>
+        <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs></tabs>
+                </TabPane>
+                <AnchorPane id="SplashUI" fx:id="splash" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                    <children></children>
+                </AnchorPane>
+                <AnchorPane fx:id="spinnerLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            styleClass="mainSpinnerLayer">
+                    <children>
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <ProgressIndicator/>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </children>
+        </StackPane>
+    </children>
+    <stylesheets>
+        <URL value="@../styles/style.css"/>
+    </stylesheets>
 </AnchorPane>

@@ -39,5 +39,4 @@ public class PBcoreValidator {
     public void validate(String xml) throws SAXException, IOException {
         validator.validate(new StreamSource(new StringReader(xml)));
     }
-
 }

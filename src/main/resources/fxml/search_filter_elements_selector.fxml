@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.controlsfx.control.CheckTreeView?>
+
+<AnchorPane id="ElementSelectorUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="350.0" prefWidth="750.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/9"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="digitalbedrock.software.pbcore.controllers.SearchFilterElementsSelectorController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="175.0" percentWidth="30.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="75.0"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+               </rowConstraints>
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <CheckTreeView fx:id="treeElements" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextFlow>
+                           <Text text="Usage: "/>
+                           <Text fx:id="lblOptional" style="-fx-font-weight: bold"/>
+                           <Text fx:id="lblRepeatable" style="-fx-font-weight: bold"/>
+                        </TextFlow>
+                        <Label fx:id="lblDescription"
+                               text="Usage: optional, repeatable.pbcoreSubject is used to assign topic headings or keywords that portray the intellectual content of the asset. A subject is expressed by keywords, key phrases, or even specific classification codes. Controlled vocabularies, authorities, formal classification codes, as well as folksonomies and user-generated tags, may be employed when assigning descriptive subject terms.pbcoreSubject can be contained by the elements pbcoreDescriptionDocument or pbcorePart."
+                               wrapText="true">
+                           <VBox.margin>
+                              <Insets top="15.0"/>
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets/>
+               </VBox.margin>
+            </GridPane>
+            <GridPane VBox.vgrow="NEVER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="50.0"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
+               <children>
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                     </rowConstraints>
+                     <children>
+                        <CheckBox fx:id="cbAll" text="Select All"/>
+                     </children>
+                  </GridPane>
+                  <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0"
+                        GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="btnCancel" mnemonicParsing="false" styleClass="defaultButton" text="CANCEL"/>
+                        <Button fx:id="btnAdd" mnemonicParsing="false" styleClass="primaryButton" text="ADD">
+                           <HBox.margin>
+                              <Insets left="10.0"/>
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+   </padding>
+   <stylesheets>
+      <URL value="@../styles/style.css"/>
+   </stylesheets>
+</AnchorPane>

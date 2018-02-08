@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import digitalbedrock.software.pbcore.components.editor.AceEditor?>
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import np.com.ngopal.control.AutoFillTextBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
-<AnchorPane id="DocumentUI" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="665.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
+<?import java.lang.*?>
+<?import java.net.URL?>
+<AnchorPane id="DocumentUI"
+            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="665.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
    <children>
       <VBox prefHeight="600.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -33,7 +25,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label styleClass="statusBarDocumentType" text="DESCRIPTION DOCUMENT">
+                        <Label fx:id="statusBarDocumentType" styleClass="statusBarDocumentType" text="DESCRIPTION DOCUMENT">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
@@ -43,12 +35,12 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </FontIcon>
-                        <Label styleClass="statusBarDocumentName" text="untitled 0001">
+                        <Label fx:id="statusBarDocumentName" styleClass="statusBarDocumentName" text="untitled 0001">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" text="save document">
+                        <Button fx:id="buttonSave" visible="false" onAction="#saveFile" mnemonicParsing="false" text="save document">
                            <styleClass>
                               <String fx:value="panicButton" />
                               <String fx:value="inverseButton" />
@@ -149,7 +141,7 @@
                               </Button>
                            </children>
                         </GridPane>
-                        <TreeView fx:id="attributesTreeView" minHeight="0.0" showRoot="false" styleClass="attributesListView" VBox.vgrow="ALWAYS" />
+                        <TreeView fx:id="attributesTreeView" minHeight="0.0" styleClass="attributesList" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                   <AceEditor fx:id="aceEditor" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="2" />
@@ -159,26 +151,26 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="145.0" minHeight="145.0" prefHeight="145.0" vgrow="NEVER" />
                         <RowConstraints vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label fx:id="rootDocumentLbl" styleClass="title6" text="ROOT ELEMENT" />
-                              <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
+                              <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                            <children>
                               <Label fx:id="requiredElementsLbl" styleClass="title6" text="REQUIRED ELEMENTS" />
-                              <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
+                              <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                            <children>
                               <Label fx:id="optionalElementsLbl" styleClass="title6" text="OPTIONAL ELEMENTS" />
-                              <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsListView" VBox.vgrow="SOMETIMES" />
+                              <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                      </children>

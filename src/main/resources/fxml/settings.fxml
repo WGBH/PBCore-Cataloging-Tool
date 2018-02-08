@@ -6,31 +6,33 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="SettingsUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
+<AnchorPane id="SettingsUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
     <children>
-        <TabPane id="tabs" layoutX="127.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <TabPane id="tabs" layoutX="127.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0"
+                 tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab id="tabCV" text="CONTROLLED VOCABULARIES">
                     <content>
                         <AnchorPane>
-                            <fx:include fx:id="settingsVocabularies" source="settings_vocabularies.fxml" />
+                            <fx:include fx:id="settingsVocabularies" source="settings_vocabularies.fxml"/>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab id="tabDL" text="DIRECTORY CRAWLING">
                     <content>
                         <AnchorPane>
-                            <fx:include fx:id="settingsCrawling" source="settings_crawling.fxml" />
+                            <fx:include fx:id="settingsCrawling" source="settings_crawling.fxml"/>
                         </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
     </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
     <stylesheets>
         <URL value="@../styles/style.css" />
     </stylesheets>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
 </AnchorPane>

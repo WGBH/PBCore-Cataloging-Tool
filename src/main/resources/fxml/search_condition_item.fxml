@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane id="SearchConditionItemUI" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SearchFilterItemController">
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+   <stylesheets>
+      <URL value="@../styles/style.css" />
+   </stylesheets>
+   <children>
+      <GridPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="textFieldTerm" minWidth="150.0" />
+            <Button fx:id="buttonRemove" mnemonicParsing="false" GridPane.columnIndex="2">
+               <graphic>
+                  <FontIcon iconLiteral="mdi-close" />
+               </graphic>
+               <styleClass>
+                  <String fx:value="listActionButton" />
+                  <String fx:value="dimmedIcon" />
+               </styleClass>
+            </Button>
+            <Button fx:id="buttonManage" mnemonicParsing="false" GridPane.columnIndex="1">
+               <graphic>
+                  <FontIcon iconLiteral="mdi-filter-outline" />
+               </graphic>
+               <styleClass>
+                  <String fx:value="listActionButton" />
+                  <String fx:value="dimmedIcon" />
+               </styleClass>
+            </Button>
+            <HBox alignment="CENTER_LEFT" fillHeight="false" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="CENTER" text="E" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="fieldType" />
+                        <String fx:value="elem" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblElementsCount">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <styleClass>
+                        <String fx:value="paragraphSmall" />
+                        <String fx:value="dimmedText" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="lblElementType1" alignment="CENTER" text="A" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="fieldType" />
+                        <String fx:value="attr" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblAttributesCount">
+                     <styleClass>
+                        <String fx:value="paragraphSmall" />
+                        <String fx:value="dimmedText" />
+                     </styleClass></Label>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

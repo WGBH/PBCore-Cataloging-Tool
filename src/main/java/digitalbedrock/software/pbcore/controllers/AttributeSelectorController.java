@@ -10,7 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AttributeSelectorController extends AbsController {
 
@@ -31,18 +33,10 @@ public class AttributeSelectorController extends AbsController {
     private TreeView<PBCoreAttribute> treeElements;
 
     private PBCoreElement currentPbCoreElement;
-    private PBCoreElement pbCoreElement;
 
     @Override
-    public void setMainController(MainController mainController) {
-        super.setMainController(mainController);
-
-        if (pbCoreElement == null) {
-            return;
-        }
+    public void initialize(URL location, ResourceBundle resources) {
         lblRepeatable.setVisible(false);
-
-        treeElements.setRoot(getTreeItem(pbCoreElement));
         treeElements.setShowRoot(false);
         treeElements.setCellFactory(lv -> new PBCoreTreeCell());
         ChangeListener<TreeItem<PBCoreAttribute>> listener = (observable, oldValue, newValue) -> {
@@ -61,15 +55,13 @@ public class AttributeSelectorController extends AbsController {
             }
         };
         treeElements.getSelectionModel().selectedItemProperty().addListener(listener);
-        treeElements.getSelectionModel().select(0);
-
     }
 
     public void setAttributeSelectionListener(AttributeSelectionListener attributeSelectionListener) {
         btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> attributeSelectionListener.onAttributeSelected(null));
         btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             TreeItem<PBCoreAttribute> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            if (selectedItem.getParent().getParent() != null) {//in this case we are not looking at a root element so we should return the full parent
+            if (selectedItem.getParent().getParent() != null) {
                 attributeSelectionListener.onAttributeSelected(selectedItem.getParent().getValue().copy());
             } else {
                 attributeSelectionListener.onAttributeSelected(selectedItem.getValue().copy());
@@ -79,18 +71,26 @@ public class AttributeSelectorController extends AbsController {
 
     private TreeItem<PBCoreAttribute> getTreeItem(PBCoreElement rootElement) {
         TreeItem<PBCoreAttribute> pbCoreElementTreeItem = new TreeItem<>();
-        for (PBCoreAttribute pbCoreAttribute : rootElement.getAttributes()) {
+        rootElement.getAttributes().forEach((pbCoreAttribute) -> {
             pbCoreElementTreeItem.getChildren().add(new TreeItem<>(pbCoreAttribute));
-        }
+        });
         return pbCoreElementTreeItem;
     }
 
     public void setPbCoreElement(PBCoreElement pbCoreElement) {
         this.currentPbCoreElement = pbCoreElement;
-        this.pbCoreElement = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
+        treeElements.setRoot(getTreeItem(PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath())));
+        treeElements.getSelectionModel().select(0);
+    }
+
+    @Override
+    public MenuBar createMenu() {
+        final MenuBar menuBar = new MenuBar();
+        return menuBar;
     }
 
     private class PBCoreTreeCell extends TreeCell<PBCoreAttribute> {
+
         @Override
         protected void updateItem(PBCoreAttribute item, boolean empty) {
             super.updateItem(item, empty);

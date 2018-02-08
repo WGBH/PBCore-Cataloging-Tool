@@ -4,7 +4,7 @@ import digitalbedrock.software.pbcore.core.models.CVTerm;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class CVTermItemController extends AbsController {
+public class CVTermItemController {
 
     @FXML
     private Label termLabel;

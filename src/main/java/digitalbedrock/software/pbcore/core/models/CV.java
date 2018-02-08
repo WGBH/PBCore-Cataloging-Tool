@@ -17,7 +17,7 @@ public class CV extends CVBase {
         return isAttribute;
     }
 
-    public void setIsAttribute(boolean isAttribute) {
+    public void setAttribute(boolean isAttribute) {
         this.isAttribute = isAttribute;
     }
 

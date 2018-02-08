@@ -25,37 +25,24 @@ import java.io.IOException;
 
 public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<CVTerm>> implements ChangeListener<String>, EventHandler {
 
-    //Final Static variables for Window Insets
     private final static int TITLE_HEIGHT = 28;
 
     private final static int WINDOW_BORDER = 8;
 
-    //This is listview for showing the matched words
     private ListView<CVTerm> listview;
 
-    //This is Textbox where user types
     private TextField textbox;
 
-    //This is the main Control of AutoFillTextBox
-    private AutoFillTextBox<CVTerm> autofillTextbox;
+    private final AutoFillTextBox<CVTerm> autofillTextbox;
 
-    //This is the ObservableData where the matching words are saved
-    private ObservableList<CVTerm> data;
+    private final ObservableList<CVTerm> data;
 
-    //This is the Popup where listview is embedded.
-    private Popup popup;
+    private final Popup popup;
 
     public Window getWindow() {
-        return autofillTextbox.getScene().getWindow();
+        return autofillTextbox.getScene() == null ? null : autofillTextbox.getScene().getWindow();
     }
 
-    /**
-     * ****************************
-     * CONSTRUCTOR
-     * <p>
-     *
-     * @param text AutoTextBox ****************************
-     */
     public AutoFillTextBoxPBCoreElementSkin(AutoFillTextBox<CVTerm> text) {
         super(text);
 
@@ -92,12 +79,6 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
 
     }
 
-    /**
-     * ********************************************************
-     * Selects the current Selected Item from the list and the content of that
-     * selected Item is set to textbox.
-     * ********************************************************
-     */
     public void selectList() {
         CVTerm i = listview.getSelectionModel().getSelectedItem();
         if (i != null) {
@@ -110,43 +91,11 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         }
     }
 
-    /**
-     * ****************************************************
-     * This is the main event handler which handles all the event of the
-     * listview and textbox
-     * <p>
-     *
-     * @param evt ****************************************************
-     */
     @Override
     public void handle(Event evt) {
 
-        /**
-         * ******************************
-         * EVENT HANDLING FOR 'TextBox' ******************************
-         */
         if (evt.getEventType() == KeyEvent.KEY_PRESSED) {
-            /* --------------------------------
-             * - KeyEvent Handling for Textbox -
-             * -------------------------------- */
-//            KeyEvent t = (KeyEvent) evt;
-//            if (t.getSource() == textbox) {
-//                //WHEN USER PRESS DOWN ARROW KEY FOCUS TRANSFER TO LISTVIEW
-//                if (t.getCode() == KeyCode.DOWN) {
-//                    if (popup.isShowing()) {
-//                        listview.requestFocus();
-//                    }
-//                }
-//
-//            }
-        } /**
-         * ******************************
-         * EVENT HANDLING FOR 'LISTVIEW' ******************************
-         */
-        else if (evt.getEventType() == KeyEvent.KEY_RELEASED) {
-            /* ---------------------------------
-             * - KeyEvent Handling for ListView -
-             * ---------------------------------- */
+        } else if (evt.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent t = (KeyEvent) evt;
             if (t.getSource() == listview) {
                 if (t.getCode() == KeyCode.ENTER) {
@@ -155,26 +104,15 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
                     if (listview.getSelectionModel().getSelectedIndex() == 0) {
                         textbox.requestFocus();
                     }
-                }/* else if(){
-                 *
-                 * } */
-
+                }
             }
         } else if (evt.getEventType() == MouseEvent.MOUSE_RELEASED) {
-            /* -----------------------------------
-             * - MouseEvent Handling for Listview -
-             * ------------------------------------ */
             if (evt.getSource() == listview) {
                 selectList();
             }
         }
     }
 
-    /**
-     * A Popup containing Listview is trigged from this function This function
-     * automatically resize it's height and width according to the width of
-     * textbox and item's cell height
-     */
     public void showPopup() {
         listview.setPrefWidth(textbox.getWidth());
         if (listview.getItems().size() > 6) {
@@ -182,37 +120,25 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         } else {
             listview.setPrefHeight((listview.getItems().size() * 24));
         }
+        if (getWindow() != null) {
 
-        popup.show(getWindow(), getWindow().getX() + textbox.localToScene(0, 0).getX() + textbox.getScene().getX(), getWindow().getY() + textbox.localToScene(0, 0).getY() + textbox.getScene().getY() + TITLE_HEIGHT);
+            popup.show(getWindow(), getWindow().getX() + textbox.localToScene(0, 0).getX() + textbox.getScene().getX(), getWindow().getY() + textbox.localToScene(0, 0).getY() + textbox.getScene().getY() + TITLE_HEIGHT);
 
-        listview.getSelectionModel().clearSelection();
-        listview.getFocusModel().focus(-1);
+            listview.getSelectionModel().clearSelection();
+            listview.getFocusModel().focus(-1);
+        }
     }
 
-    /**
-     * This function hides the popup containing listview
-     */
     public void hidePopup() {
 
         popup.hide();
 
     }
 
-    /**
-     * *********************************************
-     * When ever the the rawTextProperty is changed then this listener is
-     * activated
-     * <p>
-     *
-     * @param ov
-     * @param t
-     * @param t1 **********************************************
-     */
     @Override
     public void changed(ObservableValue<? extends String> ov, String t, String t1) {
         if (ov.getValue() != null && ov.getValue().length() > 0) {
             String txtdata = (textbox.getText()).trim();
-            //Limit of data cell to be shown in ListView
             int limit = 0;
             if (txtdata.length() > 0) {
                 ObservableList<CVTerm> list = FXCollections.observableArrayList();
@@ -227,9 +153,9 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
                         break;
                     }
                 }
-                if(list.isEmpty()){
+                if (list.isEmpty()) {
                     hidePopup();
-                }else if (listview.getItems().containsAll(list) && listview.getItems().size() == list.size() && listview.getItems() != null) {
+                } else if (listview.getItems().containsAll(list) && listview.getItems().size() == list.size() && listview.getItems() != null) {
                     showPopup();
                 } else {
                     listview.setItems(list);
@@ -248,6 +174,7 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
     }
 
     private class CVTermListCell extends ListCell<CVTerm> {
+
         private Node graphic;
         private CVTermItemController controller;
 
@@ -256,11 +183,11 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cvterm_list_item.fxml"));
                 graphic = loader.load();
                 controller = loader.getController();
-            } catch (IOException exc) {
+            }
+            catch (IOException exc) {
                 throw new RuntimeException(exc);
             }
         }
-
 
         @Override
         public void updateItem(CVTerm item, boolean empty) {

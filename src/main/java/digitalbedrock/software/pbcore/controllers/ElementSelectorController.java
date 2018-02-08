@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class ElementSelectorController extends AbsController {
 
     @FXML
@@ -27,18 +30,10 @@ public class ElementSelectorController extends AbsController {
     @FXML
     private TreeView<PBCoreElement> treeElements;
 
-    private PBCoreElement pbCoreElement;
     private PBCoreElement selectedElement;
 
     @Override
-    public void setMainController(MainController mainController) {
-        super.setMainController(mainController);
-
-        if (pbCoreElement == null) {
-            return;
-        }
-
-        treeElements.setRoot(getTreeItem(pbCoreElement));
+    public void initialize(URL location, ResourceBundle resources) {
         treeElements.setShowRoot(false);
         treeElements.setCellFactory(lv -> new PBCoreTreeCell());
         ChangeListener<TreeItem<PBCoreElement>> listener = (observable, oldValue, newValue) -> {
@@ -54,7 +49,6 @@ public class ElementSelectorController extends AbsController {
             }
         };
         treeElements.getSelectionModel().selectedItemProperty().addListener(listener);
-        treeElements.getSelectionModel().select(0);
     }
 
     private boolean containsSubElement(PBCoreElement pbCoreElement, PBCoreElement value) {
@@ -74,39 +68,45 @@ public class ElementSelectorController extends AbsController {
         btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> elementSelectionListener.onElementSelected(index, null));
         btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             TreeItem<PBCoreElement> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            PBCoreElement selectedElement = selectedItem.getValue().copy();
+            PBCoreElement selectedPBCoreElement = selectedItem.getValue().copy();
             TreeItem<PBCoreElement> item = selectedItem.getParent();
             while (item.getParent() != null) {
                 item.getValue().clearOptionalSubElements();
-                if (!selectedElement.isRequired()) {
-                    item.getValue().addSubElement(selectedElement);
+                if (!selectedPBCoreElement.isRequired()) {
+                    item.getValue().addSubElement(selectedPBCoreElement);
                 }
-                selectedElement = item.getValue().copy();
+                selectedPBCoreElement = item.getValue().copy();
                 item = item.getParent();
             }
             item.getValue().clearOptionalSubElements();
-            if (!selectedElement.isRequired()) {
-                item.getValue().addSubElement(selectedElement);
+            if (!selectedPBCoreElement.isRequired()) {
+                item.getValue().addSubElement(selectedPBCoreElement);
             }
-            elementSelectionListener.onElementSelected(index, item.getParent() == null ? selectedElement.copy(false) : item.getValue().copy(false));
-            /*}*/
+            elementSelectionListener.onElementSelected(index, item.getParent() == null ? selectedPBCoreElement.copy(false) : item.getValue().copy(false));
         });
     }
 
     private TreeItem<PBCoreElement> getTreeItem(PBCoreElement rootElement) {
         TreeItem<PBCoreElement> pbCoreElementTreeItem = new TreeItem<>(rootElement);
-        for (PBCoreElement coreElement : rootElement.getOrderedSubElements()) {
+        rootElement.getOrderedSubElements().forEach((coreElement) -> {
             pbCoreElementTreeItem.getChildren().add(getTreeItem(coreElement));
-        }
+        });
         return pbCoreElementTreeItem;
     }
 
     public void setPbCoreElement(PBCoreElement pbCoreElement) {
-        this.pbCoreElement = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath()).copy();
         this.selectedElement = pbCoreElement;
+        treeElements.setRoot(getTreeItem(PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath()).copy()));
+        treeElements.getSelectionModel().select(0);
+    }
+
+    @Override
+    public MenuBar createMenu() {
+        return null;
     }
 
     private class PBCoreTreeCell extends TreeCell<PBCoreElement> {
+
         @Override
         protected void updateItem(PBCoreElement item, boolean empty) {
             super.updateItem(item, empty);

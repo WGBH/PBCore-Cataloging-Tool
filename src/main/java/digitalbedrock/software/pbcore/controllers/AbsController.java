@@ -1,11 +1,19 @@
 package digitalbedrock.software.pbcore.controllers;
 
-public abstract class AbsController {
+import digitalbedrock.software.pbcore.MainApp;
+import digitalbedrock.software.pbcore.listeners.MenuListener;
+import javafx.fxml.Initializable;
+import javafx.scene.control.MenuBar;
 
-    protected MainController mainController = null;
+public abstract class AbsController implements MenuListener, Initializable {
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    @Override
+    public void menuOptionSelected(MenuOption menuOption, Object... objects) {
+        MainApp.getInstance().goTo(menuOption, objects);
     }
 
+    public abstract MenuBar createMenu();
+
+    public void onShown() {
+    }
 }

@@ -1,5 +1,6 @@
 package digitalbedrock.software.pbcore.controllers;
 
+import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.components.AutoFillTextBoxPBCoreElementSkin;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
@@ -14,7 +15,7 @@ import javafx.scene.control.Tooltip;
 import np.com.ngopal.control.AutoFillTextBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-public class DocumentAttributeItemController extends AbsController {
+public class DocumentAttributeItemController {
 
     @FXML
     private AutoFillTextBox<CVTerm> autoCompleteTF;
@@ -37,11 +38,11 @@ public class DocumentAttributeItemController extends AbsController {
         tChangeListener = (observable, oldValue, newValue) -> {
             pbCoreAttribute.setValue(newValue);
         };
-        Registry registry = mainController.getRegistry();
+        Registry registry = MainApp.getInstance().getRegistry();
         if (registry.getControlledVocabularies().containsKey(pbCoreAttribute.getName())) {
             registry.getControlledVocabularies().get(pbCoreAttribute.getName()).getTerms().forEach(autoCompleteTF::addData);
         }
-        autoCompleteTF.getTextbox().setText(pbCoreAttribute.getValue());
+        autoCompleteTF.getTextbox().setText(pbCoreAttribute.getValue() == null ? "" : pbCoreAttribute.getValue());
         pbCoreAttribute.valueProperty.addListener((observable, oldValue, newValue) -> valueMissingIcon.setVisible(newValue == null || newValue.trim().isEmpty()));
         attributeNameLbl.setText(pbCoreAttribute.getScreenName());
         removeButton.setVisible(!pbCoreAttribute.isRequired());

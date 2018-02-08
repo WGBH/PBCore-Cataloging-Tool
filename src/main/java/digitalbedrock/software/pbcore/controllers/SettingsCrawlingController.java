@@ -1,24 +1,30 @@
 package digitalbedrock.software.pbcore.controllers;
 
+import digitalbedrock.software.pbcore.MainApp;
+import digitalbedrock.software.pbcore.controllers.settings.*;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
-import java.io.File;
-import java.time.LocalDate;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class SettingsCrawlingController extends AbsController {
 
-    private File folder;
+    public static final String PROCESSING = "PROCESSING";
+    public static final String SCHEDULED = "SCHEDULED";
+    public static final String FINISHED = "-";
 
     @FXML
     private TableView<FolderModel> foldersTableView;
@@ -27,7 +33,19 @@ public class SettingsCrawlingController extends AbsController {
     private TableColumn<FolderModel, String> pathColumn;
 
     @FXML
-    private TableColumn<FolderModel, LocalDate> lastIndexedColumn;
+    private TableColumn<FolderModel, Boolean> lastIndexedColumn;
+
+    @FXML
+    private TableColumn<FolderModel, Boolean> stateColumn;
+
+    @FXML
+    private TableColumn<FolderModel, Boolean> filesProcessedColumn;
+
+    @FXML
+    private TableColumn<FolderModel, Boolean> removeColumn;
+
+    @FXML
+    private TableColumn<FolderModel, Boolean> reindexColumn;
 
     @FXML
     private Button addButton;
@@ -38,15 +56,16 @@ public class SettingsCrawlingController extends AbsController {
     @FXML
     private Button okButton;
 
-    // actions
     @FXML
     void onAddButtonClick(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        folder = directoryChooser.showDialog(addButton.getScene().getWindow());
+        File folder = directoryChooser.showDialog(addButton.getScene().getWindow());
         if (folder == null) {
             return;
         }
-        foldersTableView.getItems().add(new FolderModel(folder));
+        MainApp.getInstance().getRegistry().getSettings().addFolder(folder);
+        foldersTableView.getItems().add(new FolderModel(folder.getPath()));
+
     }
 
     @FXML
@@ -57,28 +76,28 @@ public class SettingsCrawlingController extends AbsController {
 
     @FXML
     void onOkButtonClick(ActionEvent event) {
-        if (folder != null) {
-            mainController.getRegistry().getSettings().addPath(folder);
-        }
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @Override
-    public void setMainController(MainController mainController) {
-        super.setMainController(mainController);
-        pathColumn.setCellValueFactory(celldata -> {
-            return new SimpleStringProperty(((FolderModel) celldata.getValue()).getPath());
-        });
-        lastIndexedColumn.setCellValueFactory(celldata -> {
-            return new SimpleObjectProperty(((FolderModel) celldata.getValue()).getDateLastIndexing());
-        });
+    public void initialize(URL location, ResourceBundle resources) {
+        pathColumn.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getFolderPath()));
 
-        ObservableList<FolderModel> obsList = FXCollections.observableArrayList();
-        mainController.getRegistry().getSettings().getDirectories().forEach(file -> {
-            obsList .add(new FolderModel(file));
-        });
+        ObservableList<FolderModel> obsList = FXCollections.observableArrayList(MainApp.getInstance().getRegistry().getSettings().getFolders());
         foldersTableView.setItems(obsList);
+        foldersTableView.setSelectionModel(null);
+
+        lastIndexedColumn.setCellFactory(new FolderLastIndexedDateCellFactory());
+        stateColumn.setCellFactory(new FolderStateCellFactory());
+        filesProcessedColumn.setCellFactory(new FolderProcessedFilesCellFactory());
+        reindexColumn.setCellFactory(new ReindexFolderCellFactory());
+        removeColumn.setCellFactory(new RemoveFolderCellFactory(obsList));
     }
 
+    @Override
+    public MenuBar createMenu() {
+        final MenuBar menuBar = new MenuBar();
+        return menuBar;
+    }
 }

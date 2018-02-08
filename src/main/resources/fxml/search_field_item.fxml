@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="SearchFieldItemUI" maxHeight="25.0" prefHeight="25.0" prefWidth="200" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SearchFieldItemController">
+   <children>
+      <HBox alignment="CENTER_LEFT" fillHeight="false">
+         <Label fx:id="lblElementType" alignment="CENTER" text="A" textAlignment="CENTER">
+            <styleClass>
+               <String fx:value="fieldType" />
+               <String fx:value="attr" />
+            </styleClass>
+            <HBox.margin>
+               <Insets left="4.0" top="4.0" />
+            </HBox.margin>
+         </Label>
+         <Label fx:id="lblElementName" />
+      </HBox>
+   </children>
+   <stylesheets>
+      <URL value="@../styles/style.css" />
+   </stylesheets>
+</AnchorPane>

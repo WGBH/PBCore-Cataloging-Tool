@@ -1,34 +1,40 @@
 package digitalbedrock.software.pbcore.core.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class PBCoreAttribute {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PBCoreAttribute extends IPBCore implements Serializable {
 
     private Long id;
+    private String fullPath;
     private String screenName;
     private String name;
     private boolean required;
     private String description;
-
+    @JsonIgnore
     public StringProperty valueProperty = new SimpleStringProperty();
-    boolean readOnly;
+    private boolean readOnly;
 
     public PBCoreAttribute() {
         id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
     }
 
-    public PBCoreAttribute(String screenName, String name, boolean required, String description, String value) {
+    public PBCoreAttribute(String fullPath, String screenName, String name, boolean required, String description, String value, boolean readOnly) {
         this();
+        this.fullPath = fullPath;
         this.screenName = screenName;
         this.name = name;
         this.required = required;
         this.description = description;
         this.valueProperty.setValue(value);
+        this.readOnly = readOnly;
     }
-
 
     public boolean isReadOnly() {
         return readOnly;
@@ -38,12 +44,18 @@ public class PBCoreAttribute {
         this.readOnly = readOnly;
     }
 
+    @Override
     public String getValue() {
         return valueProperty.getValue();
     }
 
+    @Override
+    public String getType() {
+        return getClass().getSimpleName();
+    }
+
     public void setValue(String value) {
-        if(!readOnly) {
+        if (!readOnly) {
             this.valueProperty.setValue(value);
         }
     }
@@ -64,14 +76,21 @@ public class PBCoreAttribute {
         return id;
     }
 
+    @Override
     public String getScreenName() {
         return screenName;
+    }
+
+    @Override
+    public boolean isAttribute() {
+        return true;
     }
 
     public String getName() {
         return name;
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
@@ -80,6 +99,7 @@ public class PBCoreAttribute {
         this.required = required;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
@@ -93,21 +113,21 @@ public class PBCoreAttribute {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "PBCoreAttribute{" +
-                "id=" + id +
-                ", screenName='" + screenName + '\'' +
-                ", name='" + name + '\'' +
-                ", required=" + required +
-                ", description='" + description + '\'' +
-                ", value='" + getValue() + '\'' +
-                '}';
-    }
-
-
     public PBCoreAttribute copy() {
-        return new PBCoreAttribute(screenName, name, required, description, getValue());
+        return new PBCoreAttribute(fullPath, screenName, name, required, description, getValue(), readOnly);
     }
 
+    @Override
+    public String getPathRepresentation() {
+        return getScreenName();
+    }
+
+    @Override
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
+    }
 }

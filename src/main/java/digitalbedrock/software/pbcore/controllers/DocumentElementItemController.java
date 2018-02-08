@@ -22,11 +22,14 @@ public class DocumentElementItemController {
     @FXML
     private FontIcon valueMissingIcon;
 
+    private int index;
+
     private ChangeListener<String> tChangeListener;
     private ChangeListener<Boolean> tChangeListenerB;
     private ChangeListener<Boolean> tChangeListenerHasMultiple;
 
-    public void setDocumentElementInteractionListener(int index, PBCoreElement pbCoreElement, DocumentElementInteractionListener documentElementInteractionListener) {
+    public void setDocumentElementInteractionListener(int i, PBCoreElement pbCoreElement, DocumentElementInteractionListener documentElementInteractionListener) {
+        this.index = i;
         if (tChangeListener != null) {
             pbCoreElement.valueProperty.removeListener(tChangeListener);
         }
@@ -61,6 +64,10 @@ public class DocumentElementItemController {
         valueMissingIcon.setVisible((!pbCoreElement.isValid() || !pbCoreElement.isValidAttributes()) && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT);
         updateIconColor(pbCoreElement);
         titleLabel.setText(pbCoreElement.getScreenName());
+    }
+
+    public void updateIndex(int i) {
+        this.index = i;
     }
 
     private void updateIconColor(PBCoreElement pbCoreElement) {

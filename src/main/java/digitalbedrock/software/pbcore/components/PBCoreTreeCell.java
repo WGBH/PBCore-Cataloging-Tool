@@ -9,20 +9,13 @@ import javafx.scene.control.TreeCell;
 import java.io.IOException;
 
 public class PBCoreTreeCell extends TreeCell<PBCoreElement> {
-    private Node graphic;
+
     private DocumentElementItemController controller;
-    private DocumentElementItemController.DocumentElementInteractionListener listener;
+    private final DocumentElementItemController.DocumentElementInteractionListener listener;
     private PBCoreElement element;
 
     public PBCoreTreeCell(DocumentElementItemController.DocumentElementInteractionListener listener) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/document_element_list_item.fxml"));
-            graphic = loader.load();
-            controller = loader.getController();
-            this.listener = listener;
-        } catch (IOException exc) {
-            throw new RuntimeException(exc);
-        }
+        this.listener = listener;
     }
 
     @Override
@@ -32,8 +25,16 @@ public class PBCoreTreeCell extends TreeCell<PBCoreElement> {
         if (empty) {
             setGraphic(null);
         } else {
-            setGraphic(graphic);
-            controller.setDocumentElementInteractionListener(getIndex(), element, listener);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/document_element_list_item.fxml"));
+                Node graphic = loader.load();
+                controller = loader.getController();
+                controller.setDocumentElementInteractionListener(getIndex(), element, listener);
+                setGraphic(graphic);
+            } catch (IOException exc) {
+                throw new RuntimeException(exc);
+            }
         }
 
     }
@@ -42,7 +43,7 @@ public class PBCoreTreeCell extends TreeCell<PBCoreElement> {
     public void updateIndex(int i) {
         super.updateIndex(i);
         if (controller != null && element != null) {
-            controller.setDocumentElementInteractionListener(i, element, listener);
+            controller.updateIndex(i);
         }
     }
 }

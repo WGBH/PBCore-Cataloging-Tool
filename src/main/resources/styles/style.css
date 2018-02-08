@@ -62,7 +62,7 @@
 }
 
 .root {
-    -fx-font-family: "Arial";
+    -fx-font-family: Arial;
 }
 
 /*
@@ -107,7 +107,12 @@
 .title4 {
     -fx-font-size: 14px;
     -fx-text-fill: dark-text-color;
-    -fx-font-weight: bold;
+    -fx-font-family: Arial;
+    -fx-font-weight: 900;
+}
+
+.title5 {
+
 }
 
 .title6 {
@@ -121,9 +126,29 @@
     -fx-text-fill: dimmed-text-color;
 }
 
+.paragraphSmall {
+    -fx-font-size: 12px;
+}
+
 .formLabel {
     -fx-font-size: 13px;
     -fx-text-fill: muted-text-color;
+}
+
+.formValidation {
+    -fx-font-size: 11px;
+}
+
+.darkText {
+    -fx-text-fill: dark-text-color;
+}
+
+.mutedText {
+    -fx-text-fill: muted-text-color;
+}
+
+.dimmedText {
+    -fx-text-fill: dimmed-text-color;
 }
 
 .primaryText {
@@ -150,6 +175,10 @@
   _| || (_| (_) | | | \__ \
  |_____\___\___/|_| |_|___/
 */
+
+.dimmedIcon {
+    -fx-icon-color: dimmed-color;
+}
 
 .primaryIcon {
     -fx-icon-color: primary-color;
@@ -296,7 +325,51 @@
  |______|_|___/\__|     \/   |_|\___| \_/\_/
 */
 
+.list-view, .list-cell {
+    -fx-text-fill: text-color;
+}
 
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-cell .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: text-color;
+}
+
+.list-cell .button {
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.list-cell .button .ikonli-font-icon {
+    -fx-icon-color: info-color;
+}
+
+.list-cell .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(29, 29, 29, 0.15);
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(11, 116, 211, 0.25);
+    -fx-text-fill: text-color;
+}
+
+.list-cell:selected .label {
+
+}
+
+.list-cell:selected .button.removeButton .ikonli-font-icon {
+    -fx-icon-color: rgba(255, 255, 255, 0.35);
+}
 
 /*
   _______             __      ___
@@ -358,6 +431,84 @@
 }
 
 /*
+  _______    _     _              _
+ |__   __|  | |   | |            (_)
+    | | __ _| |__ | | ___  __   ___  _____      __
+    | |/ _` | '_ \| |/ _ \ \ \ / / |/ _ \ \ /\ / /
+    | | (_| | |_) | |  __/  \ V /| |  __/\ V  V /
+    |_|\__,_|_.__/|_|\___|   \_/ |_|\___| \_/\_/
+*/
+
+.table-view {
+    -fx-base: gray-bg; /* header bg */
+    -fx-control-inner-background: white-bg; /* cell bg */
+    -fx-background-color: transparent; /* table bg */
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .placeholder {
+    -fx-text-fill: text-color;
+}
+
+.table-view:focused {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color:
+            transparent
+            transparent
+            dimmed-color
+            transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    /*-fx-size: 35;*/
+    /*-fx-border-width: 0 0 1 0;*/
+    /*-fx-border-color:*/
+            /*transparent*/
+            /*transparent*/
+            /*dimmed-color*/
+            /*transparent;*/
+    /*-fx-border-insets: 0 10 1 0;*/
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-family: Arial;
+    -fx-font-weight: 900;
+    -fx-text-fill: dark-text-color;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view .table-cell {
+    -fx-min-height: 35px;
+    -fx-pref-height: 35px;
+    -fx-max-height: 35px;
+    -fx-text-fill: text-color;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #ddd;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: transparent;
+}
+
+/*.table-view .scroll-bar {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*
   ____        _   _
  |  _ \      | | | |
  | |_) |_   _| |_| |_ ___  _ __
@@ -397,6 +548,38 @@
     -fx-padding: 5px;
     -fx-background-color: icon-button-bg-color;
     -fx-text-fill: icon-button-text-color;
+}
+
+.listActionButton {
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-height: 25px;
+    -fx-max-height: 25px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.listActionButton.primaryIcon .ikonli-font-icon {
+    -fx-icon-color: primary-color;
+}
+
+.listActionButton.dimmedIcon .ikonli-font-icon {
+    -fx-icon-color: dimmed-color;
+}
+
+.listActionButton.niceIcon .ikonli-font-icon {
+    -fx-icon-color: nice-color;
+}
+
+.listActionButton.warningIcon .ikonli-font-icon {
+    -fx-icon-color: warning-color;
+}
+
+.listActionButton.panicIcon .ikonli-font-icon {
+    -fx-icon-color: panic-color;
 }
 
 .iconButton .ikonli-font-icon {
@@ -523,26 +706,26 @@
     -fx-border-color: info-color;
 }
 
-#DocumentUI .elementsListView {
+#DocumentUI .elementsList {
     -fx-background-color: transparent;
 }
 
-#DocumentUI .elementsListView .tree-cell {
+#DocumentUI .elementsList .tree-cell {
     -fx-background-color: transparent;
     -fx-min-height: 25px;
     -fx-pref-height: 25px;
     -fx-max-height: 25px;
 }
 
-#DocumentUI .elementsListView .tree-cell:selected {
+#DocumentUI .elementsList .tree-cell:selected {
     -fx-background-color: primary-color;
 }
 
-#DocumentUI .elementsListView .tree-cell:selected .label {
+#DocumentUI .elementsList .tree-cell:selected .label {
     -fx-text-fill: inverted-text-color;
 }
 
-#DocumentUI .elementsListView .tree-cell:selected .button.removeButton .ikonli-font-icon {
+#DocumentUI .elementsList .tree-cell:selected .button.removeButton .ikonli-font-icon {
     -fx-icon-color: rgba(255, 255, 255, 0.35);
 }
 
@@ -569,12 +752,12 @@
 }
 
 #DocumentUI .elementValueTextArea .list-view {
-    -fx-background-color: #ff0000;
+    -fx-background-color: transparent;
 }
 
 #DocumentUI .elementValueTextArea .list-view .list-cell {
     -fx-background-color: transparent;
-    -fx-font-size: 20px;
+    -fx-font-size: 14px;
 }
 
 #DocumentUI .elementValueCombo {
@@ -594,7 +777,12 @@
     -fx-text-fill: nice-text-color;
 }
 
-#DocumentUI .attributesListView {
+#DocumentUI .attributesList {
+    -fx-background-color: transparent;
+}
+
+#DocumentUI .attributesList .list-cell,
+#DocumentUI .attributesList .list-cell:selected {
     -fx-background-color: transparent;
 }
 
@@ -640,7 +828,7 @@
 }
 
 #DocumentElementListItemUI .label {
-    -fx-font-size: 14px;
+    -fx-font-size: 13px;
     -fx-text-fill: text-color;
 }
 
@@ -695,6 +883,45 @@
     -fx-icon-color: muted-color;
 }
 
+#EditorUI .previewElementList {
+    -fx-background-color: transparent;
+}
+
+#EditorUI .previewElementList .list-cell {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+#EditorUI .previewElementList .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+#PreviewElementItemUI .elementText {
+    -fx-line-spacing: 5;
+}
+
+#PreviewElementItemUI .elementText .previewElementLabel {
+    -fx-font-size: 14px;
+    -fx-fill: dark-text-color;
+}
+
+#PreviewElementItemUI .elementText .previewElementValue {
+    -fx-font-size: 14px;
+    -fx-fill: text-color;
+}
+
+#PreviewAttributeItemUI .attributeText {
+    -fx-line-spacing: 3;
+}
+
+#PreviewAttributeItemUI .attributeText .attributeLabel {
+    -fx-fill: #c4c4c4;
+}
+
+#PreviewAttributeItemUI .attributeText .attributeValue {
+    -fx-fill: dark-text-color;
+}
+
 /*
   ______ _                           _      _____      _           _
  |  ____| |                         | |    / ____|    | |         | |
@@ -705,6 +932,19 @@
 */
 
 #ElementSelectorUI {
+
+}
+
+/*
+   _____                     _       _____ _
+  / ____|                   | |     |_   _| |
+ | (___   ___  __ _ _ __ ___| |__     | | | |_ ___ _ __ ___
+  \___ \ / _ \/ _` | '__/ __| '_ \    | | | __/ _ \ '_ ` _ \
+  ____) |  __/ (_| | | | (__| | | |  _| |_| ||  __/ | | | | |
+ |_____/ \___|\__,_|_|  \___|_| |_| |_____|\__\___|_| |_| |_|
+*/
+
+#SearchFieldItemUI {
 
 }
 
@@ -734,6 +974,57 @@
 
 }
 
+#SearchUI .searchConditionList {
+    -fx-background-color: transparent;
+}
+
+#SearchUI .searchConditionList .list-cell {
+    -fx-padding: 0;
+}
+
+.fieldType,
+#SearchUI .searchConditionList .list-cell .fieldType {
+    -fx-min-width: 16px;
+    -fx-pref-width: 16px;
+    -fx-max-width: 16px;
+    -fx-min-height: 16px;
+    -fx-pref-height: 16px;
+    -fx-max-height: 16px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 2px;
+}
+
+.fieldType.elem,
+#SearchUI .searchConditionList .list-cell .fieldType.elem {
+    -fx-background-color: #0B74D3;
+}
+
+.fieldType.attr,
+#SearchUI .searchConditionList .list-cell .fieldType.attr {
+    -fx-background-color: #11C115;
+}
+
+#SearchUI .searchConditionList .list-cell .paragraphSmall.dimmedText {
+    -fx-font-size: 12px;
+    -fx-text-fill: dimmed-text-color;
+}
+
+
+/*
+   _____                     _        _____                _ _ _   _
+  / ____|                   | |      / ____|              | (_) | (_)
+ | (___   ___  __ _ _ __ ___| |__   | |     ___  _ __   __| |_| |_ _  ___  _ __
+  \___ \ / _ \/ _` | '__/ __| '_ \  | |    / _ \| '_ \ / _` | | __| |/ _ \| '_ \
+  ____) |  __/ (_| | | | (__| | | | | |___| (_) | | | | (_| | | |_| | (_) | | | |
+ |_____/ \___|\__,_|_|  \___|_| |_|  \_____\___/|_| |_|\__,_|_|\__|_|\___/|_| |_|
+*/
+
+#SearchConditionItemUI {
+
+}
+
 /*
    _____       _           _
   / ____|     | |         | |
@@ -746,7 +1037,10 @@
 */
 
 #SplashUI {
-
+    -fx-background-image: url("../imgs/splash_image.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
 }
 
 /*
@@ -788,6 +1082,7 @@
     -fx-faint-focus-color: transparent;
     -fx-focus-color: transparent;
     -fx-text-fill: text-color;
+    -fx-font-family: Arial;
     -fx-font-weight: bold;
     -fx-border-width: 0 0 0 0;
 }

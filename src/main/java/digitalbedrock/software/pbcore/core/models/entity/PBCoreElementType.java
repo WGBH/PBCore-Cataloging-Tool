@@ -2,7 +2,6 @@ package digitalbedrock.software.pbcore.core.models.entity;
 
 import java.util.Arrays;
 
-
 public enum PBCoreElementType {
     ROOT_ELEMENT(1L, "Root Element"),
     INTELLECTUAL_CONTENT(2L, "Intellectual Content"),

@@ -1,104 +1,268 @@
 package digitalbedrock.software.pbcore.controllers;
 
+import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.NewDocumentType;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
-import digitalbedrock.software.pbcore.listeners.AttributeSelectionListener;
-import digitalbedrock.software.pbcore.listeners.ElementSelectionListener;
-import digitalbedrock.software.pbcore.listeners.MenuActionListener;
+import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
+import digitalbedrock.software.pbcore.listeners.*;
+import digitalbedrock.software.pbcore.lucene.HitDocument;
+import digitalbedrock.software.pbcore.lucene.LuceneEngineSearchFilter;
 import digitalbedrock.software.pbcore.utils.Registry;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.URL;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainController {
+public class MainController extends AbsController implements FileChangedListener, SearchResultListener, SavedSearchedUpdated {
 
+    private static final String UNTITLED = "untitled";
+    @FXML
+    private AnchorPane splash;
+    @FXML
+    private AnchorPane spinnerLayer;
+    @FXML
+    private TabPane tabPane;
 
-    private final Registry registry;
-    private final AtomicBoolean isModalUp = new AtomicBoolean(false);
-    private final Stage stage;
-    private final MenuActionListener menuActionListener;
+    private final AtomicInteger untitledTabsCount = new AtomicInteger(0);
 
-    public MainController(MenuActionListener menuActionListener, Stage stage) throws IOException {
-        this.registry = new Registry();
-        this.stage = stage;
-        this.menuActionListener = menuActionListener;
-    }
+    private SavableTabListener currentSavableTabListener;
 
+    private Menu search;
 
-    public void initialize(WindowEvent e) {
-        registry.loadSavedSettings();
-        //if (1 == 1) {
-        //showNewDescriptionDocument(NewDocumentType.DESCRIPTION_DOCUMENT);
-        //} else {
-        if (registry.getSettings().getDirectories().isEmpty()) {
-            showSettings(1);
+    @Override
+    public void menuOptionSelected(MenuOption menuOption, Object... objects) {
+        switch (menuOption) {
+            case OPEN_FILE:
+                Object object = objects[0];
+                openDocument((File) object);
+                break;
+            case NEW_DESCRIPTION_DOCUMENT:
+                newDocument(NewDocumentType.DESCRIPTION_DOCUMENT);
+                break;
+            case NEW_INSTANTIATION_DOCUMENT:
+                newDocument(NewDocumentType.INSTANTIATION_DOCUMENT);
+                break;
+            case NEW_COLLECTION:
+                newDocument(NewDocumentType.COLLECTION);
+                break;
+            case SAVE:
+                saveDocument();
+                break;
+            case SAVE_AS:
+                saveDocumentAs();
+                break;
+            default:
+                super.menuOptionSelected(menuOption, objects);
+                break;
         }
-        //}
     }
 
+    public void newDocument(NewDocumentType newDocumentType) {
+        PBCoreElement rootElement = PBCoreStructure.getInstance().getRootElement(newDocumentType);
+        rootElement.clearOptionalSubElements();
+        showTab(null, null, rootElement);
+    }
+
+    public void openDocument(File file) {
+        try {
+            PBCoreElement pbCoreElement = PBCoreStructure.getInstance().parseFile(file);
+            showTab(null, file, pbCoreElement.copy());
+        } catch (JAXBException | IllegalAccessException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid File");
+            alert.setHeaderText("The selected file is not a valid PBCore file");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void saveDocument() {
+        if (currentSavableTabListener != null) {
+            currentSavableTabListener.saveDocument();
+        }
+    }
+
+    public void saveDocumentAs() {
+        if (currentSavableTabListener != null) {
+            currentSavableTabListener.saveDocumentAs();
+        }
+    }
+
+    private void showTab(String token, File file, PBCoreElement pbCoreElement) {
+        if (file != null) {
+            File finalFile = file;
+            Tab tab1 = tabPane.getTabs().stream().filter(tab -> Objects.equals(tab.getId(), finalFile.getAbsolutePath())).findFirst().orElse(null);
+            if (tab1 != null) {
+                tabPane.getSelectionModel().select(tab1);
+                return;
+            }
+        }
+        String title;
+        String id;
+        if (file != null) {
+            if (file.exists()) {
+                title = file.getName();
+                id = file.getAbsolutePath();
+            } else {
+                title = file.getName();
+                id = file.getName();
+                untitledTabsCount.addAndGet(1);
+                file = null;
+            }
+        } else {
+            title = UNTITLED + String.format("%04d", untitledTabsCount.addAndGet(1));
+            id = title;
+        }
+        Tab tab = new Tab(title);
+        tab.setId(id);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/document.fxml"));
+            Node node = loader.load();
+            DocumentController controller = loader.getController();
+            String s = token != null ? token : UUID.randomUUID().toString() + System.currentTimeMillis();
+            controller.initializeDocument(s, id, file, pbCoreElement, this);
+            tab.setOnClosed(t -> {
+                if (tabPane.getTabs().isEmpty()) {
+                    splash.setVisible(true);
+                }
+                if (tab.getText().startsWith(UNTITLED)) {
+                    untitledTabsCount.set(untitledTabsCount.get() - 1);
+                }
+                MainApp.getInstance().getRegistry().removePBCoreElement(s);
+            });
+            tab.setOnCloseRequest(event -> {
+                controller.saveDocument(true);
+                event.consume();
+            });
+            tab.setContent(node);
+            tab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                currentSavableTabListener = controller;
+                controller.onShow();
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().select(tab);
+        splash.setVisible(false);
+    }
+
+    @Override
+    public void onFileChanged(String currentId, File file, boolean close) {
+        if (!Objects.equals(currentId, file.getAbsolutePath())) {
+            Tab tabToRemove = tabPane.getTabs().stream().filter(tab -> Objects.equals(tab.getId(), file.getAbsolutePath())).findFirst().orElse(null);
+            if (tabToRemove != null) {
+                tabPane.getTabs().remove(tabToRemove);
+                if (tabPane.getTabs().isEmpty()) {
+                    splash.setVisible(true);
+                }
+            }
+        }
+        Tab tab1 = tabPane.getTabs().stream().filter(tab -> Objects.equals(tab.getId(), currentId)).findFirst().orElse(null);
+        if (tab1 != null) {
+            tab1.setId(file.getAbsolutePath());
+            tab1.setText(file.getName());
+            if (close) {
+                tabPane.getTabs().remove(tab1);
+                EventHandler<Event> handler = tab1.getOnClosed();
+                if (handler != null) {
+                    handler.handle(null);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void discardChanges(String currentId, File file) {
+        Tab tab1 = tabPane.getTabs().stream().filter(tab -> Objects.equals(tab.getId(), currentId)).findFirst().orElse(null);
+        if (tab1 != null) {
+            tabPane.getTabs().remove(tab1);
+            EventHandler<Event> handler = tab1.getOnClosed();
+            if (handler != null) {
+                handler.handle(null);
+            }
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    @Override
     public MenuBar createMenu() {
         final MenuBar menuBar = new MenuBar();
-
         // FILE
         final Menu file = new Menu("File");
         final MenuItem open = new MenuItem("Open...");
         open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.META_DOWN));
-        //open.setOnAction(e -> openDocument());
+        open.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Document");
+            File selectedFile = fileChooser.showOpenDialog(tabPane.getScene().getWindow());
+            if (selectedFile == null) {
+                return;
+            }
+            menuOptionSelected(MenuListener.MenuOption.OPEN_FILE, selectedFile);
+        });
 
         final MenuItem newd = new MenuItem("New Description Document");
         newd.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.META_DOWN));
-        newd.setOnAction(e -> showNewDescriptionDocument(NewDocumentType.DESCRIPTION_DOCUMENT));
+        newd.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_DESCRIPTION_DOCUMENT));
 
         final MenuItem newi = new MenuItem("New Instantiation Document");
         newi.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.META_DOWN));
-        newi.setOnAction(e -> showNewDescriptionDocument(NewDocumentType.INSTANTIATION_DOCUMENT));
+        newi.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_INSTANTIATION_DOCUMENT));
 
         final MenuItem newc = new MenuItem("New Collection");
         newc.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
-        newc.setOnAction(e -> showNewDescriptionDocument(NewDocumentType.COLLECTION));
+        newc.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_COLLECTION));
 
         final MenuItem batch = new MenuItem("Batch edit open documents");
 
         final MenuItem export = new MenuItem("Export open files to ZIP");
         final MenuItem save = new MenuItem("Save");
         save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.META_DOWN));
+        save.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE));
         final MenuItem saveas = new MenuItem("Save as...");
         saveas.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
+        saveas.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE_AS));
 
         final MenuItem quit = new MenuItem("Quit");
         quit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.META_DOWN));
-        quit.setOnAction(e -> this.quit(e));
+        quit.setOnAction(e -> menuOptionSelected(MenuOption.QUIT));
         file.getItems().addAll(open, new SeparatorMenuItem(), newd, newi, newc, new SeparatorMenuItem(), batch, export, new SeparatorMenuItem(), save, saveas, new SeparatorMenuItem(), quit);
 
         // SEARCH
-        final Menu search = new Menu("Search");
-        final MenuItem newSearch = new MenuItem("New Search");
-        newSearch.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN));
-        newSearch.setOnAction(e -> this.showSearch(0));
-        search.getItems().addAll(newSearch, new SeparatorMenuItem(), new MenuItem("Recent Searches"));
-
+        search = new Menu("Search");
+        onSavedSearchesUpdated();
+        Registry registry = MainApp.getInstance().getRegistry();
+        registry.addSavedSearchesListener(this);
         // SETTINGS
         final Menu settings = new Menu("Settings");
         final MenuItem cv = new MenuItem("Controlled Vocabularies");
         final MenuItem folders = new MenuItem("Directory Crawling");
-        cv.setOnAction(e -> this.showSettings(0));
-        folders.setOnAction(e -> this.showSettings(1));
+        cv.setOnAction(e -> menuOptionSelected(MenuOption.CONTROLLED_VOCABULARIES));
+        folders.setOnAction(e -> menuOptionSelected(MenuOption.DIRECTORY_CRAWLING));
         settings.getItems().addAll(cv, folders);
 
         // HELP
@@ -106,175 +270,56 @@ public class MainController {
         help.setDisable(true);  //temp
 
         menuBar.getMenus().addAll(file, search, settings, help);
-        if (registry.isMac()) {
+        if (MainApp.getInstance().getRegistry().isMac()) {
             menuBar.setUseSystemMenuBar(true);
         }
         return menuBar;
     }
 
-    private void quit(ActionEvent event) {
-        //todo: close all modals
-        // todo: check if anything needs saving
-        // todo: stop aany running thread
-        Platform.exit();
+    @Override
+    public void onShown() {
+        splash.setVisible(true);
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae -> Platform.runLater(() -> {
+                    Registry registry = MainApp.getInstance().getRegistry();
+                    registry.getPbCoreElements().entrySet().forEach((entry) -> {
+                        String s = registry.getCurrentWorkPagesFilenames().get(entry.getKey());
+                        String s1 = registry.getCurrentWorkPages().get(entry.getKey());
+                        showTab(entry.getKey(), new File(s == null ? s1 : s), entry.getValue());
+                    });
+                    spinnerLayer.setVisible(false);
+                })));
+        timeline.play();
     }
 
-    private void showSettings(int tab) {
-        if (isModalUp.get()) {
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"));
-            Parent tabs = loader.load();
-            ((AbsController) loader.getController()).setMainController(this);
-            ((TabPane) tabs.lookup("#tabs")).getSelectionModel().select(tab);
-            Scene settingsScene = new Scene(tabs);
-            Stage settingsWindow = new Stage();
-            settingsWindow.initOwner(stage);
-            settingsWindow.initModality(Modality.APPLICATION_MODAL);
-            settingsWindow.setTitle("Settings");
-            settingsWindow.setScene(settingsScene);
-            isModalUp.set(true);
-            settingsWindow.setOnCloseRequest(e -> {
-                isModalUp.set(false);
-            });
-
-            settingsWindow.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    @Override
+    public void searchResultSelected(HitDocument hitDocument) {
+        showTab(null, new File(hitDocument.getFilepath()), hitDocument.getPbCoreElement().copy());
     }
 
-    private void showSearch(int searchIdx) {
-        if (isModalUp.get()) {
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/search.fxml"));
-            Parent parent = loader.load();
-            ((AbsController) loader.getController()).setMainController(this);
-            Scene searchScene = new Scene(parent);
-            Stage searchWindow = new Stage();
-            searchWindow.initOwner(stage);
-            searchWindow.initModality(Modality.APPLICATION_MODAL);
-            searchWindow.setTitle("Search");
-            searchWindow.setScene(searchScene);
-            isModalUp.set(true);
-            searchWindow.setOnCloseRequest(e -> {
-                isModalUp.set(false);
-            });
-            searchWindow.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void showNewDescriptionDocument(NewDocumentType newDocumentType) {
-        if (isModalUp.get()) {
-            return;
-        }
-        menuActionListener.newDocument(newDocumentType);
-    }
-
-    private void openDocument() {
-        if (isModalUp.get()) {
-            return;
-        }
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Document");
-        File file = fileChooser.showOpenDialog(stage);
-        if (file == null) {
-            return;
-        }
-        menuActionListener.openDocument(file);
-    }
-
-    public void showSelectElement(int index, PBCoreElement pbCoreElement, ElementSelectionListener elementSelectionListener) {
-        if (isModalUp.get()) {
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/element_selector.fxml"));
-            Parent parent = loader.load();
-            ElementSelectorController controller = loader.getController();
-            controller.setPbCoreElement(pbCoreElement);
-            controller.setMainController(this);
-            Scene searchScene = new Scene(parent);
-            Stage searchWindow = new Stage();
-            searchWindow.initOwner(stage);
-            searchWindow.initModality(Modality.APPLICATION_MODAL);
-            searchWindow.setTitle("Add new element");
-            searchWindow.setScene(searchScene);
-            isModalUp.set(true);
-            searchWindow.setOnCloseRequest(e -> isModalUp.set(false));
-            searchWindow.show();
-            controller.setElementSelectionListener(index, (index1, element) -> {
-                if (elementSelectionListener != null) {
-                    elementSelectionListener.onElementSelected(index1, element);
+    @Override
+    public void onSavedSearchesUpdated() {
+        search.getItems().clear();
+        final MenuItem newSearch = new MenuItem("New Search");
+        newSearch.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN));
+        newSearch.setOnAction(e -> menuOptionSelected(MenuOption.NEW_SEARCH));
+        search.getItems().addAll(newSearch, new SeparatorMenuItem());
+        Registry registry = MainApp.getInstance().getRegistry();
+        registry.getSavedSearches().stream().map((luceneEngineSearchFilters) -> {
+            StringBuilder terms = new StringBuilder();
+            int c = 1;
+            for (LuceneEngineSearchFilter luceneEngineSearchFilter : luceneEngineSearchFilters) {
+                terms.append(luceneEngineSearchFilter.getTerm());
+                if (c++ != luceneEngineSearchFilters.size()) {
+                    terms.append(", ");
                 }
-                isModalUp.set(false);
-                searchWindow.close();
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
+            MenuItem menuItem = new MenuItem(terms.toString());
+            menuItem.setOnAction(e -> menuOptionSelected(MenuOption.SAVED_SEARCH, luceneEngineSearchFilters));
+            return menuItem;
+        }).forEachOrdered((menuItem) -> {
+            search.getItems().add(menuItem);
+        });
     }
-
-    public void showSelectAttribute(PBCoreElement pbCoreElement, AttributeSelectionListener attributeSelectionListener) {
-        if (isModalUp.get()) {
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/attribute_selector.fxml"));
-            Parent parent = loader.load();
-            AttributeSelectorController controller = loader.getController();
-            controller.setPbCoreElement(pbCoreElement);
-            controller.setMainController(this);
-            Scene searchScene = new Scene(parent);
-            Stage searchWindow = new Stage();
-            searchWindow.initOwner(stage);
-            searchWindow.initModality(Modality.APPLICATION_MODAL);
-            searchWindow.setTitle("Add new attribute");
-            searchWindow.setScene(searchScene);
-            isModalUp.set(true);
-            searchWindow.setOnCloseRequest(e -> isModalUp.set(false));
-            searchWindow.show();
-            controller.setAttributeSelectionListener(element -> {
-                if (attributeSelectionListener != null) {
-                    attributeSelectionListener.onAttributeSelected(element);
-                }
-                isModalUp.set(false);
-                searchWindow.close();
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-
-    public Registry getRegistry() {
-        return registry;
-    }
-
-    /*
-    private void showSearch(int searchIdx) {
-        try {
-            Node tabs = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
-            ((TabPane) tabs.lookup("#tabs")).getSelectionModel().select(tab);
-            ((BorderPane) stage.getScene().getRoot()).setCenter(tabs);
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
-//    @FXML
-//    public void switchToTwo(ActionEvent event) {
-//        BorderPane root= (BorderPane) stage.getScene().getRoot();
-//        try {
-//            root.setCenter(FXMLLoader.load(getClass().getResource("/fxml/document.fxml")));
-//        }
-//        catch (IOException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.out.println("xx");
-//    }
 }

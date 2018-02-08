@@ -1,73 +1,77 @@
 package digitalbedrock.software.pbcore.core.models;
 
-import java.io.File;
-import java.time.LocalDate;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleLongProperty;
 
-public class FolderModel {
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-    private boolean toAdd;
-    private boolean toRemove;
+public class FolderModel implements Serializable {
 
-    private File folder;
-    private long totalValidFiles;
-    private LocalDate dateLastIndexing;
-    private boolean isIndexing;
+    private String folderPath;
+    private final LongProperty totalValidFiles = new SimpleLongProperty();
+    private LocalDateTime dateLastIndexing;
+    private final BooleanProperty indexing = new SimpleBooleanProperty();
+    private final BooleanProperty scheduled = new SimpleBooleanProperty();
 
-    public FolderModel(File file) {
-        folder = file;
-        dateLastIndexing = LocalDate.now();
+    public FolderModel() {
     }
 
-    public boolean isToAdd() {
-        return toAdd;
+    public FolderModel(String folderPath) {
+        this.folderPath = folderPath;
     }
 
-    public void setToAdd(boolean toAdd) {
-        this.toAdd = toAdd;
+    public String getFolderPath() {
+        return folderPath;
     }
 
-    public boolean isToRemove() {
-        return toRemove;
+    public LocalDateTime getDateLastIndexing() {
+        return dateLastIndexing;
     }
 
-    public void setToRemove(boolean toRemove) {
-        this.toRemove = toRemove;
+    public void setDateLastIndexing(LocalDateTime dateLastIndexing) {
+        this.dateLastIndexing = dateLastIndexing;
     }
 
-    public File getFolder() {
-        return folder;
-    }
-
-    public String getPath() {
-        return folder.getAbsolutePath();
-    }
-
-    public void setFolder(File folder) {
-        this.folder = folder;
+    public void setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
     }
 
     public long getTotalValidFiles() {
+        return totalValidFiles.get();
+    }
+
+    public LongProperty totalValidFilesProperty() {
         return totalValidFiles;
     }
 
     public void setTotalValidFiles(long totalValidFiles) {
-        this.totalValidFiles = totalValidFiles;
+        this.totalValidFiles.set(totalValidFiles);
     }
 
-    public LocalDate getDateLastIndexing() {
-        return dateLastIndexing;
+    public boolean isIndexing() {
+        return indexing.get();
     }
 
-    public void setDateLastIndexing(LocalDate dateLastIndexing) {
-        this.dateLastIndexing = dateLastIndexing;
+    public BooleanProperty indexingProperty() {
+        return indexing;
     }
 
-    public boolean isIsIndexing() {
-        return isIndexing;
+    public void setIndexing(boolean indexing) {
+        this.indexing.set(indexing);
     }
 
-    public void setIsIndexing(boolean isIndexing) {
-        this.isIndexing = isIndexing;
+    public boolean isScheduled() {
+        return scheduled.get();
     }
 
+    public BooleanProperty scheduledProperty() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled.set(scheduled);
+    }
 }
