@@ -1,20 +1,14 @@
 package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
-import digitalbedrock.software.pbcore.components.AutoFillTextBoxPBCoreElementSkin;
+import digitalbedrock.software.pbcore.components.PBCoreAnyValueListCell;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.components.PBCoreTreeCell;
 import digitalbedrock.software.pbcore.components.editor.AceEditor;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.ElementType;
-import digitalbedrock.software.pbcore.core.models.entity.PBCoreAttribute;
-import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
-import digitalbedrock.software.pbcore.core.models.entity.PBCoreElementType;
-import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
-import digitalbedrock.software.pbcore.listeners.AttributeSelectionListener;
-import digitalbedrock.software.pbcore.listeners.ElementSelectionListener;
-import digitalbedrock.software.pbcore.listeners.FileChangedListener;
-import digitalbedrock.software.pbcore.listeners.SavableTabListener;
+import digitalbedrock.software.pbcore.core.models.entity.*;
+import digitalbedrock.software.pbcore.listeners.*;
 import digitalbedrock.software.pbcore.utils.Registry;
 import digitalbedrock.software.pbcore.utils.StringUtils;
 import javafx.beans.property.ObjectProperty;
@@ -44,7 +38,8 @@ import java.util.regex.Pattern;
 
 public class DocumentController extends AbsController implements ElementSelectionListener, AttributeSelectionListener, PBCoreAttributeTreeCell.AttributeTreeCellListener, SavableTabListener {
 
-    private static final int ROW_HEIGHT = 55;
+    @FXML
+    private ListView<PBCoreElementAnyValue> lvAnyValues;
     @FXML
     private TreeView<PBCoreElement> rootDocumentTreeView;
     @FXML
@@ -81,9 +76,11 @@ public class DocumentController extends AbsController implements ElementSelectio
     private Label statusBarDocumentType;
     @FXML
     private Label statusBarDocumentName;
+    @FXML
+    private Button addAnyValueButton;
 
-    ObjectProperty<PBCoreElement> selectedPBCoreElementProperty = new SimpleObjectProperty<>();
-    PBCoreElement rootElement;
+    private final ObjectProperty<PBCoreElement> selectedPBCoreElementProperty = new SimpleObjectProperty<>();
+    private PBCoreElement rootElement;
 
     private ChangeListener<TreeItem<PBCoreElement>> rootListener = null;
     private ChangeListener<TreeItem<PBCoreElement>> requiredListener = null;
@@ -110,29 +107,32 @@ public class DocumentController extends AbsController implements ElementSelectio
         }
         selectedPBCoreElementProperty.setValue(null);
         updateXmlPreview();
+        buttonSave.setVisible(true);
+        lvAnyValues.setVisible(false);
+        taElementValue.setDisable(true);
     }
 
-    public void onAdd(int index, PBCoreElement pbCoreElement) {
-        selectedPBCoreElementProperty.setValue(pbCoreElement);
-
-        menuOptionSelected(MenuOption.SELECT_ELEMENT, index, pbCoreElement, DocumentController.this);
+    private void onAdd(String treeViewId, int index, PBCoreElement pbCoreElement) {
+        menuOptionSelected(MenuOption.SELECT_ELEMENT, treeViewId, index, pbCoreElement, DocumentController.this);
     }
 
-    public void onDuplicate(int index, PBCoreElement pbCoreElement, TreeView<PBCoreElement> treeView) {
+    private void onDuplicate(int index, PBCoreElement pbCoreElement, TreeView<PBCoreElement> treeView) {
         TreeItem<PBCoreElement> selectedItem = treeView.getTreeItem(index);
         PBCoreElement copy = pbCoreElement.copy(true);
         copy.valueProperty.addListener((observable, oldValue, newValue) -> updateXmlPreview());
         selectedItem.getParent().getValue().addSubElement(copy);
         TreeItem<PBCoreElement> itemToAdd;
         if (treeView.equals(requiredElementsListView)) {
-            itemToAdd = getRequiredTreeItem(copy, true);
+            itemToAdd = getRequiredTreeItem(copy, pbCoreElement.getElementType() == PBCoreElementType.ROOT_ELEMENT);
         } else {
             itemToAdd = getOptionalTreeItem(copy, true);
         }
-        selectedItem.getParent().getChildren().add(index + 1, itemToAdd);
+        int i = selectedItem.getParent().getChildren().indexOf(selectedItem);
+        selectedItem.getParent().getChildren().add(i + 1, itemToAdd);
 
         selectedPBCoreElementProperty.setValue(copy);
         updateXmlPreview();
+        buttonSave.setVisible(true);
     }
 
     private void loadRequiredTreeData(PBCoreElement rootElement) {
@@ -151,15 +151,10 @@ public class DocumentController extends AbsController implements ElementSelectio
             return pbCoreAttributeTreeItem;
         }
         List<PBCoreAttribute> attributes = rootElement.getAttributes();
-        attributes.stream().map((attribute) -> {
-            pbCoreAttributeTreeItem.getChildren().add(new TreeItem<>(attribute));
-            return attribute;
-        }).forEachOrdered((attribute) -> {
-            attribute.valueProperty.addListener((observable, oldValue, newValue) -> {
-                buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(oldValue, newValue));
-                updateXmlPreview();
-            });
-        });
+        attributes.stream().peek((attribute) -> pbCoreAttributeTreeItem.getChildren().add(new TreeItem<>(attribute))).forEachOrdered((attribute) -> attribute.valueProperty.addListener((observable, oldValue, newValue) -> {
+            buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(oldValue, newValue));
+            updateXmlPreview();
+        }));
         return pbCoreAttributeTreeItem;
     }
 
@@ -178,9 +173,12 @@ public class DocumentController extends AbsController implements ElementSelectio
         rootElement.validProperty.addListener((observable, oldValue, newValue) -> updateStatusBarLabel());
         rootElement.fatalErrorProperty.addListener((observable, oldValue, newValue) -> updateStatusBarLabel());
         List<PBCoreElement> subElements = rootElement.getOrderedSubElements();
-        subElements.stream().filter((pbCoreElement) -> (pbCoreElement.isRequired() || !root)).forEachOrdered((pbCoreElement) -> {
-            pbCoreElementTreeItem.getChildren().add(Math.min(pbCoreElement.getSequence(), pbCoreElementTreeItem.getChildren().isEmpty() ? 0 : pbCoreElementTreeItem.getChildren().size() - 1), getRequiredTreeItem(pbCoreElement, false));
-        });
+        subElements.stream()
+                .filter(pbCoreElement -> pbCoreElement.isRequired() || !root)
+                .forEach(pbCoreElement
+                        -> pbCoreElementTreeItem.getChildren()
+                        .add(Math.min(pbCoreElement.getSequence(), pbCoreElementTreeItem.getChildren().size()),
+                                getRequiredTreeItem(pbCoreElement, false)));
         return pbCoreElementTreeItem;
     }
 
@@ -192,9 +190,12 @@ public class DocumentController extends AbsController implements ElementSelectio
         rootElement.validProperty.addListener((observable, oldValue, newValue) -> updateStatusBarLabel());
         rootElement.fatalErrorProperty.addListener((observable, oldValue, newValue) -> updateStatusBarLabel());
         List<PBCoreElement> subElements = rootElement.getOrderedSubElements();
-        subElements.stream().filter((pbCoreElement) -> (hasNonRootParent || !pbCoreElement.isRequired())).forEachOrdered((pbCoreElement) -> {
-            pbCoreElementTreeItem.getChildren().add(Math.min(pbCoreElement.getSequence(), pbCoreElementTreeItem.getChildren().isEmpty() ? 0 : pbCoreElementTreeItem.getChildren().size() - 1), getOptionalTreeItem(pbCoreElement, true));
-        });
+        subElements.stream()
+                .filter(pbCoreElement -> hasNonRootParent || !pbCoreElement.isRequired())
+                .forEach(pbCoreElement
+                        -> pbCoreElementTreeItem.getChildren()
+                        .add(Math.min(pbCoreElement.getSequence(), pbCoreElementTreeItem.getChildren().size()),
+                                getOptionalTreeItem(pbCoreElement, true)));
         return pbCoreElementTreeItem;
     }
 
@@ -203,8 +204,8 @@ public class DocumentController extends AbsController implements ElementSelectio
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().removeListener(optionalListener);
             requiredElementsListView.getSelectionModel().selectedItemProperty().removeListener(requiredListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
-            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() != null && !selectedPBCoreElementProperty.getValue().getSubElements().isEmpty());
-            setTaElementValueText(selectedPBCoreElementProperty.getValue());
+            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            setElementValueText(selectedPBCoreElementProperty.getValue());
             optionalElementsTreeView.getSelectionModel().clearSelection();
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().addListener(optionalListener);
             requiredElementsListView.getSelectionModel().clearSelection();
@@ -214,8 +215,8 @@ public class DocumentController extends AbsController implements ElementSelectio
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().removeListener(optionalListener);
             rootDocumentTreeView.getSelectionModel().selectedItemProperty().removeListener(rootListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
-            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() != null && !selectedPBCoreElementProperty.getValue().getSubElements().isEmpty());
-            setTaElementValueText(selectedPBCoreElementProperty.getValue());
+            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            setElementValueText(selectedPBCoreElementProperty.getValue());
             optionalElementsTreeView.getSelectionModel().clearSelection();
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().addListener(optionalListener);
             rootDocumentTreeView.getSelectionModel().clearSelection();
@@ -225,8 +226,8 @@ public class DocumentController extends AbsController implements ElementSelectio
             requiredElementsListView.getSelectionModel().selectedItemProperty().removeListener(requiredListener);
             rootDocumentTreeView.getSelectionModel().selectedItemProperty().removeListener(rootListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
-            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() != null && !selectedPBCoreElementProperty.getValue().getSubElements().isEmpty());
-            setTaElementValueText(selectedPBCoreElementProperty.getValue());
+            taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            setElementValueText(selectedPBCoreElementProperty.getValue());
             requiredElementsListView.getSelectionModel().clearSelection();
             requiredElementsListView.getSelectionModel().selectedItemProperty().addListener(requiredListener);
             rootDocumentTreeView.getSelectionModel().clearSelection();
@@ -234,22 +235,29 @@ public class DocumentController extends AbsController implements ElementSelectio
         };
     }
 
-    private void setTaElementValueText(PBCoreElement pbCoreElement) {
-        taElementValue.getData().clear();
-        taElementValue.getTextbox().setText(pbCoreElement == null || pbCoreElement.getValue() == null ? null : pbCoreElement.getValue());
-        if (pbCoreElement == null) {
-            taElementValue.setFilterMode(false);
-            invalidValueIcon.setVisible(false);
-            return;
+    private void setElementValueText(PBCoreElement pbCoreElement) {
+        if (pbCoreElement != null && pbCoreElement.isAnyElement()) {
+            lvAnyValues.setItems(FXCollections.observableArrayList(pbCoreElement.getAnyValues()));
+            updateInvalidIcon(false, false);
+            addAnyValueButton.setVisible(true);
+        } else {
+            taElementValue.getData().clear();
+            taElementValue.getTextbox().setText(pbCoreElement == null || pbCoreElement.getValue() == null ? null : pbCoreElement.getValue());
+            if (pbCoreElement == null) {
+                taElementValue.setFilterMode(false);
+                invalidValueIcon.setVisible(false);
+                return;
+            }
+            Registry registry = MainApp.getInstance().getRegistry();
+            boolean b = registry.getControlledVocabularies().containsKey(pbCoreElement.getName());
+            taElementValue.setFilterMode(b);
+            if (b) {
+                List<CVTerm> suggestions = registry.getControlledVocabularies().get(pbCoreElement.getName()).getTerms();
+                taElementValue.getData().addAll(suggestions);
+            }
+            updateInvalidIcon(!pbCoreElement.isValid() && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT, pbCoreElement.isFatalError());
+            addAnyValueButton.setVisible(false);
         }
-        Registry registry = MainApp.getInstance().getRegistry();
-        boolean b = registry.getControlledVocabularies().containsKey(pbCoreElement.getName());
-        taElementValue.setFilterMode(b);
-        if (b) {
-            List<CVTerm> suggestions = registry.getControlledVocabularies().get(pbCoreElement.getName()).getTerms();
-            taElementValue.getData().addAll(suggestions);
-        }
-        updateInvalidIcon(!pbCoreElement.isValid() && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT, pbCoreElement.isFatalError());
     }
 
     private void updateInvalidIcon(boolean isInvalid, boolean fatalError) {
@@ -259,28 +267,30 @@ public class DocumentController extends AbsController implements ElementSelectio
             invalidValueIcon.getStyleClass().remove("warningIcon");
             if (fatalError) {
                 invalidValueIcon.getStyleClass().add("panicIcon");
-                invalidValueIcon.setIconCode(MaterialDesign.MDI_CHECK_CIRCLE);
+                invalidValueIcon.setIconCode(MaterialDesign.MDI_ALERT_CIRCLE);
             } else {
                 invalidValueIcon.getStyleClass().add("warningIcon");
                 invalidValueIcon.setIconCode(MaterialDesign.MDI_ALERT);
             }
             Tooltip tooltip = new Tooltip(getErrorMessage());
             invalidValueIcon.setOnMouseEntered(event -> {
-                Point2D p = invalidValueIcon.localToScreen(invalidValueIcon.getLayoutBounds().getMaxX(), invalidValueIcon.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+                Point2D p = invalidValueIcon.localToScreen(invalidValueIcon.getLayoutBounds().getMaxX(), invalidValueIcon.getLayoutBounds().getMaxY());
                 tooltip.show(invalidValueIcon, p.getX(), p.getY() + 2);
             });
             invalidValueIcon.setOnMouseExited(event -> tooltip.hide());
         } else {
+            invalidValueIcon.getStyleClass().add("warningIcon");
+            invalidValueIcon.setIconCode(MaterialDesign.MDI_ALERT);
             invalidValueIcon.setOnMouseEntered(null);
             invalidValueIcon.setOnMouseEntered(null);
         }
     }
 
-    public String getErrorMessage() {
+    private String getErrorMessage() {
         if (selectedPBCoreElementProperty.getValue().isHasChildElements() && !selectedPBCoreElementProperty.getValue().isValid()) {
             if (selectedPBCoreElementProperty.getValue().isFatalError()) {
                 invalidDocumentIcon.getStyleClass().add("panicIcon");
-                invalidDocumentIcon.setIconCode(MaterialDesign.MDI_CHECK_CIRCLE);
+                invalidDocumentIcon.setIconCode(MaterialDesign.MDI_ALERT_CIRCLE);
                 if (selectedPBCoreElementProperty.getValue().getSubElements().size() > 1) {
                     return "At least one child node has an invalid value";
                 } else {
@@ -317,7 +327,9 @@ public class DocumentController extends AbsController implements ElementSelectio
                 invalidDocumentIcon.setIconCode(MaterialDesign.MDI_ALERT_CIRCLE);
                 return "Value doesn't match required pattern";
             case SIMPLE:
-                if (selectedPBCoreElementProperty.getValue().getValue() == null || selectedPBCoreElementProperty.getValue().getValue().trim().isEmpty()) {
+                if (selectedPBCoreElementProperty.getValue().isAnyElement() && selectedPBCoreElementProperty.getValue().getAnyValues().isEmpty()) {
+                    return "This element should have at least one value associated";
+                } else if (selectedPBCoreElementProperty.getValue().getValue() == null || selectedPBCoreElementProperty.getValue().getValue().trim().isEmpty()) {
                     return "Value missing";
                 } else {
                     invalidDocumentIcon.getStyleClass().add("warningIcon");
@@ -334,7 +346,8 @@ public class DocumentController extends AbsController implements ElementSelectio
     }
 
     @Override
-    public void onElementSelected(int index, PBCoreElement element) {
+    public void onElementSelected(String treeViewId, int index, PBCoreElement element) {
+
         if (element == null) {
             return;
         }
@@ -344,22 +357,22 @@ public class DocumentController extends AbsController implements ElementSelectio
         if (selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().getId() == rootElement.getId()) {
             if (element.isRequired()) {
                 selectedItem = requiredElementsListView.getRoot();
-                pbCoreElementTreeItem = getRequiredTreeItem(element, true);
+                pbCoreElementTreeItem = getRequiredTreeItem(element, element.getElementType() == PBCoreElementType.ROOT_ELEMENT);
                 elementType = ElementType.REQUIRED;
             } else {
                 selectedItem = optionalElementsTreeView.getRoot();
                 pbCoreElementTreeItem = getOptionalTreeItem(element, true);
                 elementType = ElementType.OPTIONAL;
             }
-        } else if (selectedPBCoreElementProperty.getValue().isRequired()) {
+        } else if (treeViewId.equals(requiredElementsListView.getId())) {
             selectedItem = requiredElementsListView.getTreeItem(index);
-            pbCoreElementTreeItem = getRequiredTreeItem(element, true);
+            pbCoreElementTreeItem = getRequiredTreeItem(element, element.getElementType() == PBCoreElementType.ROOT_ELEMENT);
             elementType = ElementType.REQUIRED;
         } else {
             selectedItem = optionalElementsTreeView.getTreeItem(index);
             if (selectedItem == null) {
                 selectedItem = requiredElementsListView.getTreeItem(index);
-                pbCoreElementTreeItem = getRequiredTreeItem(element, true);
+                pbCoreElementTreeItem = getRequiredTreeItem(element, element.getElementType() == PBCoreElementType.ROOT_ELEMENT);
                 elementType = ElementType.REQUIRED;
             } else {
                 pbCoreElementTreeItem = getOptionalTreeItem(element, true);
@@ -372,7 +385,7 @@ public class DocumentController extends AbsController implements ElementSelectio
         selectedItem.setExpanded(true);
         selectedItem.getChildren().add(Math.min(element.getSequence(), selectedItem.getChildren().isEmpty() ? 0 : selectedItem.getChildren().size() - 1), pbCoreElementTreeItem);
         selectedPBCoreElementProperty.setValue(element);
-        setTaElementValueText(element);
+        setElementValueText(element);
         updateXmlPreview();
         switch (elementType) {
             case REQUIRED:
@@ -387,6 +400,7 @@ public class DocumentController extends AbsController implements ElementSelectio
                 break;
         }
         updateStatusBarLabel();
+        buttonSave.setVisible(true);
     }
 
     @Override
@@ -397,6 +411,7 @@ public class DocumentController extends AbsController implements ElementSelectio
         selectedPBCoreElementProperty.getValue().addAttribute(pbCoreAttribute.copy());
         attributesTreeView.setRoot(getAttributesTreeItem(selectedPBCoreElementProperty.getValue()));
         updateXmlPreview();
+        buttonSave.setVisible(true);
     }
 
     @Override
@@ -404,6 +419,7 @@ public class DocumentController extends AbsController implements ElementSelectio
         selectedPBCoreElementProperty.getValue().removeAttribute(pbCoreAttribute);
         attributesTreeView.setRoot(getAttributesTreeItem(selectedPBCoreElementProperty.getValue()));
         updateXmlPreview();
+        buttonSave.setVisible(true);
     }
 
     private void updateXmlPreview() {
@@ -474,12 +490,21 @@ public class DocumentController extends AbsController implements ElementSelectio
                     case ENUMERATION:
                         taElementValue.setVisible(false);
                         cbElementValue.setVisible(true);
+                        lvAnyValues.setVisible(false);
                         cbElementValue.setItems(FXCollections.observableArrayList(newValue.getEnumerationValues()));
-                        cbElementValue.getSelectionModel().select(0);
+                        int i = newValue.getEnumerationValues().indexOf(newValue.getValue());
+                        cbElementValue.getSelectionModel().select(i < 0 ? 0 : i);
                         break;
                     default:
-                        taElementValue.setVisible(true);
-                        cbElementValue.setVisible(false);
+                        if (newValue.isAnyElement()) {
+                            lvAnyValues.setVisible(true);
+                            taElementValue.setVisible(false);
+                            cbElementValue.setVisible(false);
+                        } else {
+                            lvAnyValues.setVisible(false);
+                            taElementValue.setVisible(true);
+                            cbElementValue.setVisible(false);
+                        }
                         cbElementValue.getItems().clear();
                 }
             }
@@ -488,14 +513,15 @@ public class DocumentController extends AbsController implements ElementSelectio
 
         TreeItem<PBCoreElement> elementTreeItem = new TreeItem<>(rootElement);
         rootDocumentTreeView.setRoot(elementTreeItem);
-        rootDocumentTreeView.setCellFactory(lv -> new PBCoreTreeCell(new DocumentElementItemController.DocumentElementInteractionListener() {
+        rootDocumentTreeView.setCellFactory(lv -> new PBCoreTreeCell(false, false, new DocumentElementItemController.DocumentElementInteractionListener() {
             @Override
             public void onRemove(int index, PBCoreElement pbCoreElement) {
             }
 
             @Override
             public void onAdd(int index, PBCoreElement pbCoreElement) {
-                DocumentController.this.onAdd(index, pbCoreElement);
+                rootDocumentTreeView.getSelectionModel().selectFirst();
+                DocumentController.this.onAdd(rootDocumentTreeView.getId(), index, pbCoreElement);
             }
 
             @Override
@@ -505,15 +531,17 @@ public class DocumentController extends AbsController implements ElementSelectio
         }));
 
         requiredElementsListView.setShowRoot(false);
-        requiredElementsListView.setCellFactory(lv -> new PBCoreTreeCell(new DocumentElementItemController.DocumentElementInteractionListener() {
+        requiredElementsListView.setCellFactory(lv -> new PBCoreTreeCell(true, false, new DocumentElementItemController.DocumentElementInteractionListener() {
             @Override
             public void onRemove(int index, PBCoreElement pbCoreElement) {
                 DocumentController.this.onRemove(index, pbCoreElement, requiredElementsListView);
+                requiredElementsListView.getSelectionModel().clearSelection();
             }
 
             @Override
             public void onAdd(int index, PBCoreElement pbCoreElement) {
-                DocumentController.this.onAdd(index, pbCoreElement);
+                requiredElementsListView.getSelectionModel().select(index);
+                DocumentController.this.onAdd(requiredElementsListView.getId(), index, pbCoreElement);
             }
 
             @Override
@@ -524,15 +552,17 @@ public class DocumentController extends AbsController implements ElementSelectio
         loadRequiredTreeData(rootElement);
 
         optionalElementsTreeView.setShowRoot(false);
-        optionalElementsTreeView.setCellFactory(lv -> new PBCoreTreeCell(new DocumentElementItemController.DocumentElementInteractionListener() {
+        optionalElementsTreeView.setCellFactory(lv -> new PBCoreTreeCell(true, false, new DocumentElementItemController.DocumentElementInteractionListener() {
             @Override
             public void onRemove(int index, PBCoreElement pbCoreElement) {
                 DocumentController.this.onRemove(index, pbCoreElement, optionalElementsTreeView);
+                optionalElementsTreeView.getSelectionModel().clearSelection();
             }
 
             @Override
             public void onAdd(int index, PBCoreElement pbCoreElement) {
-                DocumentController.this.onAdd(index, pbCoreElement);
+                optionalElementsTreeView.getSelectionModel().select(index);
+                DocumentController.this.onAdd(optionalElementsTreeView.getId(), index, pbCoreElement);
             }
 
             @Override
@@ -557,7 +587,7 @@ public class DocumentController extends AbsController implements ElementSelectio
             Registry registry = MainApp.getInstance().getRegistry();
             if (registry.getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName())) {
                 List<CVTerm> suggestions = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName()).getTerms();
-                selectedPBCoreElementProperty.getValue().setValid(suggestions.stream().filter(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())).count() > 0);
+                selectedPBCoreElementProperty.getValue().setValid(suggestions.stream().anyMatch(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())));
             } else {
                 if (!selectedPBCoreElementProperty.getValue().isHasChildElements()) {
                     switch (selectedPBCoreElementProperty.getValue().getElementValueRestrictionType()) {
@@ -576,7 +606,7 @@ public class DocumentController extends AbsController implements ElementSelectio
             updateInvalidIcon(!selectedPBCoreElementProperty.getValue().isValid(), selectedPBCoreElementProperty.getValue().isFatalError());
         });
         cbElementValue.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (selectedPBCoreElementProperty.getValue() == null) {
+            if (selectedPBCoreElementProperty.getValue() == null || newValue == null) {
                 return;
             }
             selectedPBCoreElementProperty.getValue().setValue(newValue);
@@ -584,8 +614,7 @@ public class DocumentController extends AbsController implements ElementSelectio
         });
         taElementValue.setDisable(true);
         cbElementValue.setVisible(false);
-        setTaElementValueText(selectedPBCoreElementProperty.getValue());
-        new AutoFillTextBoxPBCoreElementSkin(taElementValue);
+        setElementValueText(selectedPBCoreElementProperty.getValue());
         updateXmlPreview();
 
         aceEditor.setEditorOpenedStateListener(new AceEditor.EditorOpenedStateListener() {
@@ -593,6 +622,7 @@ public class DocumentController extends AbsController implements ElementSelectio
             public void onEditorClosed() {
                 GridPane.setRowIndex(attributesVB, 0);
                 GridPane.setColumnIndex(attributesVB, 2);
+
                 mainGridColumnLeft.setPercentWidth(34);
                 mainGridColumnCenter.setPercentWidth(33);
                 mainGridColumnRight.setPercentWidth(33);
@@ -614,6 +644,29 @@ public class DocumentController extends AbsController implements ElementSelectio
         rootDocumentTreeView.getSelectionModel().select(0);
         updateStatusBarLabel();
         buttonSave.setVisible(file == null);
+
+        lvAnyValues.setCellFactory(lv -> new PBCoreAnyValueListCell(pbCoreElementAnyValue -> {
+            if (pbCoreElementAnyValue == null) {
+                return;
+            }
+            selectedPBCoreElementProperty.getValue().removeAnyValue(pbCoreElementAnyValue);
+            lvAnyValues.getItems().remove(pbCoreElementAnyValue);
+            updateXmlPreview();
+            updateInvalidIcon(false, false);
+            buttonSave.setVisible(true);
+        }));
+        addAnyValueButton.setOnAction(event -> {
+            menuOptionSelected(MenuOption.ADD_ELEMENT_ANY_VALUE, selectedPBCoreElementProperty.getValue(), (AddElementAnyValueListener) pbCoreElementAnyValue -> {
+                if (pbCoreElementAnyValue == null) {
+                    return;
+                }
+                selectedPBCoreElementProperty.getValue().addAnyElement(pbCoreElementAnyValue);
+                lvAnyValues.getItems().add(pbCoreElementAnyValue);
+                updateXmlPreview();
+                updateInvalidIcon(false, false);
+                buttonSave.setVisible(true);
+            });
+        });
     }
 
     @FXML
@@ -632,35 +685,71 @@ public class DocumentController extends AbsController implements ElementSelectio
         if (!buttonSave.isVisible()) {
             if (fileChangedListener != null) {
                 fileChangedListener.onFileChanged(currentId, file, close);
+                return;
             }
         }
         if (file == null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Unsaved changes");
-            alert.setContentText("Your work is not currently saved. Do you want to save if before closing the tab?");
+            if (close) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Unsaved changes");
+                alert.setContentText("Your work is not currently saved. Do you want to save if before closing the tab?");
+                alert.setHeaderText(null);
+                ButtonType buttonTypeSave = new ButtonType("Save Changes");
+                ButtonType buttonTypeDiscard = new ButtonType("Discard Changes");
+                ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            ButtonType buttonTypeSave = new ButtonType("Save Changes");
-            ButtonType buttonTypeDiscard = new ButtonType("Discard Changes");
-            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeDiscard, buttonTypeCancel);
 
-            alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeDiscard, buttonTypeCancel);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get() == buttonTypeSave) {
+                        FileChooser fileChooser = new FileChooser();
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent()) {
-                if (result.get() == buttonTypeSave) {
-                    FileChooser fileChooser = new FileChooser();
+                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Xml files (*.xml)", "*.xml");
+                        fileChooser.getExtensionFilters().add(extFilter);
 
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Xml files (*.xml)", "*.xml");
-                    fileChooser.getExtensionFilters().add(extFilter);
-
-                    file = fileChooser.showSaveDialog(rootDocumentTreeView.getScene().getWindow());
-                } else if (result.get() == buttonTypeDiscard) {
-                    fileChangedListener.discardChanges(currentId, file);
-                    return;
+                        file = fileChooser.showSaveDialog(rootDocumentTreeView.getScene().getWindow());
+                    } else if (result.get() == buttonTypeDiscard) {
+                        fileChangedListener.discardChanges(currentId, file);
+                        return;
+                    }
                 }
+            } else {
+                FileChooser fileChooser = new FileChooser();
+
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Xml files (*.xml)", "*.xml");
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                file = fileChooser.showSaveDialog(rootDocumentTreeView.getScene().getWindow());
             }
         }
         if (file != null) {
+            if (close) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Unsaved changes");
+                alert.setContentText("Your work is not currently saved. Do you want to save if before closing the tab?");
+                alert.setHeaderText(null);
+                ButtonType buttonTypeSave = new ButtonType("Save Changes");
+                ButtonType buttonTypeDiscard = new ButtonType("Discard Changes");
+                ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeDiscard, buttonTypeCancel);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get() == buttonTypeSave) {
+
+                    } else if (result.get() == buttonTypeDiscard) {
+                        fileChangedListener.discardChanges(currentId, file);
+                        return;
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            }
+            statusBarDocumentName.setText(file == null ? currentId : file.getName());
             PBCoreElement value = requiredElementsListView.getRoot().getValue();
             try {
                 PBCoreStructure.getInstance().saveFile(value, file);
@@ -702,9 +791,39 @@ public class DocumentController extends AbsController implements ElementSelectio
     }
 
     @Override
+    public void addBatchUpdate(PBCoreElement pbCoreElement) {
+        List<PBCoreElement> pbCoreElements = new ArrayList<>();
+        if (rootElement.getName().equalsIgnoreCase("pbcorecollection")) {
+            pbCoreElements.addAll(rootElement.getSubElements());
+        } else {
+            pbCoreElements.add(rootElement);
+        }
+        Iterator<PBCoreElement> iterator = pbCoreElements.iterator();
+        while (iterator.hasNext()) {
+            PBCoreElement next = iterator.next();
+            pbCoreElement.getSubElements().forEach((elementToAdd) -> {
+                String fullP = elementToAdd.getFullPath();
+                fullP = fullP.replace(elementToAdd.getName(), "");
+                int i = fullP.lastIndexOf("/");
+                if (i != -1) {
+                    fullP = fullP.substring(0, i);
+                }
+                if (!(!next.getFullPath().contains(fullP)
+                        || (!elementToAdd.isRepeatable()
+                        && next.getSubElements().stream().anyMatch(pbc -> Objects.equals(pbc.getFullPath(), elementToAdd.getFullPath()))))) {
+                    next.addSubElement(elementToAdd.copy(true));
+                }
+            });
+        }
+        loadOptionalTreeData(rootElement);
+        loadRequiredTreeData(rootElement);
+        updateXmlPreview();
+        updateStatusBarLabel();
+    }
+
+    @Override
     public MenuBar createMenu() {
-        final MenuBar menuBar = new MenuBar();
-        return menuBar;
+        return new MenuBar();
     }
 
     @Override

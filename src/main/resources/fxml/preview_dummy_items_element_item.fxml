@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane id="PreviewElementItemUI" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../styles/style.css" />
+    </stylesheets>
+    <TextFlow layoutX="10.0" layoutY="10.0" minHeight="25.0" styleClass="itemsText" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Text fx:id="previewElementLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="previewItemsLabel" text="ITEMS" />
+    </TextFlow>
+</AnchorPane>

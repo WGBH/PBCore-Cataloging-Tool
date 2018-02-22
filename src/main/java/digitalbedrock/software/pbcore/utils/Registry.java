@@ -1,6 +1,5 @@
 package digitalbedrock.software.pbcore.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -21,7 +20,6 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.BackingStoreException;
 
 public class Registry implements Observer {
 
@@ -31,22 +29,20 @@ public class Registry implements Observer {
     private Settings settings = new Settings();
 
     private final Map<String, CV> controlledVocabularies;
-    private Map<String, PBCoreElement> pbCoreElements = new HashMap<>();
+    private final Map<String, PBCoreElement> pbCoreElements = new HashMap<>();
+    private PBCoreElement batchEditPBCoreElement;
 
     private static final String ACE_EDITOR_FOLDER = "editor" + File.separator + "ace" + File.separator;
     private static final String ACE_EDITOR_HTML_FILE = "editor.html";
-    private List<SavedSearchedUpdated> savedSearchesUpdated = new ArrayList<>();
+    private final List<SavedSearchedUpdated> savedSearchesUpdated = new ArrayList<>();
 
-    public Registry() throws IOException {
+    public Registry() {
         isMac = System.getProperty("os.name").toLowerCase().contains("mac");
         isWindows = System.getProperty("os.name").toLowerCase().contains("win");
         controlledVocabularies = loadControlledVocabularies();
         verifyAndRetrieveAceEditorHtmlResourceFile();
-        try {
-            loadPBCoreElements();
-        } catch (BackingStoreException e) {
-            e.printStackTrace();
-        }
+        loadPBCoreElements();
+        loadBatchEditPBCoreElement();
     }
 
     public String defaultDirectory() {
@@ -111,7 +107,7 @@ public class Registry implements Observer {
 
     public CVTerm saveVocabulary(String cvId, String term, String source, String version, String ref) {
         try {
-            CVTerm cvTerm = new CVTerm(term, "", true, source, version, ref);
+            CVTerm cvTerm = new CVTerm(term, source, version, ref);
             controlledVocabularies.get(cvId).getTerms().add(cvTerm);
             saveVocabulariesFile();
             return cvTerm;
@@ -124,7 +120,6 @@ public class Registry implements Observer {
     public void updateVocabulary(String cvId, CVTerm selectedCVTerm) {
         int i = controlledVocabularies.get(cvId).getTerms().indexOf(selectedCVTerm);
         CVTerm cvTerm = controlledVocabularies.get(cvId).getTerms().set(i, selectedCVTerm);
-        System.out.println(cvTerm);
         try {
             saveVocabulariesFile();
         } catch (IOException ex) {
@@ -144,13 +139,13 @@ public class Registry implements Observer {
         }
     }
 
-    void saveVocabulariesFile() throws IOException {
+    private void saveVocabulariesFile() throws IOException {
         String file = defaultDirectory() + File.separator + "cvs" + File.separator + "cvs.json";
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(new File(file), controlledVocabularies);
     }
 
-    private void loadPBCoreElements() throws BackingStoreException, JsonProcessingException {
+    private void loadPBCoreElements() {
         Map<String, String> pages = getCurrentWorkPages();
         List<Map.Entry<String, String>> pagesToRemove = new ArrayList<>();
         pages.entrySet().forEach((entry) -> {
@@ -165,10 +160,23 @@ public class Registry implements Observer {
                 Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        pagesToRemove.forEach((entry) -> {
-            pages.remove(entry.getKey());
-        });
+        pagesToRemove.forEach((entry) -> pages.remove(entry.getKey()));
         saveCurrentWorkPages(pages);
+    }
+
+    private void loadBatchEditPBCoreElement() {
+        try {
+            File file = new File(defaultDirectory() + File.separator + "batch-edit");
+            if (file.exists()) {
+                batchEditPBCoreElement = PBCoreStructure.getInstance().parseFile(file, this);
+            }
+        } catch (IllegalAccessException | JAXBException ex) {
+            Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public PBCoreElement getBatchEditPBCoreElement() {
+        return batchEditPBCoreElement;
     }
 
     public void removePBCoreElement(String token) {
@@ -176,16 +184,12 @@ public class Registry implements Observer {
         Map<String, String> pagesFilenames = getCurrentWorkPagesFilenames();
         pages.remove(token);
         pagesFilenames.remove(token);
-        try {
-            File file = new File(defaultDirectory() + File.separator + token);
-            if (file.exists()) {
-                file.delete();
-            }
-            saveCurrentWorkPages(pages);
-            saveCurrentWorkPagesFilenames(pagesFilenames);
-        } catch (IOException | BackingStoreException ex) {
-            Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+        File file = new File(defaultDirectory() + File.separator + token);
+        if (file.exists()) {
+            file.delete();
         }
+        saveCurrentWorkPages(pages);
+        saveCurrentWorkPagesFilenames(pagesFilenames);
     }
 
     public void savePBCoreElement(String token, String currentId, File f, PBCoreElement pbCoreElement) {
@@ -198,7 +202,8 @@ public class Registry implements Observer {
             PBCoreStructure.getInstance().saveFile(pbCoreElement, new File(file));
             saveCurrentWorkPages(pages);
             saveCurrentWorkPagesFilenames(pagesFilenames);
-        } catch (IOException | BackingStoreException | ParserConfigurationException | TransformerException ex) {
+            pbCoreElements.put(token, pbCoreElement);
+        } catch (IOException | ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -302,7 +307,7 @@ public class Registry implements Observer {
         return new HashMap<>();
     }
 
-    public void saveSavedSearches(List<List<LuceneEngineSearchFilter>> savedSearches) throws BackingStoreException, JsonProcessingException {
+    private void saveSavedSearches(List<List<LuceneEngineSearchFilter>> savedSearches) {
         try {
             String file = defaultDirectory() + File.separator + "saved-searches.json";
             ObjectMapper mapper = new ObjectMapper();
@@ -312,7 +317,7 @@ public class Registry implements Observer {
         }
     }
 
-    public void saveCurrentWorkPages(Map<String, String> pages) throws BackingStoreException, JsonProcessingException {
+    private void saveCurrentWorkPages(Map<String, String> pages) {
         try {
             String file = defaultDirectory() + File.separator + "work-pages-names.json";
             ObjectMapper mapper = new ObjectMapper();
@@ -322,7 +327,7 @@ public class Registry implements Observer {
         }
     }
 
-    public void saveCurrentWorkPagesFilenames(Map<String, String> pages) throws BackingStoreException, JsonProcessingException {
+    private void saveCurrentWorkPagesFilenames(Map<String, String> pages) {
         try {
             String file = defaultDirectory() + File.separator + "work-pages-filenames.json";
             ObjectMapper mapper = new ObjectMapper();
@@ -337,19 +342,15 @@ public class Registry implements Observer {
         if (savedSearches1.size() == 10) {
             savedSearches1.remove(savedSearches1.size() - 1);
         }
-        savedSearches1.add(0, savedSearch);
-        try {
+        if (savedSearches1.stream().filter(filters -> filters.stream().filter(luceneEngineSearchFilter -> Objects.equals(luceneEngineSearchFilter.getTerm(), savedSearch.get(0).getTerm())).count() > 0).count() == 0) {
+            savedSearches1.add(0, savedSearch);
             saveSavedSearches(savedSearches1);
             notifySavedSearches();
-        } catch (BackingStoreException | JsonProcessingException e) {
-            e.printStackTrace();
         }
     }
 
     private void notifySavedSearches() {
-        savedSearchesUpdated.forEach((observer) -> {
-            observer.onSavedSearchesUpdated();
-        });
+        savedSearchesUpdated.forEach(SavedSearchedUpdated::onSavedSearchesUpdated);
     }
 
     public void addSavedSearchesListener(SavedSearchedUpdated observer) {
@@ -360,5 +361,28 @@ public class Registry implements Observer {
 
     public void removeSavedSearchesListener(SavedSearchedUpdated observer) {
         savedSearchesUpdated.remove(observer);
+    }
+
+    public void clearBatchEditPBCoreElement() {
+        batchEditPBCoreElement = null;
+        saveBatchEditPBCoreElement();
+    }
+
+    public void saveBatchEditPBCoreElement(PBCoreElement pbCoreElement) {
+        this.batchEditPBCoreElement = pbCoreElement;
+        saveBatchEditPBCoreElement();
+    }
+
+    private void saveBatchEditPBCoreElement() {
+        File file = new File(defaultDirectory() + File.separator + "batch-edit");
+        if (batchEditPBCoreElement == null) {
+            file.delete();
+        } else {
+            try {
+                PBCoreStructure.getInstance().saveFile(batchEditPBCoreElement, file);
+            } catch (ParserConfigurationException | TransformerException | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

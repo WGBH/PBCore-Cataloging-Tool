@@ -38,9 +38,7 @@ public class ReindexFolderCellFactory implements Callback<TableColumn<FolderMode
                         model.scheduledProperty().addListener((observable, oldValue, newValue) -> updateButtons(model));
                         updateButtons(model);
                     });
-                    btnPause.setOnAction(event -> {
-                        LuceneIndexer.getInstance().stopIndexingForFolder(model.getFolderPath());
-                    });
+                    btnPause.setOnAction(event -> LuceneIndexer.getInstance().stopIndexingForFolder(model.getFolderPath()));
                     setText(null);
                     updateButtons(model);
                 }

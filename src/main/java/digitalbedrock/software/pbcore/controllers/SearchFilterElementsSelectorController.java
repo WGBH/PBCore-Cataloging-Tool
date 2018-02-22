@@ -46,19 +46,19 @@ public class SearchFilterElementsSelectorController extends AbsController {
 
     private LuceneEngineSearchFilter searchFilter;
 
-    private final List<TreeItem<IPBCore>> elementsItems = new ArrayList<>();
-    private final List<TreeItem<IPBCore>> attributesItems = new ArrayList<>();
-
-    int allElementsCount = 0;
-    int allAttributesCount = 0;
-    int allCount = 0;
-    AtomicBoolean ignore = new AtomicBoolean();
+    private int allElementsCount = 0;
+    private int allAttributesCount = 0;
+    private int allCount = 0;
+    private final AtomicBoolean ignore = new AtomicBoolean();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         treeElements.setShowRoot(false);
         treeElements.setCellFactory(lv -> new PBCoreTreeCell());
         ChangeListener<TreeItem<IPBCore>> listener = (observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
             IPBCore value = newValue.getValue();
             lblDescription.setText(value.getDescription());
             lblOptional.setText(value.isRequired() ? "required" : "optional");
@@ -102,27 +102,23 @@ public class SearchFilterElementsSelectorController extends AbsController {
             allCount++;
             if (searchFilter.getFieldsToSearch().stream().filter(ipbCore -> Objects.equals(ipbCore.getFullPath(), rootElement.getFullPath())).count() > 0) {
                 itemsToCheck.add(pbCoreElementTreeItem);
-            }else{
+            } else {
                 itemsToUnCheck.add(pbCoreElementTreeItem);
             }
-            elementsItems.add(pbCoreElementTreeItem);
         }
         rootElement.getOrderedSubElements().stream().map((coreElement) -> getTreeItem(coreElement.copy(), itemsToCheck, itemsToUnCheck)).map((treeItem) -> {
             treeItem.setExpanded(true);
             return treeItem;
-        }).forEachOrdered((treeItem) -> {
-            pbCoreElementTreeItem.getChildren().add(treeItem);
-        });
+        }).forEachOrdered((treeItem) -> pbCoreElementTreeItem.getChildren().add(treeItem));
         rootElement.getAttributes().forEach((coreElement) -> {
             CheckBoxTreeItem<IPBCore> treeItem = new CheckBoxTreeItem<>(coreElement.copy());
             treeItem.setExpanded(true);
             pbCoreElementTreeItem.getChildren().add(treeItem);
-            attributesItems.add(pbCoreElementTreeItem);
             allCount++;
             allAttributesCount++;
             if (searchFilter.getFieldsToSearch().stream().filter(ipbCore -> Objects.equals(ipbCore.getFullPath(), coreElement.getFullPath())).count() > 0) {
                 itemsToCheck.add(treeItem);
-            }else{
+            } else {
                 itemsToUnCheck.add(pbCoreElementTreeItem);
             }
         });
@@ -138,12 +134,8 @@ public class SearchFilterElementsSelectorController extends AbsController {
         cbAll.setSelected(searchF.isAllElements());
         if (!searchF.isAllElements()) {
             ignore.set(true);
-            itemsToCheck.forEach((ipbCoreTreeItem) -> {
-                treeElements.getCheckModel().check(ipbCoreTreeItem);
-            });
-            itemsToUncheck.forEach((ipbCoreTreeItem) -> {
-                treeElements.getCheckModel().clearCheck(ipbCoreTreeItem);
-            });
+            itemsToUncheck.forEach((ipbCoreTreeItem) -> treeElements.getCheckModel().clearCheck(ipbCoreTreeItem));
+            itemsToCheck.forEach((ipbCoreTreeItem) -> treeElements.getCheckModel().check(ipbCoreTreeItem));
             ignore.set(false);
         }
     }
@@ -154,6 +146,7 @@ public class SearchFilterElementsSelectorController extends AbsController {
     }
 
     private class PBCoreTreeCell extends CheckBoxTreeCell<IPBCore> {
+
         @Override
         public void updateItem(IPBCore item, boolean empty) {
             super.updateItem(item, empty);

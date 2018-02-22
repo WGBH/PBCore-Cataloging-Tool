@@ -1,4 +1,3 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,17 +6,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Definition: The subjectStringType schema type allows
- *                 for the addition of a subjectType attribute as well as the standard
- *                 sourceVersionGroup attributes and a startEndTimeGroup or
- *                 attributes.
- * 
- * <p>Java class for subjectStringType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The subjectStringType schema type allows for the addition of a
+ * subjectType attribute as well as the standard sourceVersionGroup attributes
+ * and a startEndTimeGroup or attributes.
+ *
+ * <p>
+ * Java class for subjectStringType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="subjectStringType">
  *   &lt;simpleContent>
@@ -33,9 +33,10 @@ import javax.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "subjectStringType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "value"
@@ -71,11 +72,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getValue() {
         return value;
@@ -83,11 +82,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setValue(String value) {
         this.value = value;
@@ -95,11 +92,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the subjectType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSubjectType() {
         return subjectType;
@@ -107,11 +102,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the subjectType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSubjectType(String value) {
         this.subjectType = value;
@@ -119,11 +112,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the subjectTypeSource property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSubjectTypeSource() {
         return subjectTypeSource;
@@ -131,11 +122,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the subjectTypeSource property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSubjectTypeSource(String value) {
         this.subjectTypeSource = value;
@@ -143,11 +132,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the subjectTypeRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSubjectTypeRef() {
         return subjectTypeRef;
@@ -155,11 +142,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the subjectTypeRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSubjectTypeRef(String value) {
         this.subjectTypeRef = value;
@@ -167,11 +152,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the subjectTypeVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSubjectTypeVersion() {
         return subjectTypeVersion;
@@ -179,11 +162,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the subjectTypeVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSubjectTypeVersion(String value) {
         this.subjectTypeVersion = value;
@@ -191,11 +172,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the subjectTypeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSubjectTypeAnnotation() {
         return subjectTypeAnnotation;
@@ -203,11 +182,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the subjectTypeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSubjectTypeAnnotation(String value) {
         this.subjectTypeAnnotation = value;
@@ -215,11 +192,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the startTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getStartTime() {
         return startTime;
@@ -227,11 +202,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the startTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setStartTime(String value) {
         this.startTime = value;
@@ -239,11 +212,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the endTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEndTime() {
         return endTime;
@@ -251,11 +222,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the endTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEndTime(String value) {
         this.endTime = value;
@@ -263,11 +232,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the timeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTimeAnnotation() {
         return timeAnnotation;
@@ -275,11 +242,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the timeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTimeAnnotation(String value) {
         this.timeAnnotation = value;
@@ -287,11 +252,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSource() {
         return source;
@@ -299,11 +262,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSource(String value) {
         this.source = value;
@@ -311,11 +272,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the ref property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRef() {
         return ref;
@@ -323,11 +282,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the ref property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRef(String value) {
         this.ref = value;
@@ -335,11 +292,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVersion() {
         return version;
@@ -347,11 +302,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVersion(String value) {
         this.version = value;
@@ -359,11 +312,9 @@ public class SubjectStringType {
 
     /**
      * Gets the value of the annotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAnnotation() {
         return annotation;
@@ -371,11 +322,9 @@ public class SubjectStringType {
 
     /**
      * Sets the value of the annotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAnnotation(String value) {
         this.annotation = value;

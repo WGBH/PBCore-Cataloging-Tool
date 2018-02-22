@@ -12,25 +12,26 @@ public class PBCoreTreeCell extends TreeCell<PBCoreElement> {
 
     private DocumentElementItemController controller;
     private final DocumentElementItemController.DocumentElementInteractionListener listener;
-    private PBCoreElement element;
+    private final boolean allowRemovalOfAllElements;
+    private final boolean showErrors;
 
-    public PBCoreTreeCell(DocumentElementItemController.DocumentElementInteractionListener listener) {
+    public PBCoreTreeCell(boolean showErrors, boolean allowRemovalOfAllElements, DocumentElementItemController.DocumentElementInteractionListener listener) {
         this.listener = listener;
+        this.allowRemovalOfAllElements = allowRemovalOfAllElements;
+        this.showErrors = showErrors;
     }
 
     @Override
     protected void updateItem(PBCoreElement element, boolean empty) {
         super.updateItem(element, empty);
-        this.element = element;
         if (empty) {
             setGraphic(null);
         } else {
-
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/document_element_list_item.fxml"));
                 Node graphic = loader.load();
                 controller = loader.getController();
-                controller.setDocumentElementInteractionListener(getIndex(), element, listener);
+                controller.setDocumentElementInteractionListener(showErrors, allowRemovalOfAllElements, getIndex(), element, listener);
                 setGraphic(graphic);
             } catch (IOException exc) {
                 throw new RuntimeException(exc);
@@ -42,7 +43,7 @@ public class PBCoreTreeCell extends TreeCell<PBCoreElement> {
     @Override
     public void updateIndex(int i) {
         super.updateIndex(i);
-        if (controller != null && element != null) {
+        if (controller != null) {
             controller.updateIndex(i);
         }
     }

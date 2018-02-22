@@ -1,6 +1,6 @@
 package digitalbedrock.software.pbcore.lucene;
 
-public class LuceneEngineIndexerHelper {
+class LuceneEngineIndexerHelper {
 
     private String name;
     private String value;

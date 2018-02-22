@@ -1,4 +1,3 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,16 +6,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Definition: The descriptionType schema type is a
- *                 complex group of attributes that help define the description type, as well as
- *                 allowing for descriptions of segments and relevant times.
- * 
- * <p>Java class for descriptionStringType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The descriptionType schema type is a complex group of attributes
+ * that help define the description type, as well as allowing for descriptions
+ * of segments and relevant times.
+ *
+ * <p>
+ * Java class for descriptionStringType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="descriptionStringType">
  *   &lt;simpleContent>
@@ -37,9 +38,10 @@ import javax.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "descriptionStringType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "value"
@@ -85,11 +87,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getValue() {
         return value;
@@ -97,11 +97,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setValue(String value) {
         this.value = value;
@@ -109,11 +107,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the descriptionType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDescriptionType() {
         return descriptionType;
@@ -121,11 +117,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the descriptionType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDescriptionType(String value) {
         this.descriptionType = value;
@@ -133,11 +127,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the descriptionTypeSource property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDescriptionTypeSource() {
         return descriptionTypeSource;
@@ -145,11 +137,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the descriptionTypeSource property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDescriptionTypeSource(String value) {
         this.descriptionTypeSource = value;
@@ -157,11 +147,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the descriptionTypeRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDescriptionTypeRef() {
         return descriptionTypeRef;
@@ -169,11 +157,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the descriptionTypeRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDescriptionTypeRef(String value) {
         this.descriptionTypeRef = value;
@@ -181,11 +167,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the descriptionTypeVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDescriptionTypeVersion() {
         return descriptionTypeVersion;
@@ -193,11 +177,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the descriptionTypeVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDescriptionTypeVersion(String value) {
         this.descriptionTypeVersion = value;
@@ -205,11 +187,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the descriptionTypeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDescriptionTypeAnnotation() {
         return descriptionTypeAnnotation;
@@ -217,11 +197,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the descriptionTypeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDescriptionTypeAnnotation(String value) {
         this.descriptionTypeAnnotation = value;
@@ -229,11 +207,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the segmentType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSegmentType() {
         return segmentType;
@@ -241,11 +217,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the segmentType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSegmentType(String value) {
         this.segmentType = value;
@@ -253,11 +227,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the segmentTypeSource property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSegmentTypeSource() {
         return segmentTypeSource;
@@ -265,11 +237,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the segmentTypeSource property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSegmentTypeSource(String value) {
         this.segmentTypeSource = value;
@@ -277,11 +247,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the segmentTypeRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSegmentTypeRef() {
         return segmentTypeRef;
@@ -289,11 +257,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the segmentTypeRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSegmentTypeRef(String value) {
         this.segmentTypeRef = value;
@@ -301,11 +267,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the segmentTypeVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSegmentTypeVersion() {
         return segmentTypeVersion;
@@ -313,11 +277,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the segmentTypeVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSegmentTypeVersion(String value) {
         this.segmentTypeVersion = value;
@@ -325,11 +287,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the segmentTypeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSegmentTypeAnnotation() {
         return segmentTypeAnnotation;
@@ -337,11 +297,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the segmentTypeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSegmentTypeAnnotation(String value) {
         this.segmentTypeAnnotation = value;
@@ -349,11 +307,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the startTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getStartTime() {
         return startTime;
@@ -361,11 +317,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the startTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setStartTime(String value) {
         this.startTime = value;
@@ -373,11 +327,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the endTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEndTime() {
         return endTime;
@@ -385,11 +337,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the endTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEndTime(String value) {
         this.endTime = value;
@@ -397,11 +347,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the timeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTimeAnnotation() {
         return timeAnnotation;
@@ -409,11 +357,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the timeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTimeAnnotation(String value) {
         this.timeAnnotation = value;
@@ -421,11 +367,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSource() {
         return source;
@@ -433,11 +377,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSource(String value) {
         this.source = value;
@@ -445,11 +387,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the ref property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRef() {
         return ref;
@@ -457,11 +397,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the ref property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRef(String value) {
         this.ref = value;
@@ -469,11 +407,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVersion() {
         return version;
@@ -481,11 +417,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVersion(String value) {
         this.version = value;
@@ -493,11 +427,9 @@ public class DescriptionStringType {
 
     /**
      * Gets the value of the annotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAnnotation() {
         return annotation;
@@ -505,11 +437,9 @@ public class DescriptionStringType {
 
     /**
      * Sets the value of the annotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAnnotation(String value) {
         this.annotation = value;

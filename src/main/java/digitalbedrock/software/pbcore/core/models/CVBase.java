@@ -7,8 +7,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CVBase {
 
-    protected List<CVTerm> terms = new ArrayList<>();
-    protected String description = "";
+    private List<CVTerm> terms = new ArrayList<>();
+    private String description = "";
 
     public String getDescription() {
         return description;
@@ -26,7 +26,7 @@ public class CVBase {
         this.terms = terms;
     }
 
-    public CVBase() {
+    CVBase() {
     }
 
 }

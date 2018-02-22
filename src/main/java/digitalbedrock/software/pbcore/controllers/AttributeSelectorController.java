@@ -71,9 +71,7 @@ public class AttributeSelectorController extends AbsController {
 
     private TreeItem<PBCoreAttribute> getTreeItem(PBCoreElement rootElement) {
         TreeItem<PBCoreAttribute> pbCoreElementTreeItem = new TreeItem<>();
-        rootElement.getAttributes().forEach((pbCoreAttribute) -> {
-            pbCoreElementTreeItem.getChildren().add(new TreeItem<>(pbCoreAttribute));
-        });
+        rootElement.getAttributes().forEach((pbCoreAttribute) -> pbCoreElementTreeItem.getChildren().add(new TreeItem<>(pbCoreAttribute)));
         return pbCoreElementTreeItem;
     }
 
@@ -85,8 +83,7 @@ public class AttributeSelectorController extends AbsController {
 
     @Override
     public MenuBar createMenu() {
-        final MenuBar menuBar = new MenuBar();
-        return menuBar;
+        return new MenuBar();
     }
 
     private class PBCoreTreeCell extends TreeCell<PBCoreAttribute> {

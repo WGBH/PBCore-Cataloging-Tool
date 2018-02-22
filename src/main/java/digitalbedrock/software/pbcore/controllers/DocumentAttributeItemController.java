@@ -1,7 +1,6 @@
 package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
-import digitalbedrock.software.pbcore.components.AutoFillTextBoxPBCoreElementSkin;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreAttribute;
@@ -35,32 +34,29 @@ public class DocumentAttributeItemController {
         if (tChangeListener != null) {
             autoCompleteTF.getTextbox().textProperty().removeListener(tChangeListener);
         }
-        tChangeListener = (observable, oldValue, newValue) -> {
-            pbCoreAttribute.setValue(newValue);
-        };
+        tChangeListener = (observable, oldValue, newValue) -> pbCoreAttribute.setValue(newValue);
         Registry registry = MainApp.getInstance().getRegistry();
         if (registry.getControlledVocabularies().containsKey(pbCoreAttribute.getName())) {
             registry.getControlledVocabularies().get(pbCoreAttribute.getName()).getTerms().forEach(autoCompleteTF::addData);
         }
         autoCompleteTF.getTextbox().setText(pbCoreAttribute.getValue() == null ? "" : pbCoreAttribute.getValue());
-        pbCoreAttribute.valueProperty.addListener((observable, oldValue, newValue) -> valueMissingIcon.setVisible(newValue == null || newValue.trim().isEmpty()));
+        pbCoreAttribute.valueProperty.addListener((observable, oldValue, newValue) -> valueMissingIcon.setVisible(pbCoreAttribute.isRequired() && (newValue == null || newValue.trim().isEmpty())));
         attributeNameLbl.setText(pbCoreAttribute.getScreenName());
-        removeButton.setVisible(!pbCoreAttribute.isRequired());
+        removeButton.setVisible(!pbCoreAttribute.isRequired() && !pbCoreAttribute.isReadOnly());
         removeButton.setOnAction(event -> {
             if (attributeTreeCellListener != null) {
                 attributeTreeCellListener.onRemoveAttribute(pbCoreAttribute);
             }
         });
-        new AutoFillTextBoxPBCoreElementSkin(autoCompleteTF);
         autoCompleteTF.setDisable(pbCoreAttribute.isReadOnly());
         autoCompleteTF.getTextbox().textProperty().addListener(tChangeListener);
 
-        valueMissingIcon.setVisible(pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty());
+        valueMissingIcon.setVisible(pbCoreAttribute.isRequired() && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()));
 
         if (valueMissingIcon.isVisible()) {
             Tooltip tooltip = new Tooltip("Value Missing");
             valueMissingIcon.setOnMouseEntered(event -> {
-                Point2D p = valueMissingIcon.localToScreen(valueMissingIcon.getLayoutBounds().getMaxX(), valueMissingIcon.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+                Point2D p = valueMissingIcon.localToScreen(valueMissingIcon.getLayoutBounds().getMaxX(), valueMissingIcon.getLayoutBounds().getMaxY()); 
                 tooltip.show(valueMissingIcon, p.getX(), p.getY() + 2);
             });
             valueMissingIcon.setOnMouseExited(event -> tooltip.hide());

@@ -2,6 +2,7 @@ package digitalbedrock.software.pbcore.core.models.entity;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xerces.internal.dom.ElementNSImpl;
 import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.NewDocumentType;
@@ -9,42 +10,42 @@ import digitalbedrock.software.pbcore.core.models.document.PbcoreDescriptionDocu
 import digitalbedrock.software.pbcore.utils.Registry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class PBCoreStructure {
 
     private static PBCoreStructure instance;
     private List<PBCoreElement> elements = new ArrayList<>();
 
-    public PBCoreStructure() {
+    private PBCoreStructure() {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         ObjectMapper mapper = new ObjectMapper();
         try {
             elements = mapper.readValue(classloader.getResource("structure.json"), new TypeReference<List<PBCoreElement>>() {
             });
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -78,6 +79,11 @@ public class PBCoreStructure {
         }
         PBCoreElement clone = pbcoreDescriptionDocument.copy(includeAttributes);
         verifyElementExtraAttributes(clone);
+        if (selectedDocumentType == NewDocumentType.COLLECTION) {
+            clone.getSubElements().forEach(cl -> {
+                cl.getAttributes().clear();
+            });
+        }
         return clone;
     }
 
@@ -107,15 +113,18 @@ public class PBCoreStructure {
                     "xsi:schemaLocation",
                     "xmlns:xsi");
 
-            pbCoreElementToReturn.setElementType(PBCoreElementType.ROOT_ELEMENT);
-            PBCoreAttribute pbCoreAttribute = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns", "xmlns", "xmlns", true, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html", true);
-            PBCoreAttribute pbCoreAttribute1 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xsi:schemaLocation", "xsi:schemaLocation", "xsi:schemaLocation", true, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html https://raw.githubusercontent.com/WGBH/PBCore_2.1/master/pbcore-2.1.xsd", true);
-            PBCoreAttribute pbCoreAttribute2 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns:xsi", "xmlns:xsi", "xmlns:xsi", true, "", "http://www.w3.org/2001/XMLSchema-instance", true);
+            pbCoreElementToReturn.markAsRootElement();
+            PBCoreAttribute pbCoreAttribute = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns", "xmlns", "xmlns", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html", true);
+            PBCoreAttribute pbCoreAttribute1 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xsi:schemaLocation", "xsi:schemaLocation", "xsi:schemaLocation", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html https://raw.githubusercontent.com/WGBH/PBCore_2.1/master/pbcore-2.1.xsd", true);
+            PBCoreAttribute pbCoreAttribute2 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns:xsi", "xmlns:xsi", "xmlns:xsi", false, "", "http://www.w3.org/2001/XMLSchema-instance", true);
 
-            if (pbCoreElementToReturn.getAttributes().stream().filter(pbCoreAttribute3 -> attrsToAdd.contains(pbCoreAttribute3.getName())).count() == 0) {
+            if (pbCoreElementToReturn.getAttributes().stream().noneMatch(pbCoreAttribute3 -> attrsToAdd.contains(pbCoreAttribute3.getName()))) {
                 pbCoreElementToReturn.addAttribute(pbCoreAttribute);
                 pbCoreElementToReturn.addAttribute(pbCoreAttribute1);
                 pbCoreElementToReturn.addAttribute(pbCoreAttribute2);
+            }
+            if (pbCoreElementToReturn.getName().equalsIgnoreCase("pbcoreCollection")) {
+                pbCoreElementToReturn.getSubElements().forEach(element -> element.setElementType(null));
             }
         }
     }
@@ -143,6 +152,8 @@ public class PBCoreStructure {
                 pbCoreElement.getName(),
                 pbCoreElement.isRequired(),
                 pbCoreElement.isRepeatable(),
+                pbCoreElement.isSupportsChildElements(),
+                pbCoreElement.isAnyElement(),
                 pbCoreElement.getDescription(),
                 pbCoreElement.getValue(),
                 pbCoreElement.getElementType(),
@@ -156,10 +167,9 @@ public class PBCoreStructure {
                 pbCoreElement.isHasChildElements(),
                 pbCoreElement.isChoice()
         );
-        pbCoreElement.getAttributes().forEach((pbCoreAttribute) -> {
-            coreElement.addAttribute(pbCoreAttribute.copy());
-        });
+        pbCoreElement.getAttributes().forEach((pbCoreAttribute) -> coreElement.addAttribute(pbCoreAttribute.copy()));
         parseFileToPBCoreElements(customer.getName().getLocalPart(), pathRepresentation, coreElement, customer.getValue(), registry);
+        coreElement.setElementType(PBCoreElementType.ROOT_ELEMENT);
         return coreElement;
     }
 
@@ -168,52 +178,92 @@ public class PBCoreStructure {
             return true;
         }
         parseElement(parentFullPath, parentPathRepresentation, pbCoreElement, object, registry);
-        return pbCoreElement.getSubElements().isEmpty() && pbCoreElement.getValue() == null;
+        return false;
     }
 
     private void parseElement(String parentFullPath, String parentPathRepresentation, PBCoreElement pbCoreElement, Object o, Registry registry) throws IllegalAccessException {
-        for (Field field : o.getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(XmlElement.class)) {
-
-                field.setAccessible(true);
-                Object object = field.get(o);
-                if (object instanceof Collection) {
-                    Collection collection = (Collection) object;
-                    for (Object collectionObject : collection) {
-                        processElement(parentFullPath, parentPathRepresentation, pbCoreElement, field, collectionObject, registry);
-                    }
-                } else {
-                    processElement(parentFullPath, parentPathRepresentation, pbCoreElement, field, object, registry);
-                }
-
-            } else if (field.isAnnotationPresent(XmlValue.class)) {
-                field.setAccessible(true);
-                pbCoreElement.setValue((String) field.get(o));
-                pbCoreElement.setValid(pbCoreElement.getValue() != null && !pbCoreElement.getValue().trim().isEmpty());
-            } else if (field.isAnnotationPresent(XmlAttribute.class)) {
-                field.setAccessible(true);
-                if (field.get(o) == null) {
-                    continue;
-                }
-                if (pbCoreElement.getAttributes().isEmpty()) {
-                    PBCoreElement element = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
-                    PBCoreAttribute pbCoreAttribute1 = element.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).findFirst().orElse(null).copy();
-                    try {
-                        pbCoreAttribute1.setValue((String) field.get(o));
-                    }
-                    catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    pbCoreElement.addAttribute(pbCoreAttribute1);
-                } else {
-                    pbCoreElement.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).forEach(pbCoreAttribute -> {
-                        try {
-                            pbCoreAttribute.setValue((String) field.get(o));
+        pbCoreElement.setElementType(null);
+        if (o instanceof String) {
+            pbCoreElement.setValue((String) o);
+            pbCoreElement.setValid(pbCoreElement.getValue() != null && !pbCoreElement.getValue().trim().isEmpty());
+        } else {
+            List<Field> fields = new ArrayList<>(Arrays.asList(o.getClass().getDeclaredFields()));
+            Class parent = o.getClass().getSuperclass();
+            while (parent != null) {
+                fields.addAll(Arrays.asList(parent.getDeclaredFields()));
+                parent = parent.getSuperclass();
+            }
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(XmlAnyElement.class)) {
+                    field.setAccessible(true);
+                    Object object = field.get(o);
+                    if (object instanceof Collection) {
+                        for (Object o1 : (Collection) object) {
+                            StringWriter stringWriter = new StringWriter();
+                            if (o1 instanceof ElementNSImpl) {
+                                try {
+                                    ElementNSImpl elementNSImpl = (ElementNSImpl) o1;
+                                    Document document = elementNSImpl.getOwnerDocument();
+                                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                                    Transformer transformer = transformerFactory.newTransformer();
+                                    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+                                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                                    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                                    transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+                                    pbCoreElement.addAnyElement(new PBCoreElementAnyValue(stringWriter.toString()));
+                                } catch (TransformerException e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (o1 instanceof JAXBElement) {
+                                try {
+                                    processMarshalledObject(o1, stringWriter, pbCoreElement);
+                                } catch (TransformerException | ParserConfigurationException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                        catch (IllegalAccessException e) {
+                    } else {
+                        pbCoreElement.setValue((String) field.get(o));
+                    }
+                } else if (field.isAnnotationPresent(XmlElement.class)) {
+                    field.setAccessible(true);
+                    Object object = field.get(o);
+                    if (object instanceof Collection) {
+                        Collection collection = (Collection) object;
+                        for (Object collectionObject : collection) {
+                            processElement(parentFullPath, parentPathRepresentation, pbCoreElement, field, collectionObject, registry);
+                        }
+                    } else {
+                        processElement(parentFullPath, parentPathRepresentation, pbCoreElement, field, object, registry);
+                    }
+
+                } else if (field.isAnnotationPresent(XmlValue.class)) {
+                    field.setAccessible(true);
+                    pbCoreElement.setValue((String) field.get(o));
+                    pbCoreElement.setValid(pbCoreElement.getValue() != null && !pbCoreElement.getValue().trim().isEmpty());
+                } else if (field.isAnnotationPresent(XmlAttribute.class)) {
+                    field.setAccessible(true);
+                    if (field.get(o) == null) {
+                        continue;
+                    }
+                    if (pbCoreElement.getAttributes().isEmpty() || pbCoreElement.getAttributes().stream().noneMatch(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName()))) {
+                        PBCoreElement element = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
+                        PBCoreAttribute pbCoreAttribute1 = element.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).findFirst().orElse(null).copy();
+                        try {
+                            pbCoreAttribute1.setValue((String) field.get(o));
+                        } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
-                    });
+                        pbCoreElement.addAttribute(pbCoreAttribute1);
+                    } else {
+                        pbCoreElement.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).forEach(pbCoreAttribute -> {
+                            try {
+                                pbCoreAttribute.setValue((String) field.get(o));
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -223,6 +273,22 @@ public class PBCoreStructure {
             List<CVTerm> suggestions = registry.getControlledVocabularies().get(pbCoreElement.getName()).getTerms();
             pbCoreElement.setValid(suggestions.stream().filter(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(pbCoreElement.getValue())).count() > 0);
         }
+    }
+
+    private void processMarshalledObject(Object o1, StringWriter stringWriter, PBCoreElement pbc) throws ParserConfigurationException, TransformerException {
+        JAXBElement jaxbElement = (JAXBElement) o1;
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        JAXB.marshal(jaxbElement, new DOMResult(document));
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+
+        pbc.addAnyElement(new PBCoreElementAnyValue(stringWriter.toString()));
+
     }
 
     private void processElement(String parentFullPath, String parentPathRepresentation, PBCoreElement pbCoreElement, Field field, Object object, Registry registry) throws IllegalAccessException {
@@ -243,6 +309,8 @@ public class PBCoreStructure {
                 element.getName(),
                 element.isRequired(),
                 element.isRepeatable(),
+                element.isSupportsChildElements(),
+                element.isAnyElement(),
                 element.getDescription(),
                 element.getValue(),
                 element.getElementType(),
@@ -273,43 +341,63 @@ public class PBCoreStructure {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         DOMSource source = new DOMSource(doc);
         FileWriter fileWriter = new FileWriter(file);
         StreamResult result = new StreamResult(fileWriter);
         transformer.transform(source, result);
     }
 
+    public void saveFilesToZip(Map<String, PBCoreElement> pbCoreElement, File file) throws ParserConfigurationException, TransformerException, IOException {
+        ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(file));
+        for (Map.Entry<String, PBCoreElement> stringPBCoreElementEntry : pbCoreElement.entrySet()) {
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+
+            Element element = processElement(doc, stringPBCoreElementEntry.getValue());
+
+            doc.appendChild(element);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            DOMSource source = new DOMSource(doc);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            StreamResult result = new StreamResult(outputStream);
+            transformer.transform(source, result);
+
+            byte[] bytes = outputStream.toByteArray();
+            ZipEntry entry = new ZipEntry(stringPBCoreElementEntry.getKey());
+            zos.putNextEntry(entry);
+            zos.write(bytes);
+        }
+        zos.closeEntry();
+        zos.close();
+    }
+
     private Element processElement(Document doc, PBCoreElement value) {
         Element element = doc.createElement(value.getName());
-        element.appendChild(doc.createTextNode(value.getValue() == null ? "" : value.getValue()));
-        value.getAttributes().forEach((pbCoreAttribute) -> {
-            element.setAttribute(pbCoreAttribute.getName(), pbCoreAttribute.getValue());
-        });
-        value.getOrderedSubElements().forEach((pbCoreElement) -> {
-            element.appendChild(processElement(doc, pbCoreElement));
-        });
+        if (!value.isAnyElement()) {
+            element.appendChild(doc.createTextNode(value.getValue() == null ? "" : value.getValue()));
+        } else {
+            value.getAnyValues().stream().map((s) -> s == null || s.getValue() == null || s.getValue().trim().isEmpty() ? "" : s.getValue()).forEachOrdered((valueStr) -> {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder;
+                try {
+                    builder = factory.newDocumentBuilder();
+                    Document document = builder.parse(new InputSource(new StringReader(valueStr)));
+                    element.appendChild(doc.importNode(document.getDocumentElement(), true));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        value.getAttributes().forEach(pbCoreAttribute -> element.setAttribute(pbCoreAttribute.getName(), pbCoreAttribute.getValue()));
+        value.getOrderedSubElements().forEach(pbCoreElement -> element.appendChild(processElement(doc, pbCoreElement)));
         return element;
-    }
-
-    public List<PBCoreElement> getAllElementsList() {
-        List<PBCoreElement> pbCoreElements = new ArrayList<>();
-        elements.forEach(pbCoreElement -> {
-            if (pbCoreElement.getSubElements().isEmpty()) {
-                pbCoreElements.add(pbCoreElement);
-            } else {
-                fillList(pbCoreElements, pbCoreElement);
-            }
-        });
-        return pbCoreElements;
-    }
-
-    private void fillList(List<PBCoreElement> pbCoreElements, PBCoreElement pbCoreElement) {
-        pbCoreElement.getSubElements().forEach(pbCoreElement1 -> {
-            if (pbCoreElement1.getSubElements().isEmpty()) {
-                pbCoreElements.add(pbCoreElement1);
-            } else {
-                fillList(pbCoreElements, pbCoreElement1);
-            }
-        });
     }
 }

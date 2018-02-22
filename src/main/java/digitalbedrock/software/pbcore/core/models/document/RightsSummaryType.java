@@ -1,4 +1,3 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,17 +6,19 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * Definition: The rightsSumaryType schema type allows the
- *                 use of rights at the asset level and the instantiation level. The rights can be
- *                 expressed as a summary or a link or an embedded XML record. These can also contain
- *                 time relations.
- * 
- * <p>Java class for rightsSummaryType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The rightsSumaryType schema type allows the use of rights at the
+ * asset level and the instantiation level. The rights can be expressed as a
+ * summary or a link or an embedded XML record. These can also contain time
+ * relations.
+ *
+ * <p>
+ * Java class for rightsSummaryType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="rightsSummaryType">
  *   &lt;complexContent>
@@ -32,9 +33,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "rightsSummaryType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "rightsSummary",
@@ -58,11 +60,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the rightsSummary property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getRightsSummary() {
         return rightsSummary;
@@ -70,11 +70,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the rightsSummary property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setRightsSummary(SourceVersionStringType value) {
         this.rightsSummary = value;
@@ -82,11 +80,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the rightsLink property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RightsLinkType }
-     *     
+     *
+     * @return possible object is {@link RightsLinkType }
+     *
      */
     public RightsLinkType getRightsLink() {
         return rightsLink;
@@ -94,11 +90,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the rightsLink property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RightsLinkType }
-     *     
+     *
+     * @param value allowed object is {@link RightsLinkType }
+     *
      */
     public void setRightsLink(RightsLinkType value) {
         this.rightsLink = value;
@@ -106,11 +100,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the rightsEmbedded property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EmbeddedType }
-     *     
+     *
+     * @return possible object is {@link EmbeddedType }
+     *
      */
     public EmbeddedType getRightsEmbedded() {
         return rightsEmbedded;
@@ -118,11 +110,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the rightsEmbedded property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EmbeddedType }
-     *     
+     *
+     * @param value allowed object is {@link EmbeddedType }
+     *
      */
     public void setRightsEmbedded(EmbeddedType value) {
         this.rightsEmbedded = value;
@@ -130,11 +120,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the startTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getStartTime() {
         return startTime;
@@ -142,11 +130,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the startTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setStartTime(String value) {
         this.startTime = value;
@@ -154,11 +140,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the endTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEndTime() {
         return endTime;
@@ -166,11 +150,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the endTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEndTime(String value) {
         this.endTime = value;
@@ -178,11 +160,9 @@ public class RightsSummaryType {
 
     /**
      * Gets the value of the timeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTimeAnnotation() {
         return timeAnnotation;
@@ -190,11 +170,9 @@ public class RightsSummaryType {
 
     /**
      * Sets the value of the timeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTimeAnnotation(String value) {
         this.timeAnnotation = value;

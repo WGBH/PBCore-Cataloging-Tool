@@ -2,6 +2,7 @@ package digitalbedrock.software.pbcore.controllers.settings;
 
 import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
+import digitalbedrock.software.pbcore.lucene.LuceneIndexer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -34,6 +35,7 @@ public class RemoveFolderCellFactory implements Callback<TableColumn<FolderModel
                     FolderModel model = getTableView().getItems().get(getIndex());
                     btn.setOnAction(event -> {
                         MainApp.getInstance().getRegistry().getSettings().removePath(model.getFolderPath());
+                        LuceneIndexer.getInstance().deleteDocsForFolder(model.getFolderPath());
                         obsList.remove(model);
                     });
                     setGraphic(btn);

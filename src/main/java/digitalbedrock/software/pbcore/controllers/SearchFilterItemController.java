@@ -42,8 +42,8 @@ public class SearchFilterItemController {
         });
         textFieldTerm.textProperty().addListener((observable, oldValue, newValue) -> searchFilter.setTerm(newValue));
         textFieldTerm.setText(searchFilter.getTerm());
-        lblElementsCount.setText(searchFilter.isAllElements() ? "All" : (searchFilter.getAttributesCount() + ""));
-        lblAttributesCount.setText(searchFilter.isAllElements() ? "All" : (searchFilter.getElementsCount() + ""));
+        lblElementsCount.setText(searchFilter.isAllElements() ? "All" : (searchFilter.getElementsCount() + ""));
+        lblAttributesCount.setText(searchFilter.isAllElements() ? "All" : (searchFilter.getAttributesCount() + ""));
     }
 
     public interface FilterInteractionListener {

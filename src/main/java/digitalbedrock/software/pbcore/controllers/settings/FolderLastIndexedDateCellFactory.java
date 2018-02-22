@@ -8,22 +8,20 @@ import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 
-public class FolderLastIndexedDateCellFactory implements Callback<TableColumn<FolderModel, Boolean>, TableCell<FolderModel, Boolean>> {
+public class FolderLastIndexedDateCellFactory implements Callback<TableColumn<FolderModel, String>, TableCell<FolderModel, String>> {
 
     @Override
-    public TableCell<FolderModel, Boolean> call(final TableColumn<FolderModel, Boolean> param) {
-        return new TableCell<FolderModel, Boolean>() {
+    public TableCell<FolderModel, String> call(final TableColumn<FolderModel, String> param) {
+        return new TableCell<FolderModel, String>() {
             @Override
-            public void updateItem(Boolean item, boolean empty) {
+            public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                     setText(null);
                 } else {
                     FolderModel model = getTableView().getItems().get(getIndex());
-                    model.indexingProperty().addListener((observable, oldValue, newValue) -> {
-                        Platform.runLater(() -> setText(model.getDateLastIndexing() == null ? "-" : model.getDateLastIndexing().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
-                    });
+                    model.indexingProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> setText(model.getDateLastIndexing() == null ? "-" : model.getDateLastIndexing().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))));
                     setText(model.getDateLastIndexing() == null ? "-" : model.getDateLastIndexing().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 }
             }

@@ -16,7 +16,7 @@ public class AttributeVisualLayoutItemController {
             return;
         }
         previewAttributeLabel.setText(attribute.getScreenName() + ": ");
-        previewAttributeValue.setText(attribute.getValue());
+        previewAttributeValue.setText(attribute.getValue() == null ? "" : attribute.getValue());
     }
 
 }

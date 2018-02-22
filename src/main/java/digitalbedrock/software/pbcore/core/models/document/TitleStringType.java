@@ -1,4 +1,3 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,16 +6,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * Definition: The titleStringType schema type allows for
- *                 the addition of a titleType attribute as well as the standard sourceVersionGroup
- *                 attributes and a startEndTimeGroup or attributes.
- * 
- * <p>Java class for titleStringType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The titleStringType schema type allows for the addition of a
+ * titleType attribute as well as the standard sourceVersionGroup attributes and
+ * a startEndTimeGroup or attributes.
+ *
+ * <p>
+ * Java class for titleStringType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="titleStringType">
  *   &lt;simpleContent>
@@ -32,9 +33,10 @@ import javax.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "titleStringType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "value"
@@ -70,11 +72,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getValue() {
         return value;
@@ -82,11 +82,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setValue(String value) {
         this.value = value;
@@ -94,11 +92,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the titleType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitleType() {
         return titleType;
@@ -106,11 +102,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the titleType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitleType(String value) {
         this.titleType = value;
@@ -118,11 +112,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the titleTypeSource property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitleTypeSource() {
         return titleTypeSource;
@@ -130,11 +122,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the titleTypeSource property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitleTypeSource(String value) {
         this.titleTypeSource = value;
@@ -142,11 +132,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the titleTypeRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitleTypeRef() {
         return titleTypeRef;
@@ -154,11 +142,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the titleTypeRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitleTypeRef(String value) {
         this.titleTypeRef = value;
@@ -166,11 +152,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the titleTypeVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitleTypeVersion() {
         return titleTypeVersion;
@@ -178,11 +162,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the titleTypeVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitleTypeVersion(String value) {
         this.titleTypeVersion = value;
@@ -190,11 +172,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the titleTypeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTitleTypeAnnotation() {
         return titleTypeAnnotation;
@@ -202,11 +182,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the titleTypeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTitleTypeAnnotation(String value) {
         this.titleTypeAnnotation = value;
@@ -214,11 +192,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSource() {
         return source;
@@ -226,11 +202,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSource(String value) {
         this.source = value;
@@ -238,11 +212,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the ref property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRef() {
         return ref;
@@ -250,11 +222,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the ref property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRef(String value) {
         this.ref = value;
@@ -262,11 +232,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVersion() {
         return version;
@@ -274,11 +242,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVersion(String value) {
         this.version = value;
@@ -286,11 +252,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the annotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAnnotation() {
         return annotation;
@@ -298,11 +262,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the annotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAnnotation(String value) {
         this.annotation = value;
@@ -310,11 +272,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the startTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getStartTime() {
         return startTime;
@@ -322,11 +282,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the startTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setStartTime(String value) {
         this.startTime = value;
@@ -334,11 +292,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the endTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEndTime() {
         return endTime;
@@ -346,11 +302,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the endTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEndTime(String value) {
         this.endTime = value;
@@ -358,11 +312,9 @@ public class TitleStringType {
 
     /**
      * Gets the value of the timeAnnotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTimeAnnotation() {
         return timeAnnotation;
@@ -370,11 +322,9 @@ public class TitleStringType {
 
     /**
      * Sets the value of the timeAnnotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTimeAnnotation(String value) {
         this.timeAnnotation = value;

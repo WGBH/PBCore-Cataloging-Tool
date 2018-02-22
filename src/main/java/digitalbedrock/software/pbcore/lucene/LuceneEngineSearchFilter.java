@@ -16,14 +16,8 @@ public class LuceneEngineSearchFilter {
     private boolean allElements;
 
     public LuceneEngineSearchFilter() {
-    }
-
-    public LuceneEngineSearchFilter(String term, boolean allElements, List<IPBCore> fieldsToSearch) {
-        this.term.set(term);
-        this.allElements = allElements;
-        if (fieldsToSearch != null) {
-            this.fieldsToSearch = fieldsToSearch;
-        }
+        this.term.set("");
+        this.allElements = true;
     }
 
     public StringProperty termProperty() {
@@ -70,5 +64,10 @@ public class LuceneEngineSearchFilter {
 
     public void setAllElements(boolean allElements) {
         this.allElements = allElements;
+    }
+
+    public void setAsAllElementsFilter() {
+        allElements = true;
+        this.fieldsToSearch.clear();
     }
 }

@@ -4,6 +4,18 @@ Disclaimer:
 
 This code is still in the early stages and not a completed product. 
 
+Version 7  2/21/2018
+--------------------
+
+Fully functional.  
+    Reading & Writing of PBCore Files.  
+    Searching and Indexing of file.
+    Batch Edit.
+
+
+To create a full windows executable you need.
+Inno Setup -  http://www.jrsoftware.org/isdl.php
+
 Version 6  2/7/2018
 -------------------
 

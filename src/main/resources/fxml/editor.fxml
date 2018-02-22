@@ -7,79 +7,69 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
 <?import java.net.URL?>
-<fx:root id="EditorUI" prefHeight="500.0" prefWidth="580.0" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-   <padding>
-      <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
-   </padding>
-   <children>
-      <GridPane layoutX="97.0" layoutY="59.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
-            <RowConstraints vgrow="ALWAYS" />
-         </rowConstraints>
-         <children>
-            <GridPane fx:id="topBar" styleClass="editorTopBar">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <FontIcon fx:id="previewIcon" iconLiteral="mdi-code-not-equal-variant" iconSize="22" styleClass="editorTopBarIcon">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </FontIcon>
-                        <Label styleClass="editorTopBarTitle" text="PREVIEW" />
-                     </children>
-                     <padding>
-                        <Insets left="8.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                     <children>
-                        <RadioButton fx:id="toggleXml" mnemonicParsing="false" selected="true" styleClass="leftToggle" text="xml">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="typeRadio" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="toggleVisual" mnemonicParsing="false" styleClass="rightToggle" text="Visual Layout" toggleGroup="$typeRadio" />
-                        <Button fx:id="closeButton" mnemonicParsing="false">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                           <styleClass>
-                              <String fx:value="iconButton" />
-                              <String fx:value="editorTopBarExpandCollapse" />
-                           </styleClass>
-                           <graphic>
-                              <FontIcon iconLiteral="mdi-chevron-down" iconSize="20" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </GridPane>
-            <StackPane GridPane.rowIndex="1">
-               <children>
-                  <ListView fx:id="treeViewPreview" prefHeight="200.0" prefWidth="200.0" styleClass="previewElementList"/>
-                  <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0"/>
-               </children>
-            </StackPane>
-         </children>
-      </GridPane>
-   </children>
-   <stylesheets>
-      <URL value="@../styles/style.css" />
-   </stylesheets>
+<fx:root id="EditorUI" prefHeight="500.0" prefWidth="580.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../styles/style.css"/>
+    </stylesheets>
+    <GridPane layoutX="97.0" layoutY="59.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER"/>
+            <RowConstraints vgrow="ALWAYS"/>
+        </rowConstraints>
+        <GridPane fx:id="topBar" styleClass="editorTopBar">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                <padding>
+                    <Insets left="8.0"/>
+                </padding>
+                <FontIcon fx:id="previewIcon" iconLiteral="mdi-code-not-equal-variant" iconSize="22"
+                          styleClass="editorTopBarIcon">
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </FontIcon>
+                <Label styleClass="editorTopBarTitle" text="PREVIEW"/>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                <padding>
+                    <Insets right="5.0"/>
+                </padding>
+                <RadioButton fx:id="toggleXml" mnemonicParsing="false" selected="true" styleClass="leftToggle"
+                             text="xml">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="typeRadio"/>
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="toggleVisual" mnemonicParsing="false" styleClass="rightToggle"
+                             text="Visual Layout" toggleGroup="$typeRadio"/>
+                <Button fx:id="closeButton" mnemonicParsing="false">
+                    <HBox.margin>
+                        <Insets left="5.0"/>
+                    </HBox.margin>
+                    <styleClass>
+                        <String fx:value="iconButton"/>
+                        <String fx:value="editorTopBarExpandCollapse"/>
+                    </styleClass>
+                    <graphic>
+                        <FontIcon fx:id="toggleIcon" iconLiteral="mdi-chevron-down" iconSize="20"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </GridPane>
+        <StackPane GridPane.rowIndex="1">
+            <ListView fx:id="treeViewPreview" prefHeight="200.0" prefWidth="200.0" styleClass="previewElementList"/>
+            <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0"/>
+        </StackPane>
+    </GridPane>
 </fx:root>

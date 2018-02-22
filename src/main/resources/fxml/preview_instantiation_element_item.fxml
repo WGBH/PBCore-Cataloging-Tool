@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane id="PreviewElementItemUI" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.components.editor.ElementInstantiationVisualLayoutItemController">
+    <stylesheets>
+        <URL value="@../styles/style.css" />
+    </stylesheets>
+    <TextFlow layoutX="10.0" layoutY="10.0" minHeight="25.0" styleClass="itemText" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Text fx:id="previewElementLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="previewItemTypeLabel" text="Text" />
+        <Text fx:id="previewElementMediaType" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="previewItemTypeValue" text="Text" />
+        <Text fx:id="previewElementFormat" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="previewItemFileValue" text="Text" />
+    </TextFlow>
+</AnchorPane>

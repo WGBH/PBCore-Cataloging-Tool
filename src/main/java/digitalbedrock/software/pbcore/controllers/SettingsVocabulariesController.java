@@ -16,14 +16,15 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SettingsVocabulariesController extends AbsController {
 
-    public static final String EDIT = "SAVE";
-    public static final String ADD = "ADD";
-    public static final String VOCABULARY_TERM_IS_MANDATORY = "Vocabulary term is mandatory";
-    public static final String TERM_ALREADY_ADDED_FOR_SELECTED_VOCABULARY = "Term already added";
+    private static final String EDIT = "SAVE";
+    private static final String ADD = "ADD";
+    private static final String VOCABULARY_TERM_IS_MANDATORY = "Vocabulary term is mandatory";
+    private static final String TERM_ALREADY_ADDED_FOR_SELECTED_VOCABULARY = "Term already added";
     @FXML
     private Button cancelButton;
 
@@ -70,7 +71,13 @@ public class SettingsVocabulariesController extends AbsController {
     @FXML
     private TableColumn<CVTerm, String> deleteColumn;
 
-    // actions
+    @FXML
+    private ToggleGroup typeRadio;
+    @FXML
+    private RadioButton rbElements;
+    @FXML
+    private RadioButton rbAttributes;
+
     @FXML
     void onCancelButtonClick(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -82,16 +89,6 @@ public class SettingsVocabulariesController extends AbsController {
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 
-    }
-
-    @FXML
-    public void showElements(ActionEvent e) {
-        treelist.setRoot(rootElements);
-    }
-
-    @FXML
-    public void showAttributes(ActionEvent e) {
-        treelist.setRoot(rootAttributes);
     }
 
     @Override
@@ -188,24 +185,35 @@ public class SettingsVocabulariesController extends AbsController {
                 } else {
                     CVTerm term = getTableView().getItems().get(getIndex());
                     btn.setOnAction(event -> {
-                        MainApp.getInstance().getRegistry().deleteVocabulary(selectedCV, term);
-                        tvVocabularies.getItems().remove(term);
-                        if (Objects.equals(selectedCVTerm, term)) {
-                            selectedCVTerm = null;
-                            clearTFs();
-                            updateTFs();
-                            buttonCancelEdit.setVisible(false);
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Delete Controlled vocabulary");
+                        alert.setContentText("By removing this controlled vocabulary it won't be available any more.\nThis operation is not reversible.\nDo you want to proceed?");
+                        alert.setHeaderText(null);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            deleteTerm(term);
                         }
                     });
                     setGraphic(!term.isCustom() ? null : btn);
                     setText(null);
                 }
-
                 setMaxWidth(25);
                 setAlignment(Pos.CENTER);
 
                 btn.getStyleClass().add("listActionButton");
                 btn.getStyleClass().add("dimmedIcon");
+            }
+
+            private void deleteTerm(CVTerm term) {
+                MainApp.getInstance().getRegistry().deleteVocabulary(selectedCV, term);
+                tvVocabularies.getItems().remove(term);
+                if (Objects.equals(selectedCVTerm, term)) {
+                    selectedCVTerm = null;
+                    clearTFs();
+                    updateTFs();
+                    buttonCancelEdit.setVisible(false);
+                }
             }
         });
         buttonAdd.setDisable(true);
@@ -213,7 +221,16 @@ public class SettingsVocabulariesController extends AbsController {
         tfSource.setDisable(true);
         tfVersion.setDisable(true);
         tfRef.setDisable(true);
-        tvVocabularies.setSelectionModel(null);
+        typeRadio.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (typeRadio.getSelectedToggle().equals(rbAttributes)) {
+                treelist.setRoot(rootAttributes);
+            } else if (typeRadio.getSelectedToggle().equals(rbElements)) {
+                treelist.setRoot(rootElements);
+            }
+            selectedCVTerm = null;
+            cancelEditTerm(null);
+            buttonAdd.setDisable(true);
+        });
     }
 
     private void updateTFs() {
@@ -236,8 +253,7 @@ public class SettingsVocabulariesController extends AbsController {
 
     @Override
     public MenuBar createMenu() {
-        final MenuBar menuBar = new MenuBar();
-        return menuBar;
+        return new MenuBar();
     }
 
     public void saveTerm(ActionEvent actionEvent) {
@@ -247,10 +263,13 @@ public class SettingsVocabulariesController extends AbsController {
             lblInvalidTerm.setText(VOCABULARY_TERM_IS_MANDATORY);
             lblInvalidTerm.setVisible(true);
             return;
-        } else if (registry.getControlledVocabularies().get(selectedCV).getTerms().stream().filter(cvTerm -> Objects.equals(cvTerm.getTerm(), term)).count() > 0) {
-            lblInvalidTerm.setText(TERM_ALREADY_ADDED_FOR_SELECTED_VOCABULARY);
-            lblInvalidTerm.setVisible(true);
-            return;
+        } else {
+            CVTerm cvTerm1 = registry.getControlledVocabularies().get(selectedCV).getTerms().stream().filter(cvTerm -> Objects.equals(cvTerm.getTerm(), term)).findFirst().orElse(null);
+            if (cvTerm1 != null && (selectedCVTerm == null || !Objects.equals(selectedCVTerm, cvTerm1))) {
+                lblInvalidTerm.setText(TERM_ALREADY_ADDED_FOR_SELECTED_VOCABULARY);
+                lblInvalidTerm.setVisible(true);
+                return;
+            }
         }
         lblInvalidTerm.setVisible(false);
         String source = tfSource.getText();
@@ -266,9 +285,7 @@ public class SettingsVocabulariesController extends AbsController {
             tvVocabularies.getItems().set(tvVocabularies.getItems().indexOf(selectedCVTerm), selectedCVTerm);
         }
         selectedCVTerm = null;
-        clearTFs();
-        updateTFs();
-        buttonCancelEdit.setVisible(false);
+        cancelEditTerm(null);
     }
 
     public void cancelEditTerm(ActionEvent actionEvent) {

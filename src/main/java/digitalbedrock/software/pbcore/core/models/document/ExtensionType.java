@@ -1,25 +1,21 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-
 
 /**
- * Definition: The extensionType schema type uses a common
- *                 structure to allow for the use of multiple, qualified extensions at the asset,
- *                 instantiation and essence levels.
- * 
- * <p>Java class for extensionType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The extensionType schema type uses a common structure to allow
+ * for the use of multiple, qualified extensions at the asset, instantiation and
+ * essence levels.
+ *
+ * <p>
+ * Java class for extensionType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="extensionType">
  *   &lt;complexContent>
@@ -45,9 +41,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "extensionType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "extensionWrap",
@@ -62,68 +59,70 @@ public class ExtensionType {
 
     /**
      * Gets the value of the extensionWrap property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extensionWrap property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extensionWrap property.
+     *
      * <p>
      * For example, to onAdd a new item, do as follows:
      * <pre>
      *    getExtensionWrap().onAdd(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ExtensionType.ExtensionWrap }
-     * 
-     * 
+     *
+     *
      */
     public List<ExtensionType.ExtensionWrap> getExtensionWrap() {
         if (extensionWrap == null) {
-            extensionWrap = new ArrayList<ExtensionType.ExtensionWrap>();
+            extensionWrap = new ArrayList<>();
         }
         return this.extensionWrap;
     }
 
     /**
      * Gets the value of the extensionEmbedded property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the extensionEmbedded property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the extensionEmbedded property.
+     *
      * <p>
      * For example, to onAdd a new item, do as follows:
      * <pre>
      *    getExtensionEmbedded().onAdd(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link EmbeddedType }
-     * 
-     * 
+     *
+     *
      */
     public List<EmbeddedType> getExtensionEmbedded() {
         if (extensionEmbedded == null) {
-            extensionEmbedded = new ArrayList<EmbeddedType>();
+            extensionEmbedded = new ArrayList<>();
         }
         return this.extensionEmbedded;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -138,8 +137,8 @@ public class ExtensionType {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -167,11 +166,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the extensionElement property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getExtensionElement() {
             return extensionElement;
@@ -179,11 +176,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the extensionElement property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setExtensionElement(String value) {
             this.extensionElement = value;
@@ -191,11 +186,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the extensionValue property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getExtensionValue() {
             return extensionValue;
@@ -203,11 +196,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the extensionValue property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setExtensionValue(String value) {
             this.extensionValue = value;
@@ -215,11 +206,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the extensionAuthorityUsed property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getExtensionAuthorityUsed() {
             return extensionAuthorityUsed;
@@ -227,11 +216,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the extensionAuthorityUsed property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setExtensionAuthorityUsed(String value) {
             this.extensionAuthorityUsed = value;
@@ -239,11 +226,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the source property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getSource() {
             return source;
@@ -251,11 +236,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the source property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setSource(String value) {
             this.source = value;
@@ -263,11 +246,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the ref property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getRef() {
             return ref;
@@ -275,11 +256,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the ref property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setRef(String value) {
             this.ref = value;
@@ -287,11 +266,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the version property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getVersion() {
             return version;
@@ -299,11 +276,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the version property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setVersion(String value) {
             this.version = value;
@@ -311,11 +286,9 @@ public class ExtensionType {
 
         /**
          * Gets the value of the annotation property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is {@link String }
+         *
          */
         public String getAnnotation() {
             return annotation;
@@ -323,11 +296,9 @@ public class ExtensionType {
 
         /**
          * Sets the value of the annotation property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is {@link String }
+         *
          */
         public void setAnnotation(String value) {
             this.annotation = value;

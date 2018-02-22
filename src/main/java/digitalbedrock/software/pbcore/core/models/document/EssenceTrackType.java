@@ -1,24 +1,20 @@
-
 package digitalbedrock.software.pbcore.core.models.document;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-
 
 /**
- * Definition: The essenceTrackType schema type uses a
- *                 common structure to allow for grouping of the essence related elements and their
- *                 repeated use.
- * 
- * <p>Java class for essenceTrackType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * Definition: The essenceTrackType schema type uses a common structure to allow
+ * for grouping of the essence related elements and their repeated use.
+ *
+ * <p>
+ * Java class for essenceTrackType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="essenceTrackType">
  *   &lt;complexContent>
@@ -46,9 +42,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
+@SuppressWarnings("WeakerAccess")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "essenceTrackType", namespace = "http://www.pbcore.org/PBCore/PBCoreNamespace.html", propOrder = {
     "essenceTrackType",
@@ -113,11 +110,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getEssenceTrackType() {
         return essenceTrackType;
@@ -125,11 +120,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setEssenceTrackType(SourceVersionStringType value) {
         this.essenceTrackType = value;
@@ -137,40 +130,38 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackIdentifier property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the essenceTrackIdentifier property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the essenceTrackIdentifier property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEssenceTrackIdentifier().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link SourceVersionStringType }
-     * 
-     * 
+     *
+     *
      */
     public List<SourceVersionStringType> getEssenceTrackIdentifier() {
         if (essenceTrackIdentifier == null) {
-            essenceTrackIdentifier = new ArrayList<SourceVersionStringType>();
+            essenceTrackIdentifier = new ArrayList<>();
         }
         return this.essenceTrackIdentifier;
     }
 
     /**
      * Gets the value of the essenceTrackStandard property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getEssenceTrackStandard() {
         return essenceTrackStandard;
@@ -178,11 +169,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackStandard property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setEssenceTrackStandard(SourceVersionStringType value) {
         this.essenceTrackStandard = value;
@@ -190,11 +179,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackEncoding property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getEssenceTrackEncoding() {
         return essenceTrackEncoding;
@@ -202,11 +189,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackEncoding property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setEssenceTrackEncoding(SourceVersionStringType value) {
         this.essenceTrackEncoding = value;
@@ -214,11 +199,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackDataRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackDataRate() {
         return essenceTrackDataRate;
@@ -226,11 +209,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackDataRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackDataRate(TechnicalStringType value) {
         this.essenceTrackDataRate = value;
@@ -238,11 +219,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackFrameRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackFrameRate() {
         return essenceTrackFrameRate;
@@ -250,11 +229,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackFrameRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackFrameRate(TechnicalStringType value) {
         this.essenceTrackFrameRate = value;
@@ -262,11 +239,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackPlaybackSpeed property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackPlaybackSpeed() {
         return essenceTrackPlaybackSpeed;
@@ -274,11 +249,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackPlaybackSpeed property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackPlaybackSpeed(TechnicalStringType value) {
         this.essenceTrackPlaybackSpeed = value;
@@ -286,11 +259,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackSamplingRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackSamplingRate() {
         return essenceTrackSamplingRate;
@@ -298,11 +269,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackSamplingRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackSamplingRate(TechnicalStringType value) {
         this.essenceTrackSamplingRate = value;
@@ -310,11 +279,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackBitDepth property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackBitDepth() {
         return essenceTrackBitDepth;
@@ -322,11 +289,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackBitDepth property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackBitDepth(TechnicalStringType value) {
         this.essenceTrackBitDepth = value;
@@ -334,11 +299,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackFrameSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackFrameSize() {
         return essenceTrackFrameSize;
@@ -346,11 +309,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackFrameSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackFrameSize(TechnicalStringType value) {
         this.essenceTrackFrameSize = value;
@@ -358,11 +319,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackAspectRatio property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @return possible object is {@link TechnicalStringType }
+     *
      */
     public TechnicalStringType getEssenceTrackAspectRatio() {
         return essenceTrackAspectRatio;
@@ -370,11 +329,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackAspectRatio property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TechnicalStringType }
-     *     
+     *
+     * @param value allowed object is {@link TechnicalStringType }
+     *
      */
     public void setEssenceTrackAspectRatio(TechnicalStringType value) {
         this.essenceTrackAspectRatio = value;
@@ -382,11 +339,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackTimeStart property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getEssenceTrackTimeStart() {
         return essenceTrackTimeStart;
@@ -394,11 +349,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackTimeStart property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setEssenceTrackTimeStart(SourceVersionStringType value) {
         this.essenceTrackTimeStart = value;
@@ -406,11 +359,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackDuration property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @return possible object is {@link SourceVersionStringType }
+     *
      */
     public SourceVersionStringType getEssenceTrackDuration() {
         return essenceTrackDuration;
@@ -418,11 +369,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the essenceTrackDuration property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SourceVersionStringType }
-     *     
+     *
+     * @param value allowed object is {@link SourceVersionStringType }
+     *
      */
     public void setEssenceTrackDuration(SourceVersionStringType value) {
         this.essenceTrackDuration = value;
@@ -430,98 +379,96 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the essenceTrackLanguage property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the essenceTrackLanguage property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the essenceTrackLanguage property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEssenceTrackLanguage().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ThreeLetterStringType }
-     * 
-     * 
+     *
+     *
      */
     public List<ThreeLetterStringType> getEssenceTrackLanguage() {
         if (essenceTrackLanguage == null) {
-            essenceTrackLanguage = new ArrayList<ThreeLetterStringType>();
+            essenceTrackLanguage = new ArrayList<>();
         }
         return this.essenceTrackLanguage;
     }
 
     /**
      * Gets the value of the essenceTrackAnnotation property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the essenceTrackAnnotation property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the essenceTrackAnnotation property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEssenceTrackAnnotation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link AnnotationStringType }
-     * 
-     * 
+     *
+     *
      */
     public List<AnnotationStringType> getEssenceTrackAnnotation() {
         if (essenceTrackAnnotation == null) {
-            essenceTrackAnnotation = new ArrayList<AnnotationStringType>();
+            essenceTrackAnnotation = new ArrayList<>();
         }
         return this.essenceTrackAnnotation;
     }
 
     /**
      * Gets the value of the essenceTrackExtension property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the essenceTrackExtension property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the essenceTrackExtension property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEssenceTrackExtension().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ExtensionType }
-     * 
-     * 
+     *
+     *
      */
     public List<ExtensionType> getEssenceTrackExtension() {
         if (essenceTrackExtension == null) {
-            essenceTrackExtension = new ArrayList<ExtensionType>();
+            essenceTrackExtension = new ArrayList<>();
         }
         return this.essenceTrackExtension;
     }
 
     /**
      * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSource() {
         return source;
@@ -529,11 +476,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSource(String value) {
         this.source = value;
@@ -541,11 +486,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the ref property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRef() {
         return ref;
@@ -553,11 +496,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the ref property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRef(String value) {
         this.ref = value;
@@ -565,11 +506,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVersion() {
         return version;
@@ -577,11 +516,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVersion(String value) {
         this.version = value;
@@ -589,11 +526,9 @@ public class EssenceTrackType {
 
     /**
      * Gets the value of the annotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAnnotation() {
         return annotation;
@@ -601,11 +536,9 @@ public class EssenceTrackType {
 
     /**
      * Sets the value of the annotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAnnotation(String value) {
         this.annotation = value;

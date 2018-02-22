@@ -9,11 +9,11 @@ public class HitDocument {
     private int hitsCount;
     private PBCoreElement pbCoreElement;
 
-    public HitDocument(String filename, String filepath, int hitsCount, PBCoreElement pbCoreElement) {
+    public HitDocument(String filename, String filepath, PBCoreElement pbCoreElement) {
         this.filename = filename;
         this.filepath = filepath;
         this.pbCoreElement = pbCoreElement;
-        this.hitsCount = hitsCount;
+        this.hitsCount = 0;
     }
 
     public String getFilepath() {

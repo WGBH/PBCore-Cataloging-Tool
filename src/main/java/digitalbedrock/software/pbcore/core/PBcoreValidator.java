@@ -27,7 +27,7 @@ public class PBcoreValidator {
         try {
             this.validate(xml);
             return true;
-        } catch (SAXException | IOException ex) {
+        } catch (SAXException | IOException ignored) {
         }
         return false;
     }

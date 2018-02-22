@@ -26,15 +26,19 @@ public class DocumentElementItemController {
 
     private ChangeListener<String> tChangeListener;
     private ChangeListener<Boolean> tChangeListenerB;
+    private ChangeListener<Boolean> tChangeListenerV;
     private ChangeListener<Boolean> tChangeListenerHasMultiple;
 
-    public void setDocumentElementInteractionListener(int i, PBCoreElement pbCoreElement, DocumentElementInteractionListener documentElementInteractionListener) {
+    public void setDocumentElementInteractionListener(boolean showErrors, boolean allowRemovalOfAllElements, int i, PBCoreElement pbCoreElement, DocumentElementInteractionListener documentElementInteractionListener) {
         this.index = i;
         if (tChangeListener != null) {
             pbCoreElement.valueProperty.removeListener(tChangeListener);
         }
         if (tChangeListenerB != null) {
-            pbCoreElement.validProperty.removeListener(tChangeListenerB);
+            pbCoreElement.validAttributesProperty.removeListener(tChangeListenerB);
+        }
+        if (tChangeListenerV != null) {
+            pbCoreElement.validProperty.removeListener(tChangeListenerV);
         }
         if (tChangeListenerHasMultiple != null) {
             pbCoreElement.hasMultipleProperty.removeListener(tChangeListenerHasMultiple);
@@ -42,26 +46,31 @@ public class DocumentElementItemController {
         removeButton.setOnAction(event -> documentElementInteractionListener.onRemove(index, pbCoreElement));
         addButton.setOnAction(event -> documentElementInteractionListener.onAdd(index, pbCoreElement));
         copyButton.setOnAction(event -> documentElementInteractionListener.onDuplicate(index, pbCoreElement));
-        valueMissingIcon.setVisible(!pbCoreElement.isValid());
-        removeButton.setVisible(!pbCoreElement.isRequired() || pbCoreElement.getHasMultiple());
-        addButton.setVisible(pbCoreElement.getElementType() == PBCoreElementType.ROOT_ELEMENT || pbCoreElement.isHasChildElements());
+        removeButton.setVisible(allowRemovalOfAllElements || !pbCoreElement.isRequired() || pbCoreElement.getHasMultiple());
+        addButton.setVisible(pbCoreElement.getElementType() == PBCoreElementType.ROOT_ELEMENT || pbCoreElement.isSupportsChildElements());
         copyButton.setVisible(pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT && pbCoreElement.isRepeatable());
 
-        tChangeListenerHasMultiple = (observable, oldValue, newValue) -> removeButton.setVisible(!pbCoreElement.isRequired() || pbCoreElement.getHasMultiple());
+        tChangeListenerHasMultiple = (observable, oldValue, newValue) -> removeButton.setVisible(allowRemovalOfAllElements || !pbCoreElement.isRequired() || pbCoreElement.getHasMultiple());
         tChangeListener = (observable, oldValue, newValue) -> {
-            valueMissingIcon.setVisible(!pbCoreElement.isValid() || !pbCoreElement.isValidAttributes());
+            valueMissingIcon.setVisible(showErrors && (!pbCoreElement.isValid() || !pbCoreElement.isValidAttributes()));
             updateIconColor(pbCoreElement);
         };
         tChangeListenerB = (observable, oldValue, newValue) -> {
-            valueMissingIcon.setVisible(!newValue || !pbCoreElement.isValidAttributes());
+            valueMissingIcon.setVisible(showErrors && (!pbCoreElement.isValid() || !newValue));
+            updateIconColor(pbCoreElement);
+        };
+        tChangeListenerV = (observable, oldValue, newValue) -> {
+            valueMissingIcon.setVisible(showErrors && (!newValue || !pbCoreElement.isValidAttributes()));
             updateIconColor(pbCoreElement);
         };
 
         pbCoreElement.hasMultipleProperty.addListener(tChangeListenerHasMultiple);
         pbCoreElement.validAttributesProperty.addListener(tChangeListenerB);
         pbCoreElement.valueProperty.addListener(tChangeListener);
-        pbCoreElement.validProperty.addListener(tChangeListenerB);
-        valueMissingIcon.setVisible((!pbCoreElement.isValid() || !pbCoreElement.isValidAttributes()) && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT);
+        pbCoreElement.validProperty.addListener(tChangeListenerV);
+        valueMissingIcon.setVisible(showErrors
+                && (pbCoreElement.isFatalError() || !pbCoreElement.isValid() || !pbCoreElement.isValidAttributes())
+                && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT);
         updateIconColor(pbCoreElement);
         titleLabel.setText(pbCoreElement.getScreenName());
     }

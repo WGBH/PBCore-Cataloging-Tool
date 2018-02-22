@@ -3,12 +3,12 @@ package digitalbedrock.software.pbcore.lucene;
 import digitalbedrock.software.pbcore.core.PBcoreValidator;
 import javafx.concurrent.Task;
 import org.apache.lucene.index.IndexWriter;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import org.xml.sax.SAXException;
 
-public class LuceneIndexingTask extends Task<Boolean> {
+class LuceneIndexingTask extends Task<Boolean> {
 
     private final IndexWriter indexWriter;
     private final String folder;
@@ -36,7 +36,7 @@ public class LuceneIndexingTask extends Task<Boolean> {
         try {
             File f = new File(file);
             new PBcoreValidator().validate(f);
-            LuceneEngine.createOrUpdateIndexesForFile(indexWriter, f);
+            LuceneEngine.createOrUpdateIndexesForFile(indexWriter, f, folder);
             indexWriter.commit();
             return true;
         } catch (IOException | SAXException ex) {

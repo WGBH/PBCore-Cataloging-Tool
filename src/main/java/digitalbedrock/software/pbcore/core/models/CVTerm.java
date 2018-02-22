@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CVTerm implements Comparable<CVTerm> {
 
@@ -20,10 +21,10 @@ public class CVTerm implements Comparable<CVTerm> {
     public CVTerm() {
     }
 
-    public CVTerm(String term, String description, boolean isCustom, String source, String version, String ref) {
+    public CVTerm(String term, String source, String version, String ref) {
         this.term.setValue(term);
-        this.description = description;
-        this.isCustom = isCustom;
+        this.description = "";
+        this.isCustom = true;
         this.source.setValue(source);
         this.version.setValue(version);
         this.ref.setValue(ref);
@@ -41,6 +42,7 @@ public class CVTerm implements Comparable<CVTerm> {
         this.term.set(term);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isCustom() {
         return isCustom;
     }

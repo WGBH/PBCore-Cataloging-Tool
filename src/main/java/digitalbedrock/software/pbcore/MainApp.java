@@ -22,6 +22,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +35,9 @@ public class MainApp extends Application {
     private static MainApp instance;
     private SearchResultListener searchResultListener;
     private final Registry registry;
+
+    private Stage searchStage;
+    private Stage settingsStage;
 
     public MainApp() throws IOException {
         instance = this;
@@ -57,12 +62,12 @@ public class MainApp extends Application {
             stage.setTitle("PBCore Cataloging Tool");
 
             registry.loadSavedSettings();
-            if (registry.getSettings().getFolders().isEmpty()) {
-                showSettings(1);
-            }
             PBCoreStructure.getInstance();
             goToMainScreen();
             primaryStage.show();
+            if (registry.getSettings().getFolders().isEmpty()) {
+                showSettings(true, 1);
+            }
         } catch (Exception ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -85,43 +90,15 @@ public class MainApp extends Application {
         }
     }
 
-    private Parent replaceSceneContent(String fxml) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-        Parent page = null;
-        try {
-            page = loader.load();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        Scene scene = stage.getScene();
-
-        final BorderPane borderPane = new BorderPane();
-        AbsController controller = loader.getController();
-        if (controller instanceof SearchResultListener) {
-            searchResultListener = (SearchResultListener) controller;
-        }
-        borderPane.setTop(controller.createMenu());
-        borderPane.setCenter(page);
-
-        if (scene == null) {
-            scene = new Scene(borderPane);
-            stage.setMinWidth(800);
-            stage.setMinHeight(600);
-            stage.setScene(scene);
-            stage.setTitle("PBCore Cataloging Tool");
-            stage.setOnShown(event -> controller.onShown());
-            stage.show();
-        } else {
-            stage.getScene().setRoot(page);
-        }
-        return page;
-    }
-
     public Registry getRegistry() {
         return registry;
     }
 
-    private void showSettings(int tab) {
+    private void showSettings(boolean block, int tab) {
+        if (settingsStage != null) {
+            settingsStage.toFront();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"));
             Parent tabs = loader.load();
@@ -135,10 +112,13 @@ public class MainApp extends Application {
             Scene settingsScene = new Scene(borderPane);
             Stage settingsWindow = new Stage();
             settingsWindow.initOwner(settingsScene.getWindow());
-            settingsWindow.initModality(Modality.WINDOW_MODAL);
+            settingsWindow.initModality(block ? Modality.APPLICATION_MODAL : Modality.WINDOW_MODAL);
             settingsWindow.setTitle("Settings");
             settingsWindow.setScene(settingsScene);
             settingsWindow.show();
+            settingsWindow.setOnCloseRequest(event -> settingsStage = null);
+            settingsStage = settingsWindow;
+            settingsStage.toFront();
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,6 +129,10 @@ public class MainApp extends Application {
     }
 
     private void showSearch(List<LuceneEngineSearchFilter> filters) {
+        if (searchStage != null) {
+            searchStage.toFront();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/search.fxml"));
             Parent tabs = loader.load();
@@ -168,6 +152,8 @@ public class MainApp extends Application {
             settingsWindow.setTitle("Search");
             settingsWindow.setScene(settingsScene);
             settingsWindow.show();
+            settingsWindow.setOnCloseRequest(event -> searchStage = null);
+            searchStage = settingsWindow;
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -182,7 +168,7 @@ public class MainApp extends Application {
             Scene searchScene = new Scene(parent);
             Stage searchWindow = new Stage();
             searchWindow.initOwner(searchScene.getWindow());
-            searchWindow.initModality(Modality.WINDOW_MODAL);
+            searchWindow.initModality(Modality.APPLICATION_MODAL);
             searchWindow.setTitle("Add new attribute");
             searchWindow.setScene(searchScene);
             searchWindow.show();
@@ -197,7 +183,30 @@ public class MainApp extends Application {
         }
     }
 
-    public void showSelectElement(int index, PBCoreElement pbCoreElement, ElementSelectionListener elementSelectionListener) {
+    public void showAddElementAnyValue(PBCoreElement pbCoreElement, AddElementAnyValueListener addElementAnyValueListener) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/embedded_dialog.fxml"));
+            Parent parent = loader.load();
+            AddElementAnyValueController controller = loader.getController();
+            Scene searchScene = new Scene(parent);
+            Stage searchWindow = new Stage();
+            searchWindow.initOwner(searchScene.getWindow());
+            searchWindow.initModality(Modality.APPLICATION_MODAL);
+            searchWindow.setTitle("Add new embedded value");
+            searchWindow.setScene(searchScene);
+            searchWindow.show();
+            controller.setAttributeSelectionListener(element -> {
+                if (addElementAnyValueListener != null) {
+                    addElementAnyValueListener.onValueAdded(element);
+                }
+                searchWindow.close();
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showSelectElement(String treeViewId, int index, PBCoreElement pbCoreElement, ElementSelectionListener elementSelectionListener) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/element_selector.fxml"));
             Parent parent = loader.load();
@@ -207,13 +216,13 @@ public class MainApp extends Application {
             Stage selectElementWindow = new Stage();
             selectElementWindow.initOwner(stage);
             selectElementWindow.initOwner(searchScene.getWindow());
-            selectElementWindow.initModality(Modality.WINDOW_MODAL);
+            selectElementWindow.initModality(Modality.APPLICATION_MODAL);
             selectElementWindow.setTitle("Add new element");
             selectElementWindow.setScene(searchScene);
             selectElementWindow.show();
-            controller.setElementSelectionListener(index, (index1, element) -> {
+            controller.setElementSelectionListener(treeViewId, index, (treeViewId1, index1, element) -> {
                 if (elementSelectionListener != null) {
-                    elementSelectionListener.onElementSelected(index1, element);
+                    elementSelectionListener.onElementSelected(treeViewId, index, element);
                 }
                 selectElementWindow.close();
             });
@@ -222,7 +231,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void showSelectSearchFieldElements(int index, LuceneEngineSearchFilter luceneEngineSearchFilter, SearchFilterElementsSelectionListener elementSelectionListener) {
+    private void showSelectSearchFieldElements(int index, LuceneEngineSearchFilter luceneEngineSearchFilter, SearchFilterElementsSelectionListener elementSelectionListener) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/search_filter_elements_selector.fxml"));
             Parent parent = loader.load();
@@ -250,25 +259,13 @@ public class MainApp extends Application {
     public void goTo(MenuListener.MenuOption menuOption, Object... objects) {
         switch (menuOption) {
             case OPEN_FILE:
-                goToMainScreen();
-                break;
             case NEW_DESCRIPTION_DOCUMENT:
-                goToMainScreen();
-                break;
             case NEW_INSTANTIATION_DOCUMENT:
-                goToMainScreen();
-                break;
-            case NEW_COLLECTION:
-                goToMainScreen();
-                break;
-            case BATCH_EDIT:
-                break;
-            case EXPORT_OPEN_FILES_TO_ZIP:
-                break;
             case SAVE:
-                goToMainScreen();
-                break;
             case SAVE_AS:
+            case NEW_COLLECTION:
+            case BATCH_EDIT:
+            case EXPORT_OPEN_FILES_TO_ZIP:
                 goToMainScreen();
                 break;
             case QUIT:
@@ -278,13 +275,19 @@ public class MainApp extends Application {
                 showSearch();
                 break;
             case SAVED_SEARCH:
-                showSearch((List<LuceneEngineSearchFilter>) objects[0]);
+                List<LuceneEngineSearchFilter> filters = new ArrayList<>();
+                if (objects[0] != null && objects[0] instanceof Collection) {
+                    ((Collection) objects[0]).stream().filter((o) -> (o instanceof LuceneEngineSearchFilter)).forEachOrdered((o) -> {
+                        filters.add((LuceneEngineSearchFilter) o);
+                    });
+                }
+                showSearch(filters);
                 break;
             case CONTROLLED_VOCABULARIES:
-                showSettings(0);
+                showSettings(false, 0);
                 break;
             case DIRECTORY_CRAWLING:
-                showSettings(1);
+                showSettings(false, 1);
                 break;
             case HELP:
                 break;
@@ -292,10 +295,13 @@ public class MainApp extends Application {
                 showSelectSearchFieldElements((int) objects[0], (LuceneEngineSearchFilter) objects[1], (SearchFilterElementsSelectionListener) objects[2]);
                 break;
             case SELECT_ELEMENT:
-                showSelectElement((int) objects[0], (PBCoreElement) objects[1], (ElementSelectionListener) objects[2]);
+                showSelectElement((String) objects[0], (int) objects[1], (PBCoreElement) objects[2], (ElementSelectionListener) objects[3]);
                 break;
             case SELECT_ATTRIBUTE:
                 showSelectAttribute((PBCoreElement) objects[0], (AttributeSelectionListener) objects[1]);
+                break;
+            case ADD_ELEMENT_ANY_VALUE:
+                showAddElementAnyValue((PBCoreElement) objects[0], (AddElementAnyValueListener) objects[1]);
                 break;
             case SEARCH_RESULT_SELECTED:
                 if (searchResultListener != null) {
@@ -307,7 +313,34 @@ public class MainApp extends Application {
 
     private void goToMainScreen() {
         try {
-            replaceSceneContent("/fxml/main.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+            Parent page = null;
+            try {
+                page = loader.load();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            Scene scene = stage.getScene();
+
+            final BorderPane borderPane = new BorderPane();
+            AbsController controller = loader.getController();
+            if (controller instanceof SearchResultListener) {
+                searchResultListener = (SearchResultListener) controller;
+            }
+            borderPane.setTop(controller.createMenu());
+            borderPane.setCenter(page);
+
+            if (scene == null) {
+                scene = new Scene(borderPane);
+                stage.setMinWidth(800);
+                stage.setMinHeight(600);
+                stage.setScene(scene);
+                stage.setTitle("PBCore Cataloging Tool");
+                stage.setOnShown(event -> controller.onShown());
+                stage.show();
+            } else {
+                stage.getScene().setRoot(page);
+            }
         } catch (Exception ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }

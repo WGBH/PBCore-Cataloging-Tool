@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("WeakerAccess")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PBCoreElement extends IPBCore implements Serializable {
 
@@ -29,25 +30,31 @@ public class PBCoreElement extends IPBCore implements Serializable {
     private boolean choice;
     private String description;
     private PBCoreElementType elementType;
+    private boolean supportsChildElements;
     private boolean hasChildElements;
+    private boolean anyElement;
     @JsonIgnore
-    public BooleanProperty hasMultipleProperty = new SimpleBooleanProperty();
+    public final BooleanProperty hasMultipleProperty = new SimpleBooleanProperty();
     @JsonIgnore
-    public StringProperty valueProperty = new SimpleStringProperty();
+    public final StringProperty valueProperty = new SimpleStringProperty();
+    @JsonIgnore
+    public List<PBCoreElementAnyValue> anyValues = new ArrayList<>();
 
     private boolean supportsAttributes;
     @JsonIgnore
-    public BooleanProperty validAttributesProperty = new SimpleBooleanProperty(true);
+    public final BooleanProperty validAttributesProperty = new SimpleBooleanProperty(true);
     @JsonIgnore
-    public BooleanProperty validProperty = new SimpleBooleanProperty();
+    public final BooleanProperty validProperty = new SimpleBooleanProperty();
     @JsonIgnore
-    public BooleanProperty fatalErrorProperty = new SimpleBooleanProperty();
+    public final BooleanProperty fatalErrorProperty = new SimpleBooleanProperty();
 
     private int sequence;
 
     private ElementValueRestrictionType elementValueRestrictionType = ElementValueRestrictionType.SIMPLE;
     private String patternToFollow;
     private List<String> enumerationValues;
+    @JsonIgnore
+    private int index;
 
     public PBCoreElement() {
         id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
@@ -58,7 +65,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.pathRepresentation = pathRepresentation;
     }
 
-    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name, boolean required, boolean repeatable, String description, String value, PBCoreElementType elementType,
+    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name, boolean required, boolean repeatable, boolean supportsChildElements, boolean anyElement, String description, String value, PBCoreElementType elementType,
             boolean supportsAttributes,
             boolean valid, boolean fatalError,
             int sequence,
@@ -73,6 +80,8 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.required = required;
         this.hasChildElements = hasChildElements;
         this.repeatable = repeatable;
+        this.supportsChildElements = supportsChildElements;
+        this.anyElement = anyElement;
         this.description = description;
         this.valueProperty.setValue(value);
         this.elementType = elementType;
@@ -84,6 +93,10 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.patternToFollow = patternToFollow;
         this.enumerationValues = enumerationValues;
         this.choice = choice;
+    }
+
+    public boolean isSupportsChildElements() {
+        return supportsChildElements;
     }
 
     public int getSequence() {
@@ -106,7 +119,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.attributes = attributes;
         setSupportsAttributes(!this.attributes.isEmpty());
         attributes.forEach(pbCoreAttribute -> pbCoreAttribute.valueProperty.addListener((observable, oldValue, newValue) -> {
-            setValidAttributes(attributes.stream().filter(pbCoreAttribute1 -> pbCoreAttribute1.getValue() == null || pbCoreAttribute1.getValue().trim().isEmpty()).count() == 0);
+            setValidAttributes(attributes.stream().noneMatch(pbCoreAttribute1 -> pbCoreAttribute.isRequired() && (pbCoreAttribute1.getValue() == null || pbCoreAttribute1.getValue().trim().isEmpty())));
         }));
     }
 
@@ -124,6 +137,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         return screenName;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -134,9 +148,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
 
     public void addAttribute(PBCoreAttribute attribute) {
         if (!attributes.contains(attribute)) {
-            attribute.valueProperty.addListener((observable, oldValue, newValue) -> {
-                updateValidAttributesStatus(newValue);
-            });
+            attribute.valueProperty.addListener((observable, oldValue, newValue) -> updateValidAttributesStatus(newValue));
             this.attributes.add(attribute);
             updateValidAttributesStatus(attribute.getValue());
         }
@@ -146,7 +158,9 @@ public class PBCoreElement extends IPBCore implements Serializable {
         if (subElements.stream().filter(el -> !el.isValidAttributes()).count() > 1) {
             setValidAttributes(false);
         } else {
-            setValidAttributes(attributes.stream().filter(pbCoreAttribute -> pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()).count() == 0 && newValue != null && !newValue.trim().isEmpty());
+            setValidAttributes(attributes.stream()
+                    .noneMatch(pbCoreAttribute -> pbCoreAttribute.isRequired() && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()))
+                    && (!isRequired() || (newValue != null && !newValue.trim().isEmpty())));
         }
     }
 
@@ -222,9 +236,36 @@ public class PBCoreElement extends IPBCore implements Serializable {
     }
 
     public void clearOptionalSubElements() {
-        List<PBCoreElement> collect = subElements.stream().filter(pbCoreElement -> !pbCoreElement.isRequired()).collect(Collectors.toList());
+        clearOptionalSubElements(null);
+    }
+
+    public void clearOptionalSubElements(PBCoreElement elementToMantain) {
+        List<PBCoreElement> collect = subElements.stream()
+                .filter(pbCoreElement -> !pbCoreElement.isRequired())
+                .filter(pbCoreElement -> elementToMantain == null || !containsPath(elementToMantain, pbCoreElement))
+                .collect(Collectors.toList());
         this.subElements.removeAll(collect);
+        this.subElements.forEach(pbc -> pbc.clearOptionalSubElements(elementToMantain));
         hasChildElements = !subElements.isEmpty();
+    }
+
+    private boolean containsPath(PBCoreElement elementToMantain, PBCoreElement fullPath) {
+        if (elementToMantain == null) {
+            return false;
+        }
+        String fp = elementToMantain.getFullPath();
+        while (fp.lastIndexOf("/") != -1) {
+            if (Objects.equals(fp, fullPath.getFullPath())) {
+                if (fullPath.isChoice()) {
+                    PBCoreElement pbCoreElement1 = fullPath.getSubElements().stream().filter(pbCoreElement -> elementToMantain.getFullPath().contains(pbCoreElement.getFullPath())).findFirst().orElse(null);
+                    fullPath.getSubElements().clear();
+                    fullPath.addSubElement(pbCoreElement1);
+                }
+                return true;
+            }
+            fp = fp.substring(0, fp.lastIndexOf("/"));
+        }
+        return false;
     }
 
     public PBCoreElement copy() {
@@ -232,7 +273,8 @@ public class PBCoreElement extends IPBCore implements Serializable {
     }
 
     public PBCoreElement copy(boolean withOptionalAttributes) {
-        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name, required, repeatable, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
+        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name, required, repeatable, supportsChildElements, anyElement, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
+        pbCoreElement.setAnyValues(new ArrayList<>(getAnyValues()));
         boolean validAttributes = true;
         for (PBCoreElement subElement : subElements) {
             PBCoreElement copy = subElement.copy(withOptionalAttributes);
@@ -242,7 +284,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         for (PBCoreAttribute attribute : attributes) {
             if (attribute.isRequired() || withOptionalAttributes) {
                 pbCoreElement.addAttribute(attribute.copy());
-                validAttributes = validAttributes && (attribute.getValue() != null && !attribute.getValue().trim().isEmpty());
+                validAttributes = validAttributes && (!attribute.isRequired() || (attribute.getValue() != null && !attribute.getValue().trim().isEmpty()));
             }
         }
         pbCoreElement.setValidAttributes(validAttributes);
@@ -268,13 +310,17 @@ public class PBCoreElement extends IPBCore implements Serializable {
         }
         hasChildElements = !subElements.isEmpty();
         updateHasMultiple(pbCoreElement);
+        setValid(subElements.stream().allMatch(PBCoreElement::isValid));
     }
 
     public void addSubElement(PBCoreElement element) {
+        boolean b1 = element.subElements.stream().allMatch(PBCoreElement::isValid);
         this.subElements.add(element);
         hasChildElements = !subElements.isEmpty();
         updateHasMultiple(element);
-        element.validProperty.addListener((observable, oldValue, newValue) -> setValid(subElements.stream().filter(pbCoreElement -> !pbCoreElement.isValid()).filter(pbCoreElement -> pbCoreElement.getId() != element.getId()).count() == 0 && newValue));
+        element.validProperty.addListener((observable, oldValue, newValue)
+                -> setValid(subElements.stream().filter(pbCoreElement -> !pbCoreElement.isValid()).filter(pbCoreElement -> pbCoreElement.getId() != element.getId()).count() == 0 && newValue)
+        );
         element.fatalErrorProperty.addListener((observable, oldValue, newValue) -> {
             boolean b = subElements.stream().filter(PBCoreElement::isFatalError).filter(pbCoreElement -> pbCoreElement.getId() != element.getId()).count() > 0;
             switch (elementValueRestrictionType) {
@@ -292,8 +338,11 @@ public class PBCoreElement extends IPBCore implements Serializable {
                     break;
             }
         });
-        element.validAttributesProperty.addListener((observable, oldValue, newValue) -> setValidAttributes(attributes.stream().filter(pbCoreAttribute -> pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()).count() == 0 && newValue));
-        setValid(isValid() && element.isValid());
+        element.validAttributesProperty.addListener((observable, oldValue, newValue) -> setValidAttributes(attributes.stream().noneMatch(pbCoreAttribute
+                -> pbCoreAttribute.isRequired()
+                && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()))
+                && (!isRequired() || newValue)));
+        setValid(b1 && element.isValid());
     }
 
     public void updateHasMultiple(PBCoreElement element) {
@@ -328,15 +377,16 @@ public class PBCoreElement extends IPBCore implements Serializable {
         if (pbCoreElement2 != null) {
             this.attributes.remove(pbCoreElement2);
         }
-        if (subElements.stream().filter(el -> !el.isValidAttributes()).count() > 0) {
+        if (subElements.stream().anyMatch(el -> !el.isValidAttributes())) {
             setValidAttributes(false);
         } else {
-            setValidAttributes(attributes.stream().filter(attr -> attr.getValue() == null || attr.getValue().trim().isEmpty()).count() == 0);
+            setValidAttributes(attributes.stream().noneMatch(attr
+                    -> attr.isRequired()
+                    && (attr.getValue() == null || attr.getValue().trim().isEmpty())));
         }
     }
 
     public final void setValid(boolean valid) {
-        this.validProperty.setValue(valid);
         switch (elementValueRestrictionType) {
             case PATTERN:
                 Pattern pattern = Pattern.compile(getPatternToFollow());
@@ -344,17 +394,21 @@ public class PBCoreElement extends IPBCore implements Serializable {
                 setFatalError(!matcher.matches());
                 break;
             case ENUMERATION:
-                setFatalError(subElements.stream().filter(PBCoreElement::isFatalError).count() > 0 || getValue() == null || getValue().trim().isEmpty());
+                setFatalError(subElements.stream().anyMatch(PBCoreElement::isFatalError) || getValue() == null || getValue().trim().isEmpty());
                 break;
             default:
-                setFatalError(subElements.stream().filter(PBCoreElement::isFatalError).count() > 0);
+                setFatalError(subElements.stream().anyMatch(PBCoreElement::isFatalError));
                 break;
         }
-        if (subElements.stream().filter(el -> !el.isValidAttributes()).count() > 0) {
+        if (subElements.stream().anyMatch(el -> !el.isValidAttributes())) {
             setValidAttributes(false);
         } else {
-            setValidAttributes(attributes.stream().filter(pbCoreAttribute -> pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()).count() == 0);
+            setValidAttributes(attributes.stream()
+                    .noneMatch(pbCoreAttribute
+                            -> pbCoreAttribute.isRequired()
+                    && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty())));
         }
+        this.validProperty.setValue((isAnyElement() || (!isRequired() && !isSupportsChildElements()) || valid) && !isFatalError());
     }
 
     public boolean isValid() {
@@ -430,5 +484,47 @@ public class PBCoreElement extends IPBCore implements Serializable {
     @Override
     public String getType() {
         return getClass().getSimpleName();
+    }
+
+    public void markAsRootElement() {
+        this.elementType = PBCoreElementType.ROOT_ELEMENT;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void unmarkAsRootElement() {
+        this.elementType = null;
+    }
+
+    @Override
+    public boolean isAnyElement() {
+        return anyElement;
+    }
+
+    public void setAnyElement(boolean anyElement) {
+        this.anyElement = anyElement;
+    }
+
+    public void addAnyElement(PBCoreElementAnyValue value) {
+        this.anyValues.add(value);
+    }
+
+    public List<PBCoreElementAnyValue> getAnyValues() {
+        return anyValues;
+    }
+
+    public void setAnyValues(List<PBCoreElementAnyValue> anyValues) {
+        this.anyValues = anyValues;
+    }
+
+    public void removeAnyValue(PBCoreElementAnyValue pbCoreElementAnyValue) {
+        this.anyValues.remove(pbCoreElementAnyValue);
     }
 }

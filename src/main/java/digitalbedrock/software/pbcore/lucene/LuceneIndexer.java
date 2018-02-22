@@ -37,15 +37,15 @@ import java.util.logging.Logger;
 
 public class LuceneIndexer {
 
-    private ObservableList<String> foldersToProcess = FXCollections.observableArrayList();
-    private StringProperty currentFolder = new SimpleStringProperty();
+    private final ObservableList<String> foldersToProcess = FXCollections.observableArrayList();
+    private final StringProperty currentFolder = new SimpleStringProperty();
     private static LuceneIndexer instance;
     private IndexWriter indexWriter;
 
     private final LongProperty filesInFolder = new SimpleLongProperty();
     private LuceneIndexerService luceneIndexerService;
 
-    public LuceneIndexer() {
+    private LuceneIndexer() {
         try {
             String folder = MainApp.getInstance().getRegistry().defaultDirectory() + File.separator + "index";
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(new StandardAnalyzer());
@@ -73,17 +73,15 @@ public class LuceneIndexer {
                 MainApp.getInstance().getRegistry().getSettings().updateFolder(folderModelToIndex);
             }
         });
-        filesInFolder.addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> {
-                Registry registry = MainApp.getInstance().getRegistry();
-                Settings settings = registry.getSettings();
-                FolderModel fm = settings.getFolders().stream().filter(folderModel -> Objects.equals(folderModel.getFolderPath(), currentFolder.getValue())).findFirst().orElse(null);
-                if (fm != null) {
-                    fm.setTotalValidFiles(newValue.longValue());
-                    MainApp.getInstance().getRegistry().getSettings().updateFolder(fm);
-                }
-            });
-        });
+        filesInFolder.addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+            Registry registry = MainApp.getInstance().getRegistry();
+            Settings settings = registry.getSettings();
+            FolderModel fm = settings.getFolders().stream().filter(folderModel -> Objects.equals(folderModel.getFolderPath(), currentFolder.getValue())).findFirst().orElse(null);
+            if (fm != null) {
+                fm.setTotalValidFiles(newValue.longValue());
+                MainApp.getInstance().getRegistry().getSettings().updateFolder(fm);
+            }
+        }));
     }
 
     public static LuceneIndexer getInstance() {
@@ -145,6 +143,10 @@ public class LuceneIndexer {
         }
     }
 
+    public void deleteDocsForFolder(String folderPath) {
+        LuceneEngine.deleteIndexesForFile(indexWriter, folderPath);
+    }
+
     class LuceneIndexerService extends Service<String> {
 
         final int MAX_THREADS = 20;
@@ -176,6 +178,7 @@ public class LuceneIndexer {
                     filesInFolder.set(0);
                     currentFilesCount.set(0);
                     currentFolder.set(foldersToProcess.remove(0));
+                    LuceneIndexer.getInstance().deleteDocsForFolder(currentFolder.get());
                     File file = new File(currentFolder.get());
                     listFiles(file.getAbsolutePath(), file.getAbsolutePath());
                     processing.set(false);
@@ -204,7 +207,7 @@ public class LuceneIndexer {
             }
         }
 
-        void listFiles(String baseDirectory, String filePath) throws IOException {
+        void listFiles(String baseDirectory, String filePath) {
             try {
                 Files.walkFileTree(Paths.get(filePath), new SimpleFileVisitor<Path>() {
                     @Override
@@ -230,7 +233,6 @@ public class LuceneIndexer {
                                 }
                                 currentFilesCount.decrementAndGet();
                                 if (!processing.get() && currentFilesCount.get() == 0) {
-                                    System.out.println("Finished: " + currentFolderFilesProcessed.get() + " -> " + currentFolder);
                                     currentFolder.set(null);
                                     processFolder();
                                 }
@@ -240,7 +242,8 @@ public class LuceneIndexer {
                             luceneIndexingTask.setOnSucceeded(eventHandler);
                             try {
                                 exec.submit(luceneIndexingTask);
-                            } catch (RejectedExecutionException e) {
+                            } catch (RejectedExecutionException ex) {
+                                Logger.getLogger(LuceneIndexer.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         return FileVisitResult.CONTINUE;

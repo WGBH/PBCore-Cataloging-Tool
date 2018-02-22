@@ -12,43 +12,39 @@
 <AnchorPane id="DocumentElementListItemUI" prefHeight="25.0" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="digitalbedrock.software.pbcore.controllers.DocumentElementItemController">
-    <children>
-        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <Button fx:id="removeButton" mnemonicParsing="false" styleClass="removeButton" GridPane.hgrow="NEVER"
-                        GridPane.vgrow="NEVER">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi-close" iconSize="17"/>
-                    </graphic>
-                </Button>
-                <Label fx:id="titleLabel" text="Label" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS"/>
-                <Button fx:id="addButton" maxWidth="50.0" mnemonicParsing="false" GridPane.columnIndex="3">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi-plus-circle" iconSize="17"/>
-                    </graphic>
-                </Button>
-                <Button fx:id="copyButton" mnemonicParsing="false" GridPane.columnIndex="4">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi-vector-arrange-above" iconSize="17"/>
-                    </graphic>
-                </Button>
-                <FontIcon fx:id="valueMissingIcon" iconLiteral="mdi-alert-circle" iconSize="17" styleClass="panicIcon"
-                          GridPane.columnIndex="1"/>
-            </children>
-        </GridPane>
-    </children>
     <stylesheets>
         <URL value="@../styles/style.css"/>
     </stylesheets>
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Button fx:id="removeButton" mnemonicParsing="false" styleClass="removeButton" GridPane.hgrow="NEVER"
+                GridPane.vgrow="NEVER">
+            <graphic>
+                <FontIcon iconLiteral="mdi-close" iconSize="17"/>
+            </graphic>
+        </Button>
+        <Label fx:id="titleLabel" text="Label" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS"/>
+        <Button fx:id="addButton" maxWidth="50.0" mnemonicParsing="false" GridPane.columnIndex="3">
+            <graphic>
+                <FontIcon iconLiteral="mdi-plus-circle" iconSize="17"/>
+            </graphic>
+        </Button>
+        <Button fx:id="copyButton" mnemonicParsing="false" GridPane.columnIndex="4">
+            <graphic>
+                <FontIcon iconLiteral="mdi-vector-arrange-above" iconSize="17"/>
+            </graphic>
+        </Button>
+        <FontIcon fx:id="valueMissingIcon" iconLiteral="mdi-alert-circle" iconSize="17" styleClass="panicIcon"
+                  GridPane.columnIndex="1"/>
+    </GridPane>
 </AnchorPane>

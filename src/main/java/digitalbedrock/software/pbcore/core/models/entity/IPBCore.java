@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public abstract class IPBCore {
 
+    private IPBCoreLayoutType typeForLayout = IPBCoreLayoutType.NORMAL;
+
     public abstract String getPathRepresentation();
 
     public abstract String getFullPath();
@@ -25,10 +27,20 @@ public abstract class IPBCore {
         return false;
     }
 
+    public abstract String getName();
+
     public abstract String getScreenName();
 
     public boolean isHasChildElements() {
         return false;
+    }
+
+    public IPBCoreLayoutType getTypeForLayout() {
+        return typeForLayout;
+    }
+
+    public void setTypeForLayout(IPBCoreLayoutType typeForLayout) {
+        this.typeForLayout = typeForLayout;
     }
 
     public abstract boolean isAttribute();
@@ -36,4 +48,10 @@ public abstract class IPBCore {
     public abstract String getValue();
 
     public abstract String getType();
+
+    public abstract int getIndex();
+
+    public boolean isAnyElement() {
+        return false;
+    }
 }

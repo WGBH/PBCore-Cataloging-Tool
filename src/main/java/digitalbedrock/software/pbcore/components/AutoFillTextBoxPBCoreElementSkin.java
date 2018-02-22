@@ -23,32 +23,26 @@ import np.com.ngopal.control.AutoFillTextBox;
 
 import java.io.IOException;
 
-public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<CVTerm>> implements ChangeListener<String>, EventHandler {
+public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<CVTerm>> implements ChangeListener<String>, EventHandler<Event> {
 
     private final static int TITLE_HEIGHT = 28;
-
-    private final static int WINDOW_BORDER = 8;
-
-    private ListView<CVTerm> listview;
-
-    private TextField textbox;
-
+    private final ListView<CVTerm> listview;
+    private final TextField textbox;
     private final AutoFillTextBox<CVTerm> autofillTextbox;
-
     private final ObservableList<CVTerm> data;
-
     private final Popup popup;
 
-    public Window getWindow() {
+    private Window getWindow() {
         return autofillTextbox.getScene() == null ? null : autofillTextbox.getScene().getWindow();
     }
 
     public AutoFillTextBoxPBCoreElementSkin(AutoFillTextBox<CVTerm> text) {
         super(text);
-
         autofillTextbox = text;
 
         listview = text.getListview();
+        listview.getStyleClass().setAll("autofillList");
+        listview.setStyle("-fx-border-width: 1; -fx-border-color: #c4c4c4;");
         if (text.getFilterMode()) {
             listview.setItems(text.getData());
         }
@@ -66,21 +60,25 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         textbox = text.getTextbox();
         textbox.setOnKeyPressed(this);
         textbox.textProperty().addListener(this);
+        textbox.setPromptText("enter here...");
         textbox.focusedProperty().addListener((ov, t, t1) -> textbox.end());
 
         popup = new Popup();
         popup.setAutoHide(true);
         popup.getContent().add(listview);
-
         data = text.getData();
         FXCollections.sort(data);
         getChildren().clear();
         getChildren().addAll(textbox);
-
     }
 
-    public void selectList() {
+    private void selectList() {
         CVTerm i = listview.getSelectionModel().getSelectedItem();
+
+        if (i == null && !listview.getItems().isEmpty()) {
+            i = listview.getItems().get(0);
+        }
+
         if (i != null) {
             textbox.setText(i.getTerm());
             listview.getItems().clear();
@@ -93,13 +91,36 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
 
     @Override
     public void handle(Event evt) {
+        if (evt instanceof KeyEvent && ((KeyEvent) evt).getCode() == KeyCode.ESCAPE && popup.isShowing()) {
+            hidePopup();
+        }
 
         if (evt.getEventType() == KeyEvent.KEY_PRESSED) {
+            KeyEvent t = (KeyEvent) evt;
+            if (t.getSource() == textbox) {
+                if (t.getCode() == KeyCode.DOWN) {
+                    if (popup.isShowing()) {
+                        listview.requestFocus();
+                        listview.getSelectionModel().select(0);
+                    }
+                } else if (t.getCode() == KeyCode.ENTER) {
+                    String text = textbox.getText();
+                    if (text == null || text.trim().isEmpty()) {
+                        textbox.clear();
+                    }
+                }
+
+            }
         } else if (evt.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent t = (KeyEvent) evt;
             if (t.getSource() == listview) {
                 if (t.getCode() == KeyCode.ENTER) {
-                    selectList();
+                    String text = textbox.getText();
+                    if (text != null && !text.trim().isEmpty()) {
+                        selectList();
+                    } else {
+                        textbox.clear();
+                    }
                 } else if (t.getCode() == KeyCode.UP) {
                     if (listview.getSelectionModel().getSelectedIndex() == 0) {
                         textbox.requestFocus();
@@ -113,26 +134,22 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         }
     }
 
-    public void showPopup() {
+    private void showPopup() {
+        listview.getSelectionModel().clearSelection();
         listview.setPrefWidth(textbox.getWidth());
         if (listview.getItems().size() > 6) {
-            listview.setPrefHeight((6 * 24));
+            listview.setPrefHeight((6 * 25) + 2);
         } else {
-            listview.setPrefHeight((listview.getItems().size() * 24));
+            listview.setPrefHeight((listview.getItems().size() * 25) + 2);
         }
         if (getWindow() != null) {
-
             popup.show(getWindow(), getWindow().getX() + textbox.localToScene(0, 0).getX() + textbox.getScene().getX(), getWindow().getY() + textbox.localToScene(0, 0).getY() + textbox.getScene().getY() + TITLE_HEIGHT);
-
-            listview.getSelectionModel().clearSelection();
             listview.getFocusModel().focus(-1);
         }
     }
 
     public void hidePopup() {
-
         popup.hide();
-
     }
 
     @Override
@@ -183,8 +200,7 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cvterm_list_item.fxml"));
                 graphic = loader.load();
                 controller = loader.getController();
-            }
-            catch (IOException exc) {
+            } catch (IOException exc) {
                 throw new RuntimeException(exc);
             }
         }
@@ -192,12 +208,17 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         @Override
         public void updateItem(CVTerm item, boolean empty) {
             super.updateItem(item, empty);
+
             if (isEmpty()) {
                 setGraphic(null);
             } else {
                 setGraphic(graphic);
                 controller.bind(item);
             }
+
+            setMinHeight(25);
+            setPrefHeight(25);
+            setMaxHeight(25);
         }
     }
 }

@@ -3,6 +3,8 @@ package digitalbedrock.software.pbcore.controllers;
 import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.controllers.settings.*;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
+import digitalbedrock.software.pbcore.lucene.LuceneIndexer;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SettingsCrawlingController extends AbsController {
@@ -33,13 +36,13 @@ public class SettingsCrawlingController extends AbsController {
     private TableColumn<FolderModel, String> pathColumn;
 
     @FXML
-    private TableColumn<FolderModel, Boolean> lastIndexedColumn;
+    private TableColumn<FolderModel, String> lastIndexedColumn;
 
     @FXML
-    private TableColumn<FolderModel, Boolean> stateColumn;
+    private TableColumn<FolderModel, String> stateColumn;
 
     @FXML
-    private TableColumn<FolderModel, Boolean> filesProcessedColumn;
+    private TableColumn<FolderModel, Long> filesProcessedColumn;
 
     @FXML
     private TableColumn<FolderModel, Boolean> removeColumn;
@@ -64,7 +67,13 @@ public class SettingsCrawlingController extends AbsController {
             return;
         }
         MainApp.getInstance().getRegistry().getSettings().addFolder(folder);
-        foldersTableView.getItems().add(new FolderModel(folder.getPath()));
+        FolderModel folderModel = new FolderModel(folder.getPath());
+        LuceneIndexer instance = LuceneIndexer.getInstance();
+        if (instance.startFolderIndexing(folderModel.getFolderPath())) {
+            folderModel.setScheduled(true);
+            MainApp.getInstance().getRegistry().getSettings().updateFolder(folderModel);
+        }
+        foldersTableView.getItems().add(folderModel);
 
     }
 
@@ -83,10 +92,20 @@ public class SettingsCrawlingController extends AbsController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pathColumn.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getFolderPath()));
+        stateColumn.setCellValueFactory(celldata -> {
+            if (celldata.getValue().isIndexing()) {
+                return new SimpleStringProperty(PROCESSING);
+            } else if (celldata.getValue().isScheduled()) {
+                return new SimpleStringProperty(SCHEDULED);
+            } else {
+                return new SimpleStringProperty(FINISHED);
+            }
+        });
+        lastIndexedColumn.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getDateLastIndexing() == null ? "" : celldata.getValue().getDateLastIndexing().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+        filesProcessedColumn.setCellValueFactory(celldata -> new SimpleLongProperty(celldata.getValue().getTotalValidFiles()).asObject());
 
         ObservableList<FolderModel> obsList = FXCollections.observableArrayList(MainApp.getInstance().getRegistry().getSettings().getFolders());
         foldersTableView.setItems(obsList);
-        foldersTableView.setSelectionModel(null);
 
         lastIndexedColumn.setCellFactory(new FolderLastIndexedDateCellFactory());
         stateColumn.setCellFactory(new FolderStateCellFactory());
@@ -97,7 +116,6 @@ public class SettingsCrawlingController extends AbsController {
 
     @Override
     public MenuBar createMenu() {
-        final MenuBar menuBar = new MenuBar();
-        return menuBar;
+        return new MenuBar();
     }
 }

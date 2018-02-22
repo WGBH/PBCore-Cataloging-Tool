@@ -6,13 +6,13 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
-public class FolderProcessedFilesCellFactory implements Callback<TableColumn<FolderModel, Boolean>, TableCell<FolderModel, Boolean>> {
+public class FolderProcessedFilesCellFactory implements Callback<TableColumn<FolderModel, Long>, TableCell<FolderModel, Long>> {
 
     @Override
-    public TableCell<FolderModel, Boolean> call(final TableColumn<FolderModel, Boolean> param) {
-        return new TableCell<FolderModel, Boolean>() {
+    public TableCell<FolderModel, Long> call(final TableColumn<FolderModel, Long> param) {
+        return new TableCell<FolderModel, Long>() {
             @Override
-            public void updateItem(Boolean item, boolean empty) {
+            public void updateItem(Long item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);

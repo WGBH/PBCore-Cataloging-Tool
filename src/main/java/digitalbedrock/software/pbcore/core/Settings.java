@@ -37,9 +37,7 @@ public final class Settings implements Serializable {
     }
 
     private void notifyObservers() {
-        observers.forEach((obs) -> {
-            obs.update(null, this);
-        });
+        observers.forEach((obs) -> obs.update(null, this));
     }
 
     public List<FolderModel> getFolders() {

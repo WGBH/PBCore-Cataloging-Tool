@@ -18,8 +18,10 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
     private boolean required;
     private String description;
     @JsonIgnore
-    public StringProperty valueProperty = new SimpleStringProperty();
+    public final StringProperty valueProperty = new SimpleStringProperty();
     private boolean readOnly;
+    @JsonIgnore
+    private int index;
 
     public PBCoreAttribute() {
         id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
@@ -86,6 +88,7 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
         return true;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -129,5 +132,14 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
 
     public void setFullPath(String fullPath) {
         this.fullPath = fullPath;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

@@ -14,87 +14,66 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="ElementSelectorUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="350.0" prefWidth="750.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="digitalbedrock.software.pbcore.controllers.ElementSelectorController">
-    <children>
-        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
-            <children>
-                <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="175.0" percentWidth="30.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" percentWidth="75.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
-                    </rowConstraints>
-                    <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                            <children>
-                                <TreeView fx:id="treeElements" prefHeight="200.0" prefWidth="200.0"
-                                          VBox.vgrow="ALWAYS"/>
-                            </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                            <children>
-                                <TextFlow>
-                                    <Text text="Usage: "/>
-                                    <Text fx:id="lblOptional" style="-fx-font-weight: bold"/>
-                                    <Text fx:id="lblRepeatable" style="-fx-font-weight: bold"/>
-                                </TextFlow>
-                                <Label fx:id="lblDescription"
-                                       text="Usage: optional, repeatable.pbcoreSubject is used to assign topic headings or keywords that portray the intellectual content of the asset. A subject is expressed by keywords, key phrases, or even specific classification codes. Controlled vocabularies, authorities, formal classification codes, as well as folksonomies and user-generated tags, may be employed when assigning descriptive subject terms.pbcoreSubject can be contained by the elements pbcoreDescriptionDocument or pbcorePart."
-                                       wrapText="true">
-                                    <VBox.margin>
-                                        <Insets top="15.0"/>
-                                    </VBox.margin>
-                                </Label>
-                            </children>
-                        </VBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets/>
-                    </VBox.margin>
-                </GridPane>
-                <GridPane VBox.vgrow="NEVER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="50.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Label fx:id="lblElementAlreadyAdded" styleClass="panicText" text="Element already added"
-                               GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM"
-                               GridPane.vgrow="NEVER">
-                            <GridPane.margin>
-                                <Insets bottom="5.0"/>
-                            </GridPane.margin>
-                        </Label>
-                        <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0"
-                              prefWidth="200.0" GridPane.columnIndex="1">
-                            <children>
-                                <Button fx:id="btnCancel" mnemonicParsing="false" styleClass="defaultButton"
-                                        text="CANCEL"/>
-                                <Button fx:id="btnAdd" mnemonicParsing="false" styleClass="primaryButton" text="ADD">
-                                    <HBox.margin>
-                                        <Insets left="10.0"/>
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                    </children>
-                </GridPane>
-            </children>
-        </VBox>
-    </children>
+<AnchorPane id="ElementSelectorUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="750.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.ElementSelectorController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <stylesheets>
-        <URL value="@../styles/style.css"/>
+        <URL value="@../styles/style.css" />
     </stylesheets>
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="175.0" percentWidth="30.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="75.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            </rowConstraints>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <TreeView fx:id="treeElements" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                <TextFlow>
+                    <Text text="Usage: " />
+                    <Text fx:id="lblOptional" style="-fx-font-weight: bold" />
+                    <Text fx:id="lblRepeatable" style="-fx-font-weight: bold" />
+                </TextFlow>
+                <Label fx:id="lblChoice" styleClass="niceText" text="In order to use this element you should choose child elements of only one type" wrapText="true">
+                    <VBox.margin>
+                        <Insets top="15.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" />
+                    </padding>
+                </Label>
+                <Label fx:id="lblDescription" text="Usage: optional, repeatable.pbcoreSubject is used to assign topic headings or keywords that portray the intellectual content of the asset. A subject is expressed by keywords, key phrases, or even specific classification codes. Controlled vocabularies, authorities, formal classification codes, as well as folksonomies and user-generated tags, may be employed when assigning descriptive subject terms.pbcoreSubject can be contained by the elements pbcoreDescriptionDocument or pbcorePart." wrapText="true" />
+            </VBox>
+        </GridPane>
+        <GridPane VBox.vgrow="NEVER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <Label fx:id="lblElementAlreadyAdded" styleClass="panicText" text="Element already added" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+                <GridPane.margin>
+                    <Insets bottom="5.0" />
+                </GridPane.margin>
+            </Label>
+            <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
+                <Button fx:id="btnCancel" mnemonicParsing="false" styleClass="defaultButton" text="CANCEL" />
+                <Button fx:id="btnAdd" mnemonicParsing="false" styleClass="primaryButton" text="ADD">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Button>
+            </HBox>
+        </GridPane>
+    </VBox>
 </AnchorPane>
