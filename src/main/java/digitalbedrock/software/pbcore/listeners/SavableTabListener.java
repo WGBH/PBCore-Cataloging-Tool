@@ -9,4 +9,8 @@ public interface SavableTabListener {
     void saveDocumentAs();
 
     void addBatchUpdate(PBCoreElement pbCoreElement);
+
+    void exportToCsv();
+
+    boolean isExportable();
 }

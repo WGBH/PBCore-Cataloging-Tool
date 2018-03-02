@@ -37,6 +37,7 @@ public class LuceneEngine {
             PBCoreElement pbCoreElement = PBCoreStructure.getInstance().parseFile(file1);
             saveDocumentForElement(writer, file1, pbCoreElement, folder);
         } catch (IOException | JAXBException | IllegalAccessException ex) {
+            ex.printStackTrace();
         }
     }
 

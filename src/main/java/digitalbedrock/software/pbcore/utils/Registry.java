@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.Settings;
 import digitalbedrock.software.pbcore.core.models.CV;
+import digitalbedrock.software.pbcore.core.models.CVBase;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
@@ -108,7 +110,21 @@ public class Registry implements Observer {
     public CVTerm saveVocabulary(String cvId, String term, String source, String version, String ref) {
         try {
             CVTerm cvTerm = new CVTerm(term, source, version, ref);
-            controlledVocabularies.get(cvId).getTerms().add(cvTerm);
+            CV cv = controlledVocabularies.get(cvId);
+            if (cv == null) {
+                String[] split = cvId.split(" - ");
+                cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(split[0]);
+                if (cv.isHasSubs()) {
+                    for (Map.Entry<String, CVBase> stringCVBaseEntry : cv.getSubs().entrySet()) {
+                        if (stringCVBaseEntry.getKey().equalsIgnoreCase(split[1])) {
+                            stringCVBaseEntry.getValue().getTerms().add(cvTerm);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                cv.getTerms().add(cvTerm);
+            }
             saveVocabulariesFile();
             return cvTerm;
         } catch (IOException ex) {
@@ -118,8 +134,23 @@ public class Registry implements Observer {
     }
 
     public void updateVocabulary(String cvId, CVTerm selectedCVTerm) {
-        int i = controlledVocabularies.get(cvId).getTerms().indexOf(selectedCVTerm);
-        CVTerm cvTerm = controlledVocabularies.get(cvId).getTerms().set(i, selectedCVTerm);
+        CV cv = controlledVocabularies.get(cvId);
+        if (cv == null) {
+            String[] split = cvId.split(" - ");
+            cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(split[0]);
+            if (cv.isHasSubs()) {
+                for (Map.Entry<String, CVBase> stringCVBaseEntry : cv.getSubs().entrySet()) {
+                    if (stringCVBaseEntry.getKey().equalsIgnoreCase(split[1])) {
+                        int i = stringCVBaseEntry.getValue().getTerms().indexOf(selectedCVTerm);
+                        stringCVBaseEntry.getValue().getTerms().set(i, selectedCVTerm);
+                        break;
+                    }
+                }
+            }
+        } else {
+            int i = cv.getTerms().indexOf(selectedCVTerm);
+            cv.getTerms().set(i, selectedCVTerm);
+        }
         try {
             saveVocabulariesFile();
         } catch (IOException ex) {
@@ -131,7 +162,21 @@ public class Registry implements Observer {
         if (!selectedCVTerm.isCustom()) {
             return;
         }
-        controlledVocabularies.get(cvId).getTerms().remove(selectedCVTerm);
+        CV cv = controlledVocabularies.get(cvId);
+        if (cv == null) {
+            String[] split = cvId.split(" - ");
+            cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(split[0]);
+            if (cv.isHasSubs()) {
+                for (Map.Entry<String, CVBase> stringCVBaseEntry : cv.getSubs().entrySet()) {
+                    if (stringCVBaseEntry.getKey().equalsIgnoreCase(split[1])) {
+                        stringCVBaseEntry.getValue().getTerms().remove(selectedCVTerm);
+                        break;
+                    }
+                }
+            }
+        } else {
+            cv.getTerms().remove(selectedCVTerm);
+        }
         try {
             saveVocabulariesFile();
         } catch (IOException ex) {

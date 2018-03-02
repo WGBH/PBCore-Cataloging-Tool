@@ -1,16 +1,20 @@
 package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
+import digitalbedrock.software.pbcore.core.PBcoreValidator;
 import digitalbedrock.software.pbcore.core.models.NewDocumentType;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
 import digitalbedrock.software.pbcore.listeners.*;
 import digitalbedrock.software.pbcore.lucene.HitDocument;
 import digitalbedrock.software.pbcore.lucene.LuceneEngineSearchFilter;
+import digitalbedrock.software.pbcore.parsers.CSVPBCoreParser;
 import digitalbedrock.software.pbcore.utils.Registry;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +27,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +40,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static digitalbedrock.software.pbcore.listeners.MenuListener.MenuOption.EXPORT_TO_CSV;
+
 public class MainController extends AbsController implements FileChangedListener, SearchResultListener, SavedSearchedUpdated {
 
     private static final String UNTITLED = "untitled";
@@ -46,6 +53,8 @@ public class MainController extends AbsController implements FileChangedListener
     @FXML
     private TabPane tabPane;
 
+    private BooleanProperty nonExportableProperty = new SimpleBooleanProperty(true);
+
     private final AtomicInteger untitledTabsCount = new AtomicInteger(0);
 
     private final List<SavableTabListener> openedTabs = new ArrayList<>();
@@ -54,6 +63,15 @@ public class MainController extends AbsController implements FileChangedListener
     private Tab batchAddTab;
 
     private Menu search;
+    private PBcoreValidator validator;
+
+    public MainController() {
+        try {
+            validator = new PBcoreValidator();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void menuOptionSelected(MenuOption menuOption, Object... objects) {
@@ -64,6 +82,23 @@ public class MainController extends AbsController implements FileChangedListener
                 break;
             case BATCH_EDIT:
                 batchAdd();
+                break;
+            case IMPORT_FROM_CSV:
+                object = objects[0];
+                try {
+                    showTab(null, null, CSVPBCoreParser.parseFile(((File) object).getAbsolutePath()));
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid file to import");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The selected file is not compliant with the PBCore csv template.");
+                    alert.showAndWait();
+                }
+                break;
+            case EXPORT_TO_CSV:
+                if (currentSavableTabListener != null) {
+                    currentSavableTabListener.exportToCsv();
+                }
                 break;
             case NEW_DESCRIPTION_DOCUMENT:
                 newDocument(NewDocumentType.DESCRIPTION_DOCUMENT);
@@ -137,16 +172,40 @@ public class MainController extends AbsController implements FileChangedListener
 
     private void openDocument(File file) {
         try {
+            validator.validate(file);
+        } catch (SAXException | IOException e) {
+            try {
+                PBCoreElement pbCoreElement = PBCoreStructure.getInstance().parseFile(file);
+                showTab(null, file, pbCoreElement.copy(), true);
+                showWarningMessage();
+            } catch (JAXBException | IllegalAccessException ex) {
+                showErrorMessage();
+                return;
+            }
+        }
+        try {
             PBCoreElement pbCoreElement = PBCoreStructure.getInstance().parseFile(file);
             showTab(null, file, pbCoreElement.copy());
         } catch (JAXBException | IllegalAccessException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid File");
-            alert.setHeaderText(null);
-            alert.setContentText("The selected file is not a valid PBCore file");
-            alert.showAndWait();
+            showErrorMessage();
         }
+
+    }
+
+    private void showWarningMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("File modified");
+        alert.setHeaderText(null);
+        alert.setContentText("The selected file wasn't fully compliant with the PBCore Schema. Some information may have been lost in order to open the file's contents.");
+        alert.showAndWait();
+    }
+
+    private void showErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid File");
+        alert.setHeaderText(null);
+        alert.setContentText("The selected file is not a valid PBCore file");
+        alert.showAndWait();
     }
 
     private void saveDocument() {
@@ -162,6 +221,10 @@ public class MainController extends AbsController implements FileChangedListener
     }
 
     private void showTab(String token, File file, PBCoreElement pbCoreElement) {
+        showTab(token, file, pbCoreElement, false);
+    }
+
+    private void showTab(String token, File file, PBCoreElement pbCoreElement, boolean changesDetected) {
         if (file != null) {
             File finalFile = file;
             Tab tab1 = tabPane.getTabs().stream().filter(tab -> tab.getId().equalsIgnoreCase(finalFile.getAbsolutePath())).findFirst().orElse(null);
@@ -194,10 +257,11 @@ public class MainController extends AbsController implements FileChangedListener
             Node node = loader.load();
             DocumentController controller = loader.getController();
             String s = token != null ? token : UUID.randomUUID().toString() + System.currentTimeMillis();
-            controller.initializeDocument(s, id, file, pbCoreElement, this);
+            controller.initializeDocument(s, id, file, pbCoreElement, this, changesDetected);
             tab.setOnClosed(t -> {
                 if (tabPane.getTabs().isEmpty()) {
                     splash.setVisible(true);
+                    nonExportableProperty.setValue(true);
                 }
                 if (tab.getText().startsWith(UNTITLED)) {
                     untitledTabsCount.set(untitledTabsCount.get() - 1);
@@ -214,6 +278,7 @@ public class MainController extends AbsController implements FileChangedListener
                 if (newValue != null && newValue) {
                     currentSavableTabListener = controller;
                     controller.onShow();
+                    nonExportableProperty.setValue(!currentSavableTabListener.isExportable());
                 }
             });
             openedTabs.add(controller);
@@ -240,9 +305,9 @@ public class MainController extends AbsController implements FileChangedListener
             batchAddController = loader.getController();
             batchAddController.initializeDocument(pbCoreElement -> {
                 spinnerLayer.setVisible(true);
-                for (SavableTabListener openedTab : openedTabs) {
+                openedTabs.forEach((openedTab) -> {
                     openedTab.addBatchUpdate(pbCoreElement);
-                }
+                });
                 tabPane.getTabs().remove(tab);
                 if (tabPane.getTabs().isEmpty()) {
                     splash.setVisible(true);
@@ -344,26 +409,49 @@ public class MainController extends AbsController implements FileChangedListener
         batch.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.META_DOWN));
         batch.setOnAction(e -> menuOptionSelected(MenuOption.BATCH_EDIT));
 
+        final MenuItem importFromCsv = new MenuItem("Import from CSV file");
+        importFromCsv.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN));
+        importFromCsv.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Document To Import");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File selectedFile = fileChooser.showOpenDialog(tabPane.getScene().getWindow());
+            if (selectedFile == null) {
+                return;
+            }
+            menuOptionSelected(MenuOption.IMPORT_FROM_CSV, selectedFile);
+        });
+
+        final MenuItem exportToCsv = new MenuItem("Export to CSV file");
+        exportToCsv.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.META_DOWN));
+        exportToCsv.setOnAction(e -> {
+            menuOptionSelected(EXPORT_TO_CSV);
+        });
+        exportToCsv.disableProperty().bind(nonExportableProperty);
+
         final MenuItem export = new MenuItem("Export open files to ZIP");
         export.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.META_DOWN));
         export.setOnAction(e -> menuOptionSelected(MenuOption.EXPORT_OPEN_FILES_TO_ZIP));
+
         final MenuItem save = new MenuItem("Save");
         save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.META_DOWN));
-        save.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE));
+
         final MenuItem saveas = new MenuItem("Save as...");
+        save.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE));
         saveas.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
         saveas.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE_AS));
 
         final MenuItem quit = new MenuItem("Quit");
         quit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.META_DOWN));
         quit.setOnAction(e -> menuOptionSelected(MenuOption.QUIT));
-        file.getItems().addAll(open, new SeparatorMenuItem(), newd, newi, newc, new SeparatorMenuItem(), batch, export, new SeparatorMenuItem(), save, saveas, new SeparatorMenuItem(), quit);
+        file.getItems().addAll(open, new SeparatorMenuItem(), newd, newi, newc, new SeparatorMenuItem(), importFromCsv, exportToCsv, new SeparatorMenuItem(), batch, export, new SeparatorMenuItem(), save, saveas, new SeparatorMenuItem(), quit);
 
         search = new Menu("Search");
         onSavedSearchesUpdated();
         Registry registry = MainApp.getInstance().getRegistry();
         registry.addSavedSearchesListener(this);
-        
+
         final Menu settings = new Menu("Settings");
         final MenuItem cv = new MenuItem("Controlled Vocabularies");
         final MenuItem folders = new MenuItem("Directory Crawling");
@@ -374,7 +462,7 @@ public class MainController extends AbsController implements FileChangedListener
         settings.getItems().addAll(cv, folders);
 
         final Menu help = new Menu("Help");
-        help.setDisable(true);  
+        help.setDisable(true);
 
         menuBar.getMenus().addAll(file, search, settings, help);
         if (MainApp.getInstance().getRegistry().isMac()) {

@@ -527,4 +527,12 @@ public class PBCoreElement extends IPBCore implements Serializable {
     public void removeAnyValue(PBCoreElementAnyValue pbCoreElementAnyValue) {
         this.anyValues.remove(pbCoreElementAnyValue);
     }
+
+    @Override
+    public String toString() {
+        return "PBCoreElement{" +
+                "fullPath='" + fullPath + '\'' +
+                ", value=" + getValue() +
+                '}';
+    }
 }

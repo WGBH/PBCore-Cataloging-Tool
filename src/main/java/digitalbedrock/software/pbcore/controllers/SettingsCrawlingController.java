@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -66,13 +63,23 @@ public class SettingsCrawlingController extends AbsController {
         if (folder == null) {
             return;
         }
+        if (MainApp.getInstance().getRegistry().getSettings().getFolders().stream().anyMatch(fm -> fm.getFolderPath().contains(folder.getAbsolutePath()))) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Folder");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected folder isn't valid either by:\n " +
+                    "\t- It is already included in one of your indexed folders;\n" +
+                    "\t- It is a parent folder of at least one of would indexed folders.");
+            alert.showAndWait();
+            return;
+        }
         MainApp.getInstance().getRegistry().getSettings().addFolder(folder);
         FolderModel folderModel = new FolderModel(folder.getPath());
         LuceneIndexer instance = LuceneIndexer.getInstance();
         if (instance.startFolderIndexing(folderModel.getFolderPath())) {
             folderModel.setScheduled(true);
-            MainApp.getInstance().getRegistry().getSettings().updateFolder(folderModel);
         }
+        MainApp.getInstance().getRegistry().getSettings().updateFolder(folderModel);
         foldersTableView.getItems().add(folderModel);
 
     }

@@ -1,5 +1,6 @@
 package digitalbedrock.software.pbcore.controllers.settings;
 
+import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
 import javafx.application.Platform;
 import javafx.scene.control.TableCell;
@@ -18,7 +19,7 @@ public class FolderProcessedFilesCellFactory implements Callback<TableColumn<Fol
                     setGraphic(null);
                     setText(null);
                 } else {
-                    FolderModel model = getTableView().getItems().get(getIndex());
+                    FolderModel model = MainApp.getInstance().getRegistry().getSettings().getFolders().get(getIndex());
                     model.totalValidFilesProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> setText(Long.toString(model.getTotalValidFiles()))));
                     setText(Long.toString(model.getTotalValidFiles()));
                 }

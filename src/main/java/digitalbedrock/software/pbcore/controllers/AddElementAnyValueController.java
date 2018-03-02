@@ -2,6 +2,7 @@ package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElementAnyValue;
 import digitalbedrock.software.pbcore.listeners.AddElementAnyValueListener;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,6 +52,7 @@ public class AddElementAnyValueController extends AbsController {
                 lblAttributeAlreadyAdded.setVisible(true);
             }
         });
+        Platform.runLater(() -> btnAdd.requestFocus());
     }
 
     @Override

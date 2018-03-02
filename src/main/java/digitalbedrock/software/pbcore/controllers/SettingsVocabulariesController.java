@@ -2,6 +2,7 @@ package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.CV;
+import digitalbedrock.software.pbcore.core.models.CVBase;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.utils.Registry;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -98,7 +100,14 @@ public class SettingsVocabulariesController extends AbsController {
             if (value.isAttribute()) {
                 rootAttributes.getChildren().add(t);
             } else {
-                rootElements.getChildren().add(t);
+                if (!value.isHasSubs()) {
+                    rootElements.getChildren().add(t);
+                } else {
+                    for (Map.Entry<String, CVBase> stringCVBaseEntry : value.getSubs().entrySet()) {
+                        t = new TreeItem<>(key + " - " + stringCVBaseEntry.getKey());
+                        rootElements.getChildren().add(t);
+                    }
+                }
             }
         });
         treelist.setShowRoot(false);
@@ -112,7 +121,19 @@ public class SettingsVocabulariesController extends AbsController {
             selectedCV = newValue.getValue();
             selectedCVTerm = null;
             CV cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(newValue.getValue());
-            tvVocabularies.setItems(FXCollections.observableArrayList(cv.getTerms()));
+            if (cv == null) {
+                String[] split = newValue.getValue().split(" - ");
+                cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(split[0]);
+                if (cv.isHasSubs()) {
+                    for (Map.Entry<String, CVBase> stringCVBaseEntry : cv.getSubs().entrySet()) {
+                        if (stringCVBaseEntry.getKey().equalsIgnoreCase(split[1])) {
+                            tvVocabularies.setItems(FXCollections.observableArrayList(stringCVBaseEntry.getValue().getTerms()));
+                        }
+                    }
+                }
+            } else {
+                tvVocabularies.setItems(FXCollections.observableArrayList(cv.getTerms()));
+            }
             buttonAdd.setDisable(false);
             tfTerm.setDisable(false);
             tfSource.setDisable(false);
@@ -264,7 +285,22 @@ public class SettingsVocabulariesController extends AbsController {
             lblInvalidTerm.setVisible(true);
             return;
         } else {
-            CVTerm cvTerm1 = registry.getControlledVocabularies().get(selectedCV).getTerms().stream().filter(cvTerm -> Objects.equals(cvTerm.getTerm(), term)).findFirst().orElse(null);
+            CV cv = registry.getControlledVocabularies().get(selectedCV);
+            CVTerm cvTerm1 = null;
+            if (cv != null) {
+                cvTerm1 = cv.getTerms().stream().filter(cvTerm -> Objects.equals(cvTerm.getTerm(), term)).findFirst().orElse(null);
+            } else {
+                String[] split = selectedCV.split(" - ");
+                cv = MainApp.getInstance().getRegistry().getControlledVocabularies().get(split[0]);
+                if (cv.isHasSubs()) {
+                    for (Map.Entry<String, CVBase> stringCVBaseEntry : cv.getSubs().entrySet()) {
+                        if (stringCVBaseEntry.getKey().equalsIgnoreCase(split[1])) {
+                            cvTerm1 = stringCVBaseEntry.getValue().getTerms().stream().filter(cvTerm -> Objects.equals(cvTerm.getTerm(), term)).findFirst().orElse(null);
+                        }
+                    }
+                }
+            }
+
             if (cvTerm1 != null && (selectedCVTerm == null || !Objects.equals(selectedCVTerm, cvTerm1))) {
                 lblInvalidTerm.setText(TERM_ALREADY_ADDED_FOR_SELECTED_VOCABULARY);
                 lblInvalidTerm.setVisible(true);

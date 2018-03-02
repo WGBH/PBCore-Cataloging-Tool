@@ -4,9 +4,7 @@ import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.components.PBCoreAnyValueListCell;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.components.PBCoreTreeCell;
-import digitalbedrock.software.pbcore.core.models.CVTerm;
-import digitalbedrock.software.pbcore.core.models.ElementType;
-import digitalbedrock.software.pbcore.core.models.NewDocumentType;
+import digitalbedrock.software.pbcore.core.models.*;
 import digitalbedrock.software.pbcore.core.models.entity.*;
 import digitalbedrock.software.pbcore.listeners.AddElementAnyValueListener;
 import digitalbedrock.software.pbcore.listeners.AttributeSelectionListener;
@@ -27,10 +25,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -234,7 +229,15 @@ public class DocumentBatchAddController extends AbsController implements Element
             boolean b = registry.getControlledVocabularies().containsKey(pbCoreElement.getName());
             taElementValue.setFilterMode(b);
             if (b) {
-                List<CVTerm> suggestions = registry.getControlledVocabularies().get(pbCoreElement.getName()).getTerms();
+                List<CVTerm> suggestions = new ArrayList<>();
+                CV cv = registry.getControlledVocabularies().get(pbCoreElement.getName());
+                if (cv.isHasSubs()) {
+                    cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
+                        suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
+                    });
+                } else {
+                    suggestions.addAll(cv.getTerms());
+                }
                 taElementValue.getData().addAll(suggestions);
             }
             updateInvalidIcon(!pbCoreElement.isValid() && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT, pbCoreElement.isFatalError());
@@ -451,6 +454,7 @@ public class DocumentBatchAddController extends AbsController implements Element
         if (MainApp.getInstance().getRegistry().getBatchEditPBCoreElement() == null) {
             rootElement = PBCoreStructure.getInstance().getRootElement(NewDocumentType.DESCRIPTION_DOCUMENT).copy(true);
             rootElement.clearOptionalSubElements();
+            rootElement.getSubElements().clear();
             MainApp.getInstance().getRegistry().saveBatchEditPBCoreElement(rootElement);
         } else {
             this.rootElement = MainApp.getInstance().getRegistry().getBatchEditPBCoreElement().copy(true);
@@ -565,7 +569,15 @@ public class DocumentBatchAddController extends AbsController implements Element
             selectedPBCoreElementProperty.getValue().setValue(taElementValue.getText());
             Registry registry = MainApp.getInstance().getRegistry();
             if (registry.getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName())) {
-                List<CVTerm> suggestions = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName()).getTerms();
+                List<CVTerm> suggestions = new ArrayList<>();
+                CV cv = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName());
+                if (cv.isHasSubs()) {
+                    cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
+                        suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
+                    });
+                } else {
+                    suggestions.addAll(cv.getTerms());
+                }
                 selectedPBCoreElementProperty.getValue().setValid(suggestions.stream().anyMatch(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())));
             } else {
                 if (!selectedPBCoreElementProperty.getValue().isHasChildElements()) {

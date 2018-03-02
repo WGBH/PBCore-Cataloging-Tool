@@ -5,12 +5,15 @@ import digitalbedrock.software.pbcore.components.PBCoreAnyValueListCell;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.components.PBCoreTreeCell;
 import digitalbedrock.software.pbcore.components.editor.AceEditor;
+import digitalbedrock.software.pbcore.core.models.CV;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.ElementType;
 import digitalbedrock.software.pbcore.core.models.entity.*;
 import digitalbedrock.software.pbcore.listeners.*;
+import digitalbedrock.software.pbcore.parsers.CSVPBCoreParser;
 import digitalbedrock.software.pbcore.utils.Registry;
 import digitalbedrock.software.pbcore.utils.StringUtils;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -252,7 +255,15 @@ public class DocumentController extends AbsController implements ElementSelectio
             boolean b = registry.getControlledVocabularies().containsKey(pbCoreElement.getName());
             taElementValue.setFilterMode(b);
             if (b) {
-                List<CVTerm> suggestions = registry.getControlledVocabularies().get(pbCoreElement.getName()).getTerms();
+                List<CVTerm> suggestions = new ArrayList<>();
+                CV cv = registry.getControlledVocabularies().get(pbCoreElement.getName());
+                if (cv.isHasSubs()) {
+                    cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
+                        suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
+                    });
+                } else {
+                    suggestions.addAll(cv.getTerms());
+                }
                 taElementValue.getData().addAll(suggestions);
             }
             updateInvalidIcon(!pbCoreElement.isValid() && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT, pbCoreElement.isFatalError());
@@ -468,7 +479,7 @@ public class DocumentController extends AbsController implements ElementSelectio
         }
     }
 
-    public void initializeDocument(String token, String currentId, File file, PBCoreElement pbCoreElement, FileChangedListener fileChangedListener) {
+    public void initializeDocument(String token, String currentId, File file, PBCoreElement pbCoreElement, FileChangedListener fileChangedListener, boolean changesDetected) {
         this.fileChangedListener = fileChangedListener;
         this.rootElement = pbCoreElement;
         this.file = file;
@@ -586,7 +597,15 @@ public class DocumentController extends AbsController implements ElementSelectio
             selectedPBCoreElementProperty.getValue().setValue(taElementValue.getText());
             Registry registry = MainApp.getInstance().getRegistry();
             if (registry.getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName())) {
-                List<CVTerm> suggestions = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName()).getTerms();
+                List<CVTerm> suggestions = new ArrayList<>();
+                CV cv = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName());
+                if (cv.isHasSubs()) {
+                    cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
+                        suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
+                    });
+                } else {
+                    suggestions.addAll(cv.getTerms());
+                }
                 selectedPBCoreElementProperty.getValue().setValid(suggestions.stream().anyMatch(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())));
             } else {
                 if (!selectedPBCoreElementProperty.getValue().isHasChildElements()) {
@@ -641,9 +660,10 @@ public class DocumentController extends AbsController implements ElementSelectio
         aceEditor.open();
         invalidValueIcon.setVisible(false);
         selectedPBCoreElementProperty.setValue(rootElement);
-        rootDocumentTreeView.getSelectionModel().select(0);
+        requiredElementsListView.getSelectionModel().select(0);
+        Platform.runLater(() -> taElementValue.requestFocus());
         updateStatusBarLabel();
-        buttonSave.setVisible(file == null);
+        buttonSave.setVisible(file == null || changesDetected);
 
         lvAnyValues.setCellFactory(lv -> new PBCoreAnyValueListCell(pbCoreElementAnyValue -> {
             if (pbCoreElementAnyValue == null) {
@@ -672,6 +692,27 @@ public class DocumentController extends AbsController implements ElementSelectio
     @FXML
     void saveFile(ActionEvent event) {
         saveDocument();
+    }
+
+    @Override
+    public void exportToCsv() {
+
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        file = fileChooser.showSaveDialog(rootDocumentTreeView.getScene().getWindow());
+        if (file != null) {
+            PBCoreElement value = requiredElementsListView.getRoot().getValue();
+            CSVPBCoreParser.writeFile(value, file.getAbsolutePath());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Document exported");
+            alert.setContentText("Document exported to csv successfully");
+            alert.setHeaderText(null);
+            alert.getButtonTypes().setAll(new ButtonType("Ok"));
+            alert.showAndWait();
+        }
     }
 
     @Override
@@ -828,7 +869,11 @@ public class DocumentController extends AbsController implements ElementSelectio
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
 
+    @Override
+    public boolean isExportable() {
+        return rootElement.getName().equalsIgnoreCase("pbcoreDescriptionDocument");
     }
 
     @Override
@@ -839,5 +884,6 @@ public class DocumentController extends AbsController implements ElementSelectio
 
     public void onShow() {
         aceEditor.reload();
+        Platform.runLater(() -> taElementValue.requestFocus());
     }
 }

@@ -42,6 +42,7 @@ public class DocumentAttributeItemController {
         autoCompleteTF.getTextbox().setText(pbCoreAttribute.getValue() == null ? "" : pbCoreAttribute.getValue());
         pbCoreAttribute.valueProperty.addListener((observable, oldValue, newValue) -> valueMissingIcon.setVisible(pbCoreAttribute.isRequired() && (newValue == null || newValue.trim().isEmpty())));
         attributeNameLbl.setText(pbCoreAttribute.getScreenName());
+        attributeNameLbl.setTooltip(new Tooltip(pbCoreAttribute.getScreenName()));
         removeButton.setVisible(!pbCoreAttribute.isRequired() && !pbCoreAttribute.isReadOnly());
         removeButton.setOnAction(event -> {
             if (attributeTreeCellListener != null) {

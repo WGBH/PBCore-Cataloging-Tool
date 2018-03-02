@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
@@ -73,6 +74,8 @@ public class DocumentElementItemController {
                 && pbCoreElement.getElementType() != PBCoreElementType.ROOT_ELEMENT);
         updateIconColor(pbCoreElement);
         titleLabel.setText(pbCoreElement.getScreenName());
+
+        titleLabel.setTooltip(new Tooltip(pbCoreElement.getScreenName()));
     }
 
     public void updateIndex(int i) {

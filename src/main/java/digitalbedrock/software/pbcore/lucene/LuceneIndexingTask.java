@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 class LuceneIndexingTask extends Task<Boolean> {
 
@@ -40,6 +41,7 @@ class LuceneIndexingTask extends Task<Boolean> {
             indexWriter.commit();
             return true;
         } catch (IOException | SAXException ex) {
+            Logger.getLogger(LuceneIndexingTask.class.getSimpleName()).info(ex.getMessage());
             return false;
         }
     }

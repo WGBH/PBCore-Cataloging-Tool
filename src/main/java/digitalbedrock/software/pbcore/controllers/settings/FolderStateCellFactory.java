@@ -1,5 +1,6 @@
 package digitalbedrock.software.pbcore.controllers.settings;
 
+import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
 import digitalbedrock.software.pbcore.lucene.LuceneIndexer;
 import javafx.application.Platform;
@@ -22,7 +23,7 @@ public class FolderStateCellFactory implements Callback<TableColumn<FolderModel,
                     setGraphic(null);
                     setText(null);
                 } else {
-                    FolderModel model = getTableView().getItems().get(getIndex());
+                    FolderModel model = MainApp.getInstance().getRegistry().getSettings().getFolders().get(getIndex());
                     model.scheduledProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
                         boolean processingFolder = LuceneIndexer.getInstance().isProcessingFolder(model.getFolderPath());
                         setText(newValue ? SCHEDULED : processingFolder ? PROCESSING : FINISHED);

@@ -27,15 +27,22 @@ public class ReindexFolderCellFactory implements Callback<TableColumn<FolderMode
                     setGraphic(null);
                     setText(null);
                 } else {
-                    FolderModel model = getTableView().getItems().get(getIndex());
+                    System.out.println("update" + item);
+                    FolderModel model = MainApp.getInstance().getRegistry().getSettings().getFolders().get(getIndex());
+                    model.indexingProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println("indexing: " + newValue);
+                        updateButtons(model);
+                    });
+                    model.scheduledProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println("scheduled: " + newValue);
+                        updateButtons(model);
+                    });
                     btnRefresh.setOnAction(event -> {
                         LuceneIndexer instance = LuceneIndexer.getInstance();
                         if (instance.startFolderIndexing(model.getFolderPath())) {
                             model.setScheduled(true);
                             MainApp.getInstance().getRegistry().getSettings().updateFolder(model);
                         }
-                        model.indexingProperty().addListener((observable, oldValue, newValue) -> updateButtons(model));
-                        model.scheduledProperty().addListener((observable, oldValue, newValue) -> updateButtons(model));
                         updateButtons(model);
                     });
                     btnPause.setOnAction(event -> LuceneIndexer.getInstance().stopIndexingForFolder(model.getFolderPath()));
