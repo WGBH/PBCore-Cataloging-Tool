@@ -10,7 +10,6 @@ import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.ElementType;
 import digitalbedrock.software.pbcore.core.models.entity.*;
 import digitalbedrock.software.pbcore.listeners.*;
-import digitalbedrock.software.pbcore.parsers.CSVPBCoreParser;
 import digitalbedrock.software.pbcore.utils.Registry;
 import digitalbedrock.software.pbcore.utils.StringUtils;
 import javafx.application.Platform;
@@ -695,27 +694,6 @@ public class DocumentController extends AbsController implements ElementSelectio
     }
 
     @Override
-    public void exportToCsv() {
-
-        FileChooser fileChooser = new FileChooser();
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        file = fileChooser.showSaveDialog(rootDocumentTreeView.getScene().getWindow());
-        if (file != null) {
-            PBCoreElement value = requiredElementsListView.getRoot().getValue();
-            CSVPBCoreParser.writeFile(value, file.getAbsolutePath());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Document exported");
-            alert.setContentText("Document exported to csv successfully");
-            alert.setHeaderText(null);
-            alert.getButtonTypes().setAll(new ButtonType("Ok"));
-            alert.showAndWait();
-        }
-    }
-
-    @Override
     public void saveDocument() {
         if (buttonSave.isVisible()) {
             saveDocument(false);
@@ -843,6 +821,9 @@ public class DocumentController extends AbsController implements ElementSelectio
         while (iterator.hasNext()) {
             PBCoreElement next = iterator.next();
             pbCoreElement.getSubElements().forEach((elementToAdd) -> {
+                if (!elementToAdd.getFullPath().contains(next.getFullPath())) {
+                    return;
+                }
                 String fullP = elementToAdd.getFullPath();
                 fullP = fullP.replace(elementToAdd.getName(), "");
                 int i = fullP.lastIndexOf("/");

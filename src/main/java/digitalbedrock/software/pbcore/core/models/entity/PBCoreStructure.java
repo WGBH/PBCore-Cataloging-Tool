@@ -50,6 +50,15 @@ public class PBCoreStructure {
         }
     }
 
+    public void setTooltip(PBCoreElement pbCoreElement, Map<String, String> tooltips){
+        pbCoreElement.getSubElements().forEach((coreElement) -> {
+            coreElement.setTooltip(tooltips.get(coreElement.getScreenName()));
+        });
+        pbCoreElement.getAttributes().forEach((pbCoreAttribute) -> {
+            pbCoreAttribute.setTooltip(tooltips.get(pbCoreAttribute.getScreenName()));
+        });
+    }
+
     public static PBCoreStructure getInstance() {
         if (instance == null) {
             instance = new PBCoreStructure();
@@ -114,9 +123,9 @@ public class PBCoreStructure {
                     "xmlns:xsi");
 
             pbCoreElementToReturn.markAsRootElement();
-            PBCoreAttribute pbCoreAttribute = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns", "xmlns", "xmlns", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html", true);
-            PBCoreAttribute pbCoreAttribute1 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xsi:schemaLocation", "xsi:schemaLocation", "xsi:schemaLocation", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html https://raw.githubusercontent.com/WGBH/PBCore_2.1/master/pbcore-2.1.xsd", true);
-            PBCoreAttribute pbCoreAttribute2 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns:xsi", "xmlns:xsi", "xmlns:xsi", false, "", "http://www.w3.org/2001/XMLSchema-instance", true);
+            PBCoreAttribute pbCoreAttribute = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns", "xmlns", "xmlns", "xmlns", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html", true);
+            PBCoreAttribute pbCoreAttribute1 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xsi:schemaLocation", "xsi:schemaLocation", "xsi:schemaLocation", "xsi:schemaLocation", false, "", "http://www.pbcore.org/PBCore/PBCoreNamespace.html https://raw.githubusercontent.com/WGBH/PBCore_2.1/master/pbcore-2.1.xsd", true);
+            PBCoreAttribute pbCoreAttribute2 = new PBCoreAttribute(pbCoreElementToReturn.getFullPath() + "/xmlns:xsi", "xmlns:xsi", "xmlns:xsi", "xmlns:xsi", false, "", "http://www.w3.org/2001/XMLSchema-instance", true);
 
             if (pbCoreElementToReturn.getAttributes().stream().noneMatch(pbCoreAttribute3 -> attrsToAdd.contains(pbCoreAttribute3.getName()))) {
                 pbCoreElementToReturn.addAttribute(pbCoreAttribute);
@@ -150,6 +159,7 @@ public class PBCoreStructure {
                 pathRepresentation,
                 pbCoreElement.getScreenName(),
                 pbCoreElement.getName(),
+                pbCoreElement.getTooltip(),
                 pbCoreElement.isRequired(),
                 pbCoreElement.isRepeatable(),
                 pbCoreElement.isSupportsChildElements(),
@@ -307,6 +317,7 @@ public class PBCoreStructure {
                 pathRepresentation,
                 element.getScreenName(),
                 element.getName(),
+                element.getTooltip(),
                 element.isRequired(),
                 element.isRepeatable(),
                 element.isSupportsChildElements(),

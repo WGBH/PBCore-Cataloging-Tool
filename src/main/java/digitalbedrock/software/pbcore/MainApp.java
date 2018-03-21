@@ -263,8 +263,8 @@ public class MainApp extends Application {
             case NEW_INSTANTIATION_DOCUMENT:
             case SAVE:
             case SAVE_AS:
-            case IMPORT_FROM_CSV:
-            case EXPORT_TO_CSV:
+            case CONVERT_FROM_CSV:
+            case EXPORT_SEARCHED_FILES_TO_CSV:
             case NEW_COLLECTION:
             case BATCH_EDIT:
             case EXPORT_OPEN_FILES_TO_ZIP:

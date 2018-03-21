@@ -637,7 +637,11 @@ public class DocumentBatchAddController extends AbsController implements Element
     }
 
     @FXML
-    void saveFile(ActionEvent event) {
+    public void saveFile(ActionEvent event) {
+        if(event == null && !buttonSave.isVisible()){
+            batchFinishedListener.onSaveBatch(requiredElementsListView.getRoot().getValue());
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Add elements to open files");
         alert.setContentText("By proceeding, all the elements will be added to the currently opened documents where possible.\nNo elements will be replaced and only repeatable or non existing elements on the files will be added.\nDo you want to proceed?");

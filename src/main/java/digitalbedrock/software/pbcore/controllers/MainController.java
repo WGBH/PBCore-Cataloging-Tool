@@ -24,7 +24,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
@@ -40,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static digitalbedrock.software.pbcore.listeners.MenuListener.MenuOption.EXPORT_TO_CSV;
+import static digitalbedrock.software.pbcore.listeners.MenuListener.MenuOption.EXPORT_OPEN_FILES_TO_CSV;
 
 public class MainController extends AbsController implements FileChangedListener, SearchResultListener, SavedSearchedUpdated {
 
@@ -77,28 +79,16 @@ public class MainController extends AbsController implements FileChangedListener
     public void menuOptionSelected(MenuOption menuOption, Object... objects) {
         switch (menuOption) {
             case OPEN_FILE:
-                Object object = objects[0];
-                openDocument((File) object);
+                openDocument((File) objects[0]);
                 break;
             case BATCH_EDIT:
                 batchAdd();
                 break;
-            case IMPORT_FROM_CSV:
-                object = objects[0];
-                try {
-                    showTab(null, null, CSVPBCoreParser.parseFile(((File) object).getAbsolutePath()));
-                } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Invalid file to import");
-                    alert.setHeaderText(null);
-                    alert.setContentText("The selected file is not compliant with the PBCore csv template.");
-                    alert.showAndWait();
-                }
+            case CONVERT_FROM_CSV:
+                convertFromCsv(objects[0]);
                 break;
-            case EXPORT_TO_CSV:
-                if (currentSavableTabListener != null) {
-                    currentSavableTabListener.exportToCsv();
-                }
+            case EXPORT_OPEN_FILES_TO_CSV:
+                exportOpenFiles(false);
                 break;
             case NEW_DESCRIPTION_DOCUMENT:
                 newDocument(NewDocumentType.DESCRIPTION_DOCUMENT);
@@ -116,7 +106,7 @@ public class MainController extends AbsController implements FileChangedListener
                 saveDocumentAs();
                 break;
             case EXPORT_OPEN_FILES_TO_ZIP:
-                exportOpenFiles();
+                exportOpenFiles(true);
                 break;
             default:
                 super.menuOptionSelected(menuOption, objects);
@@ -124,11 +114,54 @@ public class MainController extends AbsController implements FileChangedListener
         }
     }
 
-    private void exportOpenFiles() {
+    private void convertFromCsv(Object object) {
+        try {
+            spinnerLayer.setVisible(true);
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Select Destination Folder");
+            alert.setHeaderText(null);
+            alert.setContentText("If you choose to select a destination folder with existing contents, they may be overwritten if the generated files names match with the files names existing in the folder.");
+            Optional<ButtonType> buttonType = alert.showAndWait();
+            if (!buttonType.isPresent() || buttonType.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                spinnerLayer.setVisible(false);
+                return;
+            }
+            File file = directoryChooser.showDialog(tabPane.getScene().getWindow());
+            if (file == null) {
+                spinnerLayer.setVisible(false);
+                return;
+            }
+            int i = 1;
+            for (PBCoreElement pbCoreElement : CSVPBCoreParser.parseFile(((File) object).getAbsolutePath())) {
+                PBCoreStructure.getInstance().saveFile(pbCoreElement, new File(file.getAbsolutePath() + "/imported_from_csv_" + i++ + ".xml"));
+            }
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("File converted");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected csv file was converted to .xml files.");
+            alert.showAndWait();
+            spinnerLayer.setVisible(false);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid file to import");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected file is not compliant with the PBCore csv template.");
+            alert.showAndWait();
+            spinnerLayer.setVisible(false);
+        }
+    }
+
+    private void exportOpenFiles(boolean isZip) {
         spinnerLayer.setVisible(true);
         FileChooser fileChooser = new FileChooser();
 
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Zip files (*.zip)", "*.zip");
+        FileChooser.ExtensionFilter extFilter;
+        if (isZip) {
+            extFilter = new FileChooser.ExtensionFilter("Zip files (*.zip)", "*.zip");
+        } else {
+            extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        }
         fileChooser.getExtensionFilters().add(extFilter);
 
         File file = fileChooser.showSaveDialog(tabPane.getScene().getWindow());
@@ -153,7 +186,23 @@ public class MainController extends AbsController implements FileChangedListener
             map.put(s1, value);
         });
         try {
-            PBCoreStructure.getInstance().saveFilesToZip(map, file);
+            if (isZip) {
+                PBCoreStructure.getInstance().saveFilesToZip(map, file);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Documents exported");
+                alert.setContentText("Documents exported to zip successfully");
+                alert.setHeaderText(null);
+                alert.getButtonTypes().setAll(new ButtonType("Ok"));
+                alert.showAndWait();
+            } else {
+                CSVPBCoreParser.writeFile(map, file.getAbsolutePath());
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Documents exported");
+                alert.setContentText("Documents exported to csv successfully");
+                alert.setHeaderText(null);
+                alert.getButtonTypes().setAll(new ButtonType("Ok"));
+                alert.showAndWait();
+            }
         } catch (ParserConfigurationException | TransformerException | IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex.getMessage());
         }
@@ -271,7 +320,9 @@ public class MainController extends AbsController implements FileChangedListener
             });
             tab.setOnCloseRequest(event -> {
                 controller.saveDocument(true);
-                event.consume();
+                if (event != null) {
+                    event.consume();
+                }
             });
             tab.setContent(node);
             tab.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -409,7 +460,7 @@ public class MainController extends AbsController implements FileChangedListener
         batch.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.META_DOWN));
         batch.setOnAction(e -> menuOptionSelected(MenuOption.BATCH_EDIT));
 
-        final MenuItem importFromCsv = new MenuItem("Import from CSV file");
+        final MenuItem importFromCsv = new MenuItem("Convert CSV file to Xml");
         importFromCsv.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN));
         importFromCsv.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -420,13 +471,13 @@ public class MainController extends AbsController implements FileChangedListener
             if (selectedFile == null) {
                 return;
             }
-            menuOptionSelected(MenuOption.IMPORT_FROM_CSV, selectedFile);
+            menuOptionSelected(MenuOption.CONVERT_FROM_CSV, selectedFile);
         });
 
-        final MenuItem exportToCsv = new MenuItem("Export to CSV file");
+        final MenuItem exportToCsv = new MenuItem("Convert open files to CSV file");
         exportToCsv.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.META_DOWN));
         exportToCsv.setOnAction(e -> {
-            menuOptionSelected(EXPORT_TO_CSV);
+            menuOptionSelected(EXPORT_OPEN_FILES_TO_CSV);
         });
         exportToCsv.disableProperty().bind(nonExportableProperty);
 
@@ -489,6 +540,29 @@ public class MainController extends AbsController implements FileChangedListener
                     spinnerLayer.setVisible(false);
                 })));
         timeline.play();
+        final KeyCombination keyCombSingle = new KeyCodeCombination(KeyCode.W, KeyCombination.META_DOWN);
+        final KeyCombination keyCombAll = new KeyCodeCombination(KeyCode.W, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN);
+        tabPane.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (keyCombSingle.match(event)) {
+                if (tabPane.selectionModelProperty().getValue().getSelectedItem().getOnCloseRequest() != null) {
+                    tabPane.selectionModelProperty().getValue().getSelectedItem().getOnCloseRequest().handle(null);
+                } else {
+                    batchAddController.saveFile(null);
+                }
+            } else if (keyCombAll.match(event)) {
+                ArrayList<Tab> tabs = new ArrayList<>(tabPane.getTabs());
+                for (int i = tabs.size() - 1; i >= 0; i--) {
+                    Tab tab = tabs.get(i);
+                    tabPane.getSelectionModel().select(tab);
+                    if (tab.getOnCloseRequest() != null) {
+                        tab.getOnCloseRequest().handle(null);
+                    } else {
+                        batchAddController.saveFile(null);
+                    }
+                }
+
+            }
+        });
     }
 
     @Override

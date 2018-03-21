@@ -15,6 +15,7 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
     private String fullPath;
     private String screenName;
     private String name;
+    private String tooltip;
     private boolean required;
     private String description;
     @JsonIgnore
@@ -27,7 +28,7 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
         id = System.currentTimeMillis() + UUID.randomUUID().getLeastSignificantBits();
     }
 
-    public PBCoreAttribute(String fullPath, String screenName, String name, boolean required, String description, String value, boolean readOnly) {
+    public PBCoreAttribute(String fullPath, String screenName, String name, String tooltip, boolean required, String description, String value, boolean readOnly) {
         this();
         this.fullPath = fullPath;
         this.screenName = screenName;
@@ -36,6 +37,7 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
         this.description = description;
         this.valueProperty.setValue(value);
         this.readOnly = readOnly;
+        this.tooltip = tooltip;
     }
 
     public boolean isReadOnly() {
@@ -117,7 +119,15 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
     }
 
     public PBCoreAttribute copy() {
-        return new PBCoreAttribute(fullPath, screenName, name, required, description, getValue(), readOnly);
+        return new PBCoreAttribute(fullPath, screenName, name, tooltip, required, description, getValue(), readOnly);
+    }
+
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
     }
 
     @Override

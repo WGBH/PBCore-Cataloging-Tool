@@ -8,6 +8,8 @@ import digitalbedrock.software.pbcore.listeners.SearchFilterElementsSelectionLis
 import digitalbedrock.software.pbcore.lucene.HitDocument;
 import digitalbedrock.software.pbcore.lucene.LuceneEngine;
 import digitalbedrock.software.pbcore.lucene.LuceneEngineSearchFilter;
+import digitalbedrock.software.pbcore.parsers.CSVPBCoreParser;
+import digitalbedrock.software.pbcore.utils.PBCoreUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -18,9 +20,11 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -59,6 +63,8 @@ public class SearchController extends AbsController {
     private ListView<IPBCore> treeViewInstatiationPreview;
     @FXML
     private Button buttonCloseInstatiationPreview;
+    @FXML
+    private Button btnExportSearchToCsv;
     @FXML
     private Label previewItemsSubTitle;
 
@@ -312,6 +318,7 @@ public class SearchController extends AbsController {
                     spinnerLayer.setVisible(false);
                     MainApp.getInstance().getRegistry().addRecentSearch(andOperators);
                     lblTotalResults.setText("(" + search.getKey() + " files)");
+                    btnExportSearchToCsv.setDisable(search.getKey() < 1);
                 });
                 return null;
             }
@@ -333,6 +340,29 @@ public class SearchController extends AbsController {
     public void onCancel(ActionEvent actionEvent) {
         Stage stage = (Stage) textFieldTerm.getScene().getWindow();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+    }
+
+    @FXML
+    public void onExportSearchToCsv(ActionEvent actionEvent) {
+        spinnerLayer.setVisible(true);
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(listViewHits.getScene().getWindow());
+        if (file == null) {
+            spinnerLayer.setVisible(false);
+            return;
+        }
+
+        Map<String, PBCoreElement> mapPBCoreElements = PBCoreUtils.convertToDescriptionDocsMap(listViewHits.getItems());
+        CSVPBCoreParser.writeFile(mapPBCoreElements, file.getAbsolutePath());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Documents exported");
+        alert.setContentText("Documents exported to csv successfully");
+        alert.setHeaderText(null);
+        alert.getButtonTypes().setAll(new ButtonType("Ok"));
+        alert.showAndWait();
+        spinnerLayer.setVisible(false);
     }
 
     @FXML

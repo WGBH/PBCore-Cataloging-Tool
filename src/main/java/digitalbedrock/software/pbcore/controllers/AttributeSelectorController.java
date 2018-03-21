@@ -93,7 +93,7 @@ public class AttributeSelectorController extends AbsController {
             super.updateItem(item, empty);
             if (!empty) {
                 setText(item.getScreenName());
-                setTooltip(new Tooltip(item.getScreenName()));
+                setTooltip(new Tooltip(item.getTooltip()));
             } else {
                 setText(null);
                 setTooltip(null);

@@ -75,7 +75,7 @@ public class DocumentElementItemController {
         updateIconColor(pbCoreElement);
         titleLabel.setText(pbCoreElement.getScreenName());
 
-        titleLabel.setTooltip(new Tooltip(pbCoreElement.getScreenName()));
+        titleLabel.setTooltip(new Tooltip(pbCoreElement.getTooltip()));
     }
 
     public void updateIndex(int i) {

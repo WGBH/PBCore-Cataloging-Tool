@@ -23,6 +23,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
     private String pathRepresentation;
     private String screenName;
     private String name;
+    private String tooltip;
     private List<PBCoreAttribute> attributes = new ArrayList<>();
     private List<PBCoreElement> subElements = new ArrayList<>();
     private boolean required;
@@ -65,7 +66,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.pathRepresentation = pathRepresentation;
     }
 
-    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name, boolean required, boolean repeatable, boolean supportsChildElements, boolean anyElement, String description, String value, PBCoreElementType elementType,
+    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name,  String tooltip, boolean required, boolean repeatable, boolean supportsChildElements, boolean anyElement, String description, String value, PBCoreElementType elementType,
             boolean supportsAttributes,
             boolean valid, boolean fatalError,
             int sequence,
@@ -77,6 +78,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.pathRepresentation = pathRepresentation;
         this.screenName = screenName;
         this.name = name;
+        this.tooltip = tooltip;
         this.required = required;
         this.hasChildElements = hasChildElements;
         this.repeatable = repeatable;
@@ -93,6 +95,14 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.patternToFollow = patternToFollow;
         this.enumerationValues = enumerationValues;
         this.choice = choice;
+    }
+
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
     }
 
     public boolean isSupportsChildElements() {
@@ -273,7 +283,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
     }
 
     public PBCoreElement copy(boolean withOptionalAttributes) {
-        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name, required, repeatable, supportsChildElements, anyElement, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
+        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name,tooltip, required, repeatable, supportsChildElements, anyElement, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
         pbCoreElement.setAnyValues(new ArrayList<>(getAnyValues()));
         boolean validAttributes = true;
         for (PBCoreElement subElement : subElements) {

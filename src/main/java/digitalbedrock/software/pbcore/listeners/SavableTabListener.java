@@ -10,7 +10,5 @@ public interface SavableTabListener {
 
     void addBatchUpdate(PBCoreElement pbCoreElement);
 
-    void exportToCsv();
-
     boolean isExportable();
 }

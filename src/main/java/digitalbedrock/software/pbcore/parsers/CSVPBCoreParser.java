@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CSVPBCoreParser {
@@ -131,7 +132,7 @@ public class CSVPBCoreParser {
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_IDENTIFIER_SOURCE = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationIdentifier/source";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_DATE_DATE_TYPE = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationDate/dateType";
 
-    public static void writeFile(PBCoreElement pbCoreElement, String csvFile) {
+    public static void writeFile(Map<String, PBCoreElement> mapPbCoreElements, String csvFile) {
         try (
                 Writer writer = Files.newBufferedWriter(Paths.get(csvFile));
                 CSVWriter csvWriter = new CSVWriter(writer,
@@ -142,30 +143,34 @@ public class CSVPBCoreParser {
             String[] headerRecord = HEADER_RECORDS;
             csvWriter.writeNext(headerRecord);
             String[] records = new String[headerRecord.length];
-            int c = 0;
-            for (String s : headerRecord) {
-                PBCoreElement pbCoreE = mapPBCoreElementToString(pbCoreElement, s);
-                if (pbCoreE == null) {
-                    PBCoreAttribute pbCoreAttribute = mapPBCoreAttributeString(pbCoreElement, s);
-                    if (pbCoreAttribute != null) {
-                        records[c] = pbCoreAttribute.getValue();
-                        System.out.println(pbCoreAttribute);
+            mapPbCoreElements.entrySet().stream().map((stringPBCoreElementEntry) -> {
+                int c = 0;
+                PBCoreElement pbCoreElement = stringPBCoreElementEntry.getValue();
+                for (String s : headerRecord) {
+                    PBCoreElement pbCoreE = mapPBCoreElementToString(pbCoreElement, s);
+                    if (pbCoreE == null) {
+                        PBCoreAttribute pbCoreAttribute = mapPBCoreAttributeString(pbCoreElement, s);
+                        if (pbCoreAttribute != null) {
+                            records[c] = pbCoreAttribute.getValue();
+                            System.out.println(pbCoreAttribute);
+                        }
+                    } else {
+                        records[c] = pbCoreE.getValue();
+                        System.out.println(pbCoreE);
                     }
-                } else {
-                    records[c] = pbCoreE.getValue();
-                    System.out.println(pbCoreE);
+                    c++;
                 }
-                c++;
-            }
-            csvWriter.writeNext(records);
+                return stringPBCoreElementEntry;
+            }).forEachOrdered((_item) -> {
+                csvWriter.writeNext(records);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static PBCoreElement parseFile(String csvFile) throws IOException {
-        PBCoreElement copy = PBCoreStructure.getInstance().getRootElement(NewDocumentType.DESCRIPTION_DOCUMENT).copy(true);
-        copy.getSubElements().clear();
+    public static List<PBCoreElement> parseFile(String csvFile) throws IOException {
+        List<PBCoreElement> pbCoreElements = new ArrayList<>();
 
         CSVReader csvReader;
         String[] nextRecord;
@@ -177,6 +182,8 @@ public class CSVPBCoreParser {
                 throw new IOException();
             }
             while ((nextRecord = csvReader.readNext()) != null) {
+                PBCoreElement copy = PBCoreStructure.getInstance().getRootElement(NewDocumentType.DESCRIPTION_DOCUMENT).copy(true);
+                copy.getSubElements().clear();
                 int c = 0;
                 for (String value : nextRecord) {
                     if (mappedFullPaths.size() <= c) {
@@ -196,9 +203,10 @@ public class CSVPBCoreParser {
                         }
                     }
                 }
+                pbCoreElements.add(copy);
             }
         }
-        return copy;
+        return pbCoreElements;
     }
 
     private static PBCoreElement mapStringToPBCoreElement(PBCoreElement rootElement, String string, String value) {

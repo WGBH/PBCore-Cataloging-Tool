@@ -4,7 +4,13 @@ Disclaimer:
 
 This code is still in the early stages and not a completed product. 
 
-Version 7+  3/2/2018
+Version 7c   3/21/2018
+----------------------
+
+Bug fixes.  
+Adding some descriptions as tooltips to several labels/items.
+
+Version 7b  3/2/2018
 --------------------
 
 Interim Release - Bug Fixes.

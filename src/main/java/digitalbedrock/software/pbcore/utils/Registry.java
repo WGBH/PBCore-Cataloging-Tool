@@ -199,7 +199,11 @@ public class Registry implements Observer {
                 if (!file.exists()) {
                     pagesToRemove.add(entry);
                 } else {
-                    pbCoreElements.put(entry.getKey(), PBCoreStructure.getInstance().parseFile(file, this));
+                    try {
+                        pbCoreElements.put(entry.getKey(), PBCoreStructure.getInstance().parseFile(file, this));
+                    } catch (NullPointerException e) {
+                        Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, e.getMessage());
+                    }
                 }
             } catch (IllegalAccessException | JAXBException ex) {
                 Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
