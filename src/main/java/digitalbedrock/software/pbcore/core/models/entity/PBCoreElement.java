@@ -178,16 +178,19 @@ public class PBCoreElement extends IPBCore implements Serializable {
         return subElements;
     }
 
+    @JsonIgnore
     public List<PBCoreElement> getOrderedSubElements() {
         ArrayList<PBCoreElement> pbCoreElements = new ArrayList<>(subElements);
         pbCoreElements.sort(Comparator.comparing(PBCoreElement::getSequence));
         return pbCoreElements;
     }
 
+    @JsonIgnore
     public List<PBCoreElement> getRequiredSubElements() {
         return subElements.stream().filter(PBCoreElement::isRequired).collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<PBCoreElement> getOptionalSubElements() {
         return subElements.stream().filter(pbCoreElement -> !pbCoreElement.isRequired() && pbCoreElement.getValue() != null).collect(Collectors.toList());
     }

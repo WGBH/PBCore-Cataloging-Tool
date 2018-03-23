@@ -50,15 +50,6 @@ public class PBCoreStructure {
         }
     }
 
-    public void setTooltip(PBCoreElement pbCoreElement, Map<String, String> tooltips){
-        pbCoreElement.getSubElements().forEach((coreElement) -> {
-            coreElement.setTooltip(tooltips.get(coreElement.getScreenName()));
-        });
-        pbCoreElement.getAttributes().forEach((pbCoreAttribute) -> {
-            pbCoreAttribute.setTooltip(tooltips.get(pbCoreAttribute.getScreenName()));
-        });
-    }
-
     public static PBCoreStructure getInstance() {
         if (instance == null) {
             instance = new PBCoreStructure();
@@ -94,6 +85,23 @@ public class PBCoreStructure {
             });
         }
         return clone;
+    }
+
+    public void removeElement(PBCoreElement pbc, String fullpathToRemove) {
+        List<String> split = new ArrayList<>(Arrays.asList(fullpathToRemove.split("/")));
+        List<PBCoreElement> elementsToProcess = pbc.getSubElements();
+        PBCoreElement pbCoreElementToReturn = null;
+        while (!split.isEmpty()) {
+            String remove = split.remove(0);
+            pbCoreElementToReturn = elementsToProcess.stream().filter(pbCoreElement -> pbCoreElement.getName().equals(remove)).findFirst().orElse(null);
+            if (pbCoreElementToReturn == null) {
+                return;
+            }
+            elementsToProcess = pbCoreElementToReturn.getOrderedSubElements();
+        }
+        if (pbCoreElementToReturn != null) {
+            pbc.removeSubElement(pbCoreElementToReturn);
+        }
     }
 
     public PBCoreElement getElement(String fullpath) {
@@ -258,13 +266,16 @@ public class PBCoreStructure {
                     }
                     if (pbCoreElement.getAttributes().isEmpty() || pbCoreElement.getAttributes().stream().noneMatch(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName()))) {
                         PBCoreElement element = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
-                        PBCoreAttribute pbCoreAttribute1 = element.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).findFirst().orElse(null).copy();
-                        try {
-                            pbCoreAttribute1.setValue((String) field.get(o));
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
+                        PBCoreAttribute pbCoreAttribute1 = element.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).findFirst().orElse(null);
+                        if (pbCoreAttribute1 != null) {
+                            pbCoreAttribute1 = pbCoreAttribute1.copy();
+                            try {
+                                pbCoreAttribute1.setValue((String) field.get(o));
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
+                            pbCoreElement.addAttribute(pbCoreAttribute1);
                         }
-                        pbCoreElement.addAttribute(pbCoreAttribute1);
                     } else {
                         pbCoreElement.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals(field.getName())).forEach(pbCoreAttribute -> {
                             try {

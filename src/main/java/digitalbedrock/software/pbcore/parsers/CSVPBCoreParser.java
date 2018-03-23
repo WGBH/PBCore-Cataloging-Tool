@@ -105,6 +105,7 @@ public class CSVPBCoreParser {
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_ANNOTATION = "pbcoreDescriptionDocument/pbcoreAnnotation";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CREATOR_CREATOR = "pbcoreDescriptionDocument/pbcoreCreator/creator";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CREATOR_CREATOR_ROLE = "pbcoreDescriptionDocument/pbcoreCreator/creatorRole";
+    public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR = "pbcoreDescriptionDocument/pbcoreContributor";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR_CONTRIBUTOR = "pbcoreDescriptionDocument/pbcoreContributor/contributor";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR_CONTRIBUTOR_ROLE = "pbcoreDescriptionDocument/pbcoreContributor/contributorRole";
     public static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_RIGHTS_SUMMARY = "pbcoreDescriptionDocument/pbcoreRightsSummary";
@@ -183,6 +184,7 @@ public class CSVPBCoreParser {
             }
             while ((nextRecord = csvReader.readNext()) != null) {
                 PBCoreElement copy = PBCoreStructure.getInstance().getRootElement(NewDocumentType.DESCRIPTION_DOCUMENT).copy(true);
+                copy.clearOptionalSubElements();
                 copy.getSubElements().clear();
                 int c = 0;
                 for (String value : nextRecord) {
@@ -234,6 +236,10 @@ public class CSVPBCoreParser {
                 break;
             case COVERAGE:
                 element = verifyCoverageElement(rootElement);
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 PBCoreElement element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_COVERAGE_COVERAGE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -241,6 +247,10 @@ public class CSVPBCoreParser {
                 return element;
             case COVERAGE_TYPE:
                 element = verifyCoverageElement(rootElement);
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_COVERAGE_COVERAGE_TYPE).copy(false);
                 element1.setValue(value == null || value.trim().isEmpty() ? "Spatial" : value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -251,6 +261,10 @@ public class CSVPBCoreParser {
                 break;
             case CREATOR:
                 element = verifyCreatorElement(rootElement);
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CREATOR_CREATOR).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -258,6 +272,10 @@ public class CSVPBCoreParser {
                 return element;
             case CREATOR_ROLE:
                 element = verifyCreatorElement(rootElement);
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CREATOR_CREATOR_ROLE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -265,6 +283,11 @@ public class CSVPBCoreParser {
                 return element;
             case CONTRIBUTOR:
                 element = verifyContributorElement(rootElement);
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR_CONTRIBUTOR).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -272,6 +295,12 @@ public class CSVPBCoreParser {
                 return element;
             case CONTRIBUTOR_ROLE:
                 element = verifyContributorElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR_CONTRIBUTOR_ROLE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -282,6 +311,12 @@ public class CSVPBCoreParser {
                 break;
             case INSTANTIATION_IDENTIFIER:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_IDENTIFIER).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -289,6 +324,11 @@ public class CSVPBCoreParser {
                 return element;
             case INSTANTIATION_DATE:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_DATE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -296,6 +336,12 @@ public class CSVPBCoreParser {
                 return element;
             case INSTANTIATION_PHYSICAL:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_PHYSICA).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -303,6 +349,12 @@ public class CSVPBCoreParser {
                 return element;
             case INSTANTIATION_DIGITAL:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_DIGITAL).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -310,6 +362,12 @@ public class CSVPBCoreParser {
                 return element;
             case STANDARD:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_STANDARD).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -317,6 +375,11 @@ public class CSVPBCoreParser {
                 return element;
             case LOCATION:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_LOCATION).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -324,6 +387,12 @@ public class CSVPBCoreParser {
                 return element;
             case MEDIA_TYPE:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_MEDIA_TYPE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -331,6 +400,12 @@ public class CSVPBCoreParser {
                 return element;
             case GENERATIONS:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_GENERATIONS).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -338,6 +413,13 @@ public class CSVPBCoreParser {
                 return element;
             case DURATION:
                 element = verifyInstantiationElement(rootElement);
+
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_DURATION).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -345,6 +427,12 @@ public class CSVPBCoreParser {
                 return element;
             case COLORS:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_COLORS).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -352,11 +440,19 @@ public class CSVPBCoreParser {
                 return element;
             case LANGUAGE:
                 element = verifyInstantiationElement(rootElement);
+
+                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                    return null;
+                }
+
                 element1 = PBCoreStructure.getInstance().getElement(PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_INSTANTIATION_LANGUAGE).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
                 element.addSubElement(element1);
                 return element;
+        }
+        if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+            return null;
         }
         if (element != null) {
             element.setValue(value);
@@ -374,7 +470,7 @@ public class CSVPBCoreParser {
     }
 
     private static PBCoreElement verifyContributorElement(PBCoreElement rootElement) {
-        return verifyElement(rootElement, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR_CONTRIBUTOR);
+        return verifyElement(rootElement, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_CONTRIBUTOR);
     }
 
     private static PBCoreElement verifyInstantiationElement(PBCoreElement rootElement) {

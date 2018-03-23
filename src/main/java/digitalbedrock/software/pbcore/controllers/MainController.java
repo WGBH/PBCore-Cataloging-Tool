@@ -173,6 +173,12 @@ public class MainController extends AbsController implements FileChangedListener
         Map<String, PBCoreElement> map = new HashMap<>();
         registry.getPbCoreElements().forEach((key, value) -> {
             String s1 = registry.getCurrentWorkPages().get(key);
+            if (s1 == null) {
+                return;
+            }
+            if (!isZip && !value.getFullPath().startsWith("pbcoreDescriptionDocument")) {
+                return;
+            }
             int c = 1;
             String filename = s1;
             if (!filename.endsWith(".xml")) {

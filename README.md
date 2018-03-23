@@ -4,6 +4,11 @@ Disclaimer:
 
 This code is still in the early stages and not a completed product. 
 
+Version 7d   3/23/2018
+----------------------
+
+Bug fixes.
+
 Version 7c   3/21/2018
 ----------------------
 
