@@ -2,7 +2,10 @@
 
 Disclaimer:  
 
-This code is still in the early stages and not a completed product. 
+Version 8  6/5/2018
+-------------------
+Bug fixes & enhancements from user testing.
+
 
 Version 7d   3/23/2018
 ----------------------

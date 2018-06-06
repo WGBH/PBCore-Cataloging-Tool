@@ -45,13 +45,13 @@
                 <padding>
                     <Insets right="5.0"/>
                 </padding>
-                <RadioButton fx:id="toggleXml" mnemonicParsing="false" selected="true" styleClass="leftToggle"
+                <RadioButton fx:id="toggleXml" mnemonicParsing="false" styleClass="leftToggle"
                              text="xml">
                     <toggleGroup>
                         <ToggleGroup fx:id="typeRadio"/>
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="toggleVisual" mnemonicParsing="false" styleClass="rightToggle"
+                <RadioButton fx:id="toggleVisual" mnemonicParsing="false" selected="true" styleClass="rightToggle"
                              text="Visual Layout" toggleGroup="$typeRadio"/>
                 <Button fx:id="closeButton" mnemonicParsing="false">
                     <HBox.margin>

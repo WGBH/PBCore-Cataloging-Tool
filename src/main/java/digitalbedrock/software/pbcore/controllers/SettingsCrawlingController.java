@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -55,6 +56,9 @@ public class SettingsCrawlingController extends AbsController {
 
     @FXML
     private Button okButton;
+
+    @FXML
+    private AnchorPane apFirstTime;
 
     @FXML
     void onAddButtonClick(ActionEvent event) {
@@ -119,10 +123,20 @@ public class SettingsCrawlingController extends AbsController {
         filesProcessedColumn.setCellFactory(new FolderProcessedFilesCellFactory());
         reindexColumn.setCellFactory(new ReindexFolderCellFactory());
         removeColumn.setCellFactory(new RemoveFolderCellFactory(obsList));
+
+        boolean instructionsShown = MainApp.getInstance().getRegistry().getSettings().isFirstTimeInstructionsShown();
+        apFirstTime.setVisible(!instructionsShown);
+        if (!instructionsShown) {
+            MainApp.getInstance().getRegistry().markFirstTimeInstructionsShown();
+        }
     }
 
     @Override
     public MenuBar createMenu() {
         return new MenuBar();
+    }
+
+    public void onDismissFirstTimeInstructions(ActionEvent actionEvent) {
+        apFirstTime.setVisible(false);
     }
 }

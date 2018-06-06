@@ -31,7 +31,7 @@ public class ElementVisualLayoutItemController {
         if (!element.isAnyElement()) {
             String value = element.getValue() == null ? "" : element.getValue();
             if (element.getName().equalsIgnoreCase("pbcoreDescription") && value.length() > 100) {
-                value = value.substring(0, 100);
+                value = value.substring(0, 100) + "...";
             }
             previewElementValue.setText(value);
         } else {

@@ -8,18 +8,27 @@ import digitalbedrock.software.pbcore.utils.Registry;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SettingsVocabulariesController extends AbsController {
 
@@ -51,6 +60,11 @@ public class SettingsVocabulariesController extends AbsController {
     private TextField tfVersion;
     @FXML
     private TextField tfRef;
+
+    @FXML
+    private Button buttonAddNewItem;
+    @FXML
+    private Button buttonRemoveItem;
 
     @FXML
     private Button buttonAdd;
@@ -95,23 +109,7 @@ public class SettingsVocabulariesController extends AbsController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        MainApp.getInstance().getRegistry().getControlledVocabularies().forEach((key, value) -> {
-            TreeItem<String> t = new TreeItem<>(key);
-            if (value.isAttribute()) {
-                rootAttributes.getChildren().add(t);
-            } else {
-                if (!value.isHasSubs()) {
-                    rootElements.getChildren().add(t);
-                } else {
-                    for (Map.Entry<String, CVBase> stringCVBaseEntry : value.getSubs().entrySet()) {
-                        t = new TreeItem<>(key + " - " + stringCVBaseEntry.getKey());
-                        rootElements.getChildren().add(t);
-                    }
-                }
-            }
-        });
-        treelist.setShowRoot(false);
-        treelist.setRoot(rootElements);
+        reloadTree(false);
 
         treelist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -134,6 +132,7 @@ public class SettingsVocabulariesController extends AbsController {
             } else {
                 tvVocabularies.setItems(FXCollections.observableArrayList(cv.getTerms()));
             }
+            buttonRemoveItem.setDisable(!cv.isCustom());
             buttonAdd.setDisable(false);
             tfTerm.setDisable(false);
             tfSource.setDisable(false);
@@ -251,6 +250,7 @@ public class SettingsVocabulariesController extends AbsController {
             selectedCVTerm = null;
             cancelEditTerm(null);
             buttonAdd.setDisable(true);
+            buttonRemoveItem.setDisable(true);
         });
     }
 
@@ -335,5 +335,167 @@ public class SettingsVocabulariesController extends AbsController {
         tfSource.setText(null);
         tfVersion.setText(null);
         tfRef.setText(null);
+    }
+
+
+    @FXML
+    void onSelectNewElementToAdd(ActionEvent event) {
+        if (rbElements.isSelected()) {
+            showSelectElementModal();
+        } else if (rbAttributes.isSelected()) {
+            showSelectAttributesModal();
+        }
+
+    }
+
+    private void showSelectAttributesModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cv_attribute_selector.fxml"));
+            Parent parent = loader.load();
+            CVAttributeSelectorController controller = loader.getController();
+            Scene searchScene = new Scene(parent);
+            Stage searchWindow = new Stage();
+            searchWindow.initOwner(searchScene.getWindow());
+            searchWindow.initModality(Modality.APPLICATION_MODAL);
+            searchWindow.setTitle("Add new attribute");
+            searchWindow.setScene(searchScene);
+            searchWindow.show();
+            controller.setAttributeSelectionListener((element, close) -> {
+                reloadTree(true);
+                searchWindow.close();
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showSelectElementModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cv_element_selector.fxml"));
+            Parent parent = loader.load();
+            CVElementSelectorController controller = loader.getController();
+            Scene searchScene = new Scene(parent);
+            Stage selectElementWindow = new Stage();
+            selectElementWindow.initOwner(searchScene.getWindow());
+            selectElementWindow.initModality(Modality.APPLICATION_MODAL);
+            selectElementWindow.setTitle("Add new element");
+            selectElementWindow.setScene(searchScene);
+            selectElementWindow.show();
+            controller.setElementSelectionListener((treeViewId1, index1, element, close) -> {
+                reloadTree(false);
+                selectElementWindow.close();
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void reloadTree(boolean showAttributes) {
+        rootAttributes.getChildren().clear();
+        rootElements.getChildren().clear();
+        MainApp.getInstance().getRegistry().getControlledVocabularies().forEach((key, value) -> {
+            TreeItem<String> t = new TreeItem<>(key);
+            if (value.isAttribute()) {
+                rootAttributes.getChildren().add(t);
+            } else if (!value.isAttribute()) {
+                if (!value.isHasSubs()) {
+                    rootElements.getChildren().add(t);
+                } else {
+                    for (Map.Entry<String, CVBase> stringCVBaseEntry : value.getSubs().entrySet()) {
+                        t = new TreeItem<>(key + " - " + stringCVBaseEntry.getKey());
+                        rootElements.getChildren().add(t);
+                    }
+                }
+            }
+        });
+        treelist.setShowRoot(false);
+        treelist.setRoot(showAttributes ? rootAttributes : rootElements);
+    }
+
+    @FXML
+    void onSelectRemoveAggregator(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Select Destination Folder");
+        alert.setHeaderText(null);
+        alert.setContentText("By deleting this controlled vocabulary all the terms associated to him will no longer be available while filling the element or attribute associated to him. Proceed?");
+        Optional<ButtonType> buttonType = alert.showAndWait();
+        if (!buttonType.isPresent() || buttonType.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+            return;
+        }
+        treelist.getSelectionModel().clearSelection();
+        MainApp.getInstance().getRegistry().removeCV(selectedCV);
+        reloadTree(rbAttributes.isSelected());
+    }
+
+    @FXML
+    void onImport(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Document");
+        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv), XML files (*.xml), JSON files (*.json)", "*.csv", ".xml", "*.json");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.setSelectedExtensionFilter(extFilter);
+        File selectedFile = fileChooser.showOpenDialog(treelist.getScene().getWindow());
+        if (selectedFile == null) {
+            return;
+        }
+        try {
+            MainApp.getInstance().getRegistry().importControlledVocabularies(selectedFile);
+            reloadTree(rbAttributes.isSelected());
+            showImportSuccessMessage();
+        } catch (IOException e) {
+            showImportErrorMessage();
+        }
+    }
+
+    @FXML
+    void onExport(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Document");
+        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv), XML files (*.xml), JSON files (*.json)", "*.csv", ".xml", "*.json");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.setSelectedExtensionFilter(extFilter);
+        fileChooser.setInitialFileName("pbcore_cvs.json");
+        File selectedFile = fileChooser.showSaveDialog(treelist.getScene().getWindow());
+        if (selectedFile == null) {
+            return;
+        }
+        try {
+            MainApp.getInstance().getRegistry().exportControlledVocabularies(selectedFile);
+            showExportSuccessMessage();
+        } catch (IOException e) {
+            showExportErrorMessage();
+        }
+    }
+
+    private void showImportSuccessMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Importation successful");
+        alert.setHeaderText(null);
+        alert.setContentText("The controlled vocabularies were imported into the system successfully");
+        alert.showAndWait();
+    }
+
+    private void showExportSuccessMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Exportation successful");
+        alert.setHeaderText(null);
+        alert.setContentText("Exportation completed sucessfully");
+        alert.showAndWait();
+    }
+
+    private void showExportErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Exportation failed");
+        alert.setHeaderText(null);
+        alert.setContentText("It was not possible to export the controlled vocabularies file");
+        alert.showAndWait();
+    }
+
+    private void showImportErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Importation failed");
+        alert.setHeaderText(null);
+        alert.setContentText("The provided file isn't a valid controlled vocabularies file. Please review it or provide a different one.");
+        alert.showAndWait();
     }
 }

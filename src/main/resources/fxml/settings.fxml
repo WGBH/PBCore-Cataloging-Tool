@@ -6,27 +6,22 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="SettingsUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" styleClass="dialogRoot"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
+<AnchorPane id="SettingsUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1040.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <stylesheets>
-        <URL value="@../styles/style.css"/>
+        <URL value="@../styles/style.css" />
     </stylesheets>
-    <TabPane id="tabs" layoutX="127.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0"
-             tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <TabPane id="tabs" layoutX="127.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab id="tabCV" text="CONTROLLED VOCABULARIES">
             <AnchorPane>
-                <fx:include source="settings_vocabularies.fxml"/>
+                <fx:include source="settings_vocabularies.fxml" />
             </AnchorPane>
         </Tab>
         <Tab id="tabDL" text="DIRECTORY CRAWLING">
             <AnchorPane>
-                <fx:include source="settings_crawling.fxml"/>
+                <fx:include source="settings_crawling.fxml" />
             </AnchorPane>
         </Tab>
     </TabPane>

@@ -13,6 +13,8 @@ import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
 import digitalbedrock.software.pbcore.listeners.SavedSearchedUpdated;
 import digitalbedrock.software.pbcore.lucene.LuceneEngineSearchFilter;
+import digitalbedrock.software.pbcore.parsers.CSVAttributeMapper;
+import digitalbedrock.software.pbcore.parsers.CSVElementMapper;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,7 +32,7 @@ public class Registry implements Observer {
 
     private Settings settings = new Settings();
 
-    private final Map<String, CV> controlledVocabularies;
+    private Map<String, CV> controlledVocabularies;
     private final Map<String, PBCoreElement> pbCoreElements = new HashMap<>();
     private PBCoreElement batchEditPBCoreElement;
 
@@ -41,7 +43,7 @@ public class Registry implements Observer {
     public Registry() {
         isMac = System.getProperty("os.name").toLowerCase().contains("mac");
         isWindows = System.getProperty("os.name").toLowerCase().contains("win");
-        controlledVocabularies = loadControlledVocabularies();
+        controlledVocabularies = new TreeMap<>(loadControlledVocabularies());
         verifyAndRetrieveAceEditorHtmlResourceFile();
         loadPBCoreElements();
         loadBatchEditPBCoreElement();
@@ -433,5 +435,97 @@ public class Registry implements Observer {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void createNewVocabulariesAggregator(String name) {
+        CV cv = new CV();
+        cv.setCustom(true);
+        cv.setAttribute(true);
+        getControlledVocabularies().put(name, cv);
+        try {
+            saveVocabulariesFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeCV(String selectedCV) {
+        getControlledVocabularies().remove(selectedCV);
+        try {
+            saveVocabulariesFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, CV> importControlledVocabularies(File file) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap<String, CV> importedVocabularies = mapper.readValue(file, new TypeReference<HashMap<String, CV>>() {
+        });
+        HashMap<String, CV> defaultVocabularies = mapper.readValue(Thread.currentThread().getContextClassLoader().getResource("cvs.json"), new TypeReference<HashMap<String, CV>>() {
+        });
+        if (importedVocabularies == null) {
+            return new HashMap<>();
+        }
+        for (Map.Entry<String, CV> stringCVEntry : importedVocabularies.entrySet()) {
+            if (defaultVocabularies.containsKey(stringCVEntry.getKey())) {
+                CV cv = defaultVocabularies.get(stringCVEntry.getKey());
+                cv.update(stringCVEntry.getValue());
+            } else {
+                CV value = stringCVEntry.getValue();
+                value.setCustom(true);
+                value.setHasSubs(false);
+                for (CVTerm cvTerm : value.getTerms()) {
+                    cvTerm.setCustom(true);
+                }
+                defaultVocabularies.put(stringCVEntry.getKey(), value);
+            }
+        }
+        controlledVocabularies = new TreeMap<>(defaultVocabularies);
+        saveVocabulariesFile();
+        return getControlledVocabularies();
+    }
+
+    public void exportControlledVocabularies(File file) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(file, controlledVocabularies);
+    }
+
+    public void markFirstTimeInstructionsShown() {
+        getSettings().markFirstTimeInstructionsShown();
+        saveSettings();
+    }
+
+    public List<CSVElementMapper> loadMappers() {
+        List<CSVElementMapper> mappers = new ArrayList<>();
+        String file = defaultDirectory() + File.separator + "mappers" + File.separator + "mappers.json";
+        File f = new File(file);
+        if (!f.exists()) {
+            try {
+                new File(defaultDirectory() + File.separator + "mappers").mkdir();
+                Files.copy(Thread.currentThread().getContextClassLoader().getResourceAsStream("mappers.json"), f.toPath());
+            } catch (IOException ex) {
+                Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mappers = mapper.readValue(f, new TypeReference<List<CSVElementMapper>>() {
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            mappers = mapper.readValue(Thread.currentThread().getContextClassLoader().getResource("mappers.json"), new TypeReference<List<CSVElementMapper>>() {
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (CSVElementMapper csvElementMapper : mappers) {
+            for (CSVAttributeMapper csvAttributeMapper : csvElementMapper.getAttributes()) {
+                csvAttributeMapper.setElementFullPath(csvElementMapper.getElementFullPath());
+            }
+        }
+        return mappers;
     }
 }

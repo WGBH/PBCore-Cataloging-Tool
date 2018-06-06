@@ -48,4 +48,12 @@ public class CV extends CVBase {
     public CV() {
         super();
     }
+
+    public void update(CV value) {
+        for (CVTerm cvTerm : value.getTerms()) {
+            if (cvTerm.isCustom() && !getTerms().contains(cvTerm)) {
+                getTerms().add(cvTerm);
+            }
+        }
+    }
 }

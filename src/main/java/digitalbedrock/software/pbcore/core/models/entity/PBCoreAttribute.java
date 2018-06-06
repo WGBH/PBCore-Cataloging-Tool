@@ -119,7 +119,11 @@ public class PBCoreAttribute extends IPBCore implements Serializable {
     }
 
     public PBCoreAttribute copy() {
-        return new PBCoreAttribute(fullPath, screenName, name, tooltip, required, description, getValue(), readOnly);
+        return copy(true);
+    }
+
+    public PBCoreAttribute copy(boolean withValues) {
+        return new PBCoreAttribute(fullPath, screenName, name, tooltip, required, description, withValues ? getValue() : null, readOnly);
     }
 
     public String getTooltip() {

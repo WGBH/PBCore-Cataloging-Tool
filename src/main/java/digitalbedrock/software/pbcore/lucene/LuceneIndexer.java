@@ -144,7 +144,7 @@ public class LuceneIndexer {
     }
 
     public void deleteDocsForFolder(String folderPath) {
-        LuceneEngine.deleteIndexesForFile(indexWriter, folderPath);
+        LuceneEngine.deleteIndexesForFolder(indexWriter, folderPath);
     }
 
     class LuceneIndexerService extends Service<String> {

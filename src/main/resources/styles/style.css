@@ -21,7 +21,7 @@
     muted-color: #a0a0a0;
     light-color: #c4c4c4;
     nice-color: #11c115;
-    warning-color: #FFBE05;
+    warning-color: #ff9926; /* FFBE05 */
     panic-color: #d01f1f;
     info-color: #8bc2ee;
     focus-color: #28a3f4;
@@ -34,14 +34,14 @@
     muted-text-color: #a0a0a0;
     light-text-color: #c4c4c4;
     nice-text-color: #11c115;
-    warning-text-color: #FFBE05;
+    warning-text-color: #ff9926;
     panic-text-color: #d01f1f;
 
-    toggle-button-bg-color: #a0a0a0;
-    toggle-button-text-color: #c4c4c4;
+    toggle-button-bg-color: #656565;
+    toggle-button-text-color: #969696;
 
-    toggle-button-bg-color-sel: #838383;
-    toggle-button-text-color-sel: #ffffff;
+    toggle-button-bg-color-sel: #11c115;
+    toggle-button-text-color-sel: #434343;
 
     icon-button-bg-color: transparent;
     icon-button-text-color: #585858;
@@ -65,6 +65,14 @@
     panic-button-text-color: #ffffff;
 }
 
+.backdrop {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+    -fx-background-color: white-bg;
+}
+
 .root {
     -fx-font-family: Arial;
     -fx-focus-color: transparent;
@@ -73,6 +81,10 @@
 
 .autofill-text {
     -fx-skin: "digitalbedrock.software.pbcore.components.AutoFillTextBoxPBCoreElementSkin";
+}
+
+.autofill-text-area {
+    -fx-skin: "digitalbedrock.software.pbcore.components.AutoFillTextAreaBoxPBCoreElementSkin";
 }
 
 .title1 {
@@ -196,7 +208,7 @@
 }
 
 .check-box {
-    -fx-label-padding: 0.0em 0.0em 0.0em 0.416667em; 
+    -fx-label-padding: 0.0em 0.0em 0.0em 0.416667em;
     -fx-text-fill: text-color;
 }
 
@@ -389,8 +401,8 @@
 }
 
 .table-view {
-    -fx-base: gray-bg; 
-    -fx-control-inner-background: white-bg; 
+    -fx-base: gray-bg;
+    -fx-control-inner-background: white-bg;
     -fx-background-color: transparent;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
@@ -696,6 +708,11 @@
 }
 
 #DocumentUI .elementValueTextArea .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#DocumentUI .elementValueTextArea .text-area {
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }

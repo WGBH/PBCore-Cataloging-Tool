@@ -10,22 +10,24 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SkinBase;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-import np.com.ngopal.control.AutoFillTextBox;
 
 import java.io.IOException;
 
-public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<CVTerm>> implements ChangeListener<String>, EventHandler<Event> {
+public class AutoFillTextAreaBoxPBCoreElementSkin extends SkinBase<AutoFillTextAreaBox<CVTerm>> implements ChangeListener<String>, EventHandler<Event> {
 
     private final static int TITLE_HEIGHT = 28;
     private final ListView<CVTerm> listview;
-    private final TextField textbox;
-    private final AutoFillTextBox<CVTerm> autofillTextbox;
+    private final TextArea textbox;
+    private final AutoFillTextAreaBox<CVTerm> autofillTextbox;
     private final ObservableList<CVTerm> data;
     private final Popup popup;
 
@@ -33,7 +35,7 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         return autofillTextbox.getScene() == null ? null : autofillTextbox.getScene().getWindow();
     }
 
-    public AutoFillTextBoxPBCoreElementSkin(AutoFillTextBox<CVTerm> text) {
+    public AutoFillTextAreaBoxPBCoreElementSkin(AutoFillTextAreaBox<CVTerm> text) {
         super(text);
         autofillTextbox = text;
 
@@ -55,6 +57,8 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
         listview.setCellFactory(lv -> new CVTermListCell());
 
         textbox = text.getTextbox();
+        textbox.setPrefHeight(110);
+        textbox.setWrapText(true);
         textbox.setOnKeyPressed(this);
         textbox.textProperty().addListener(this);
         textbox.setPromptText("enter here...");
@@ -92,7 +96,7 @@ public class AutoFillTextBoxPBCoreElementSkin extends SkinBase<AutoFillTextBox<C
             hidePopup();
         }
 
-        if (evt.getEventType() == KeyEvent.KEY_PRESSED) {
+        if (evt instanceof KeyEvent && evt.getEventType() == KeyEvent.KEY_PRESSED) {
             KeyEvent t = (KeyEvent) evt;
             if (t.getSource() == textbox) {
                 if (t.getCode() == KeyCode.DOWN) {

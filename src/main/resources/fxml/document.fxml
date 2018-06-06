@@ -4,185 +4,194 @@
 
 <?import java.lang.String?>
 <?import java.net.URL?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import np.com.ngopal.control.AutoFillTextBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane id="DocumentUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="665.0"
-            prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-            AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
-    <padding>
-        <Insets/>
-    </padding>
-    <stylesheets>
-        <URL value="@../styles/style.css"/>
-    </stylesheets>
-    <VBox prefHeight="600.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <GridPane hgap="10.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="statusBar"
-                  VBox.vgrow="NEVER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES"/>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <HBox alignment="CENTER_LEFT">
-                <padding>
-                    <Insets left="20.0"/>
-                </padding>
-                <Label fx:id="statusBarDocumentType" styleClass="statusBarDocumentType" text="DESCRIPTION DOCUMENT">
-                    <HBox.margin>
-                        <Insets right="5.0"/>
-                    </HBox.margin>
-                </Label>
-                <FontIcon iconLiteral="mdi-chevron-right" iconSize="18" styleClass="statusBarSeparator">
-                    <HBox.margin>
-                        <Insets right="5.0"/>
-                    </HBox.margin>
-                </FontIcon>
-                <Label fx:id="statusBarDocumentName" styleClass="statusBarDocumentName" text="untitled 0001">
-                    <HBox.margin>
-                        <Insets right="5.0"/>
-                    </HBox.margin>
-                </Label>
-                <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#saveFile" text="save document"
-                        visible="false">
-                    <styleClass>
-                        <String fx:value="panicButton"/>
-                        <String fx:value="inverseButton"/>
-                        <String fx:value="smallButton"/>
-                    </styleClass>
-                    <HBox.margin>
-                        <Insets left="5.0"/>
-                    </HBox.margin>
-                </Button>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1">
-                <GridPane.margin>
-                    <Insets/>
-                </GridPane.margin>
-                <padding>
-                    <Insets right="20.0"/>
-                </padding>
-                <Label fx:id="documentValidationLbl" styleClass="panicText"
-                       text="Invalid file: missing mandatory values"/>
-                <FontIcon fx:id="invalidDocumentIcon" iconLiteral="mdi-alert-circle" iconSize="18"
-                          styleClass="panicIcon">
-                    <HBox.margin>
-                        <Insets left="5.0"/>
-                    </HBox.margin>
-                </FontIcon>
-            </HBox>
-        </GridPane>
-        <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0"
-              styleClass="elementsTitleBar">
-            <VBox.margin>
-                <Insets left="20.0" right="20.0" top="10.0"/>
-            </VBox.margin>
-            <Label styleClass="title4" text="ELEMENTS"/>
-        </HBox>
-        <GridPane hgap="20.0" VBox.vgrow="ALWAYS">
-            <columnConstraints>
-                <ColumnConstraints fx:id="mainGridColumnLeft" hgrow="SOMETIMES" minWidth="10.0" percentWidth="34"
-                                   prefWidth="100.0"/>
-                <ColumnConstraints fx:id="mainGridColumnCenter" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33"
-                                   prefWidth="100.0"/>
-                <ColumnConstraints fx:id="mainGridColumnRight" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33"
-                                   prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints vgrow="SOMETIMES"/>
-                <RowConstraints vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <VBox.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0"/>
-            </VBox.margin>
-            <VBox GridPane.columnIndex="1">
-                <GridPane styleClass="elementValueTitleBar">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
-                    <FontIcon fx:id="invalidValueIcon" iconLiteral="mdi-alert-circle" iconSize="18"
-                              styleClass="panicIcon" GridPane.columnIndex="1"/>
-                    <Button fx:id="addAnyValueButton" visible="false" mnemonicParsing="false" onAction="#onAddAttribute"
-                            text="+ ADD VALUE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-                        <styleClass>
-                            <String fx:value="linkButton"/>
-                            <String fx:value="smallButton"/>
-                        </styleClass>
-                    </Button>
-                    <Label text="ELEMENT VALUE"/>
-                </GridPane>
-                <StackPane alignment="CENTER_LEFT">
-                    <AutoFillTextBox fx:id="taElementValue" layoutY="2.0" maxWidth="1.7976931348623157E308"
-                                     prefHeight="30.0" styleClass="elementValueTextArea"
-                                     StackPane.alignment="TOP_LEFT"/>
-                    <ComboBox fx:id="cbElementValue" maxWidth="1.7976931348623157E308" prefHeight="30.0"
-                              styleClass="elementValueCombo" StackPane.alignment="TOP_LEFT"/>
-                    <ListView fx:id="lvAnyValues" styleClass="elementValueList"/>
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
-                </StackPane>
-            </VBox>
-            <VBox fx:id="attributesVB" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <GridPane styleClass="elementAttributesTitleBar">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <Label text="ELEMENT ATTRIBUTES"/>
-                    <Button fx:id="addAttributeButton" mnemonicParsing="false" onAction="#onAddAttribute"
-                            text="+ ADD ATTRIBUTE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-                        <styleClass>
-                            <String fx:value="linkButton"/>
-                            <String fx:value="smallButton"/>
-                        </styleClass>
-                    </Button>
-                </GridPane>
-                <TreeView id="xptolist" fx:id="attributesTreeView" styleClass="attributesList" VBox.vgrow="ALWAYS"/>
-            </VBox>
-            <AceEditor fx:id="aceEditor" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="2"/>
-            <GridPane vgap="10.0" GridPane.rowSpan="2">
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER"/>
-                    <RowConstraints maxHeight="145.0" minHeight="145.0" prefHeight="145.0" vgrow="NEVER"/>
-                    <RowConstraints vgrow="SOMETIMES"/>
-                </rowConstraints>
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <Label styleClass="title6" text="ROOT ELEMENT"/>
-                    <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsList"
-                              VBox.vgrow="SOMETIMES"/>
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                    <Label styleClass="title6" text="REQUIRED ELEMENTS"/>
-                    <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsList"
-                              VBox.vgrow="SOMETIMES"/>
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-                    <Label styleClass="title6" text="OPTIONAL ELEMENTS"/>
-                    <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsList"
-                              VBox.vgrow="SOMETIMES"/>
-                </VBox>
+<?import digitalbedrock.software.pbcore.components.AutoFillTextAreaBox?>
+<AnchorPane id="DocumentUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="665.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.DocumentController">
+   <padding>
+      <Insets />
+   </padding>
+   <stylesheets>
+      <URL value="@../styles/style.css" />
+   </stylesheets>
+   <VBox prefHeight="600.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane hgap="10.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="statusBar" VBox.vgrow="NEVER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <HBox alignment="CENTER_LEFT">
+            <padding>
+               <Insets left="20.0" />
+            </padding>
+            <Label fx:id="statusBarDocumentType" styleClass="statusBarDocumentType" text="DESCRIPTION DOCUMENT">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <FontIcon iconLiteral="mdi-chevron-right" iconSize="18" styleClass="statusBarSeparator">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </FontIcon>
+            <Label fx:id="statusBarDocumentName" styleClass="statusBarDocumentName" text="untitled 0001">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="btnShowInExplorer" mnemonicParsing="false" onAction="#showInExplorer" text="Open in enclosing folder">
+               <styleClass>
+                  <String fx:value="defaultButton" />
+                  <String fx:value="inverseButton" />
+                  <String fx:value="smallButton" />
+               </styleClass>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#saveFile" text="save document" visible="false">
+               <styleClass>
+                  <String fx:value="panicButton" />
+                  <String fx:value="smallButton" />
+               </styleClass>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1">
+            <GridPane.margin>
+               <Insets />
+            </GridPane.margin>
+            <padding>
+               <Insets right="20.0" />
+            </padding>
+            <Label fx:id="documentValidationLbl" styleClass="panicText" text="Invalid file: missing mandatory values" />
+            <FontIcon fx:id="invalidDocumentIcon" iconLiteral="mdi-alert-circle" iconSize="18" styleClass="panicIcon">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </FontIcon>
+         </HBox>
+      </GridPane>
+      <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" styleClass="elementsTitleBar">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" top="10.0" />
+         </VBox.margin>
+         <Label styleClass="title4" text="ELEMENTS" />
+      </HBox>
+      <GridPane hgap="20.0" VBox.vgrow="ALWAYS">
+         <columnConstraints>
+            <ColumnConstraints fx:id="mainGridColumnLeft" hgrow="SOMETIMES" minWidth="10.0" percentWidth="34" prefWidth="100.0" />
+            <ColumnConstraints fx:id="mainGridColumnCenter" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33" prefWidth="100.0" />
+            <ColumnConstraints fx:id="mainGridColumnRight" hgrow="SOMETIMES" minWidth="10.0" percentWidth="33" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+         </VBox.margin>
+         <VBox GridPane.columnIndex="1">
+            <GridPane styleClass="elementValueTitleBar">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <FontIcon fx:id="invalidValueIcon" iconLiteral="mdi-alert-circle" iconSize="18" styleClass="panicIcon" GridPane.columnIndex="1" />
+               <Button fx:id="addAnyValueButton" mnemonicParsing="false" onAction="#onAddAttribute" text="+ ADD VALUE" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                  <styleClass>
+                     <String fx:value="linkButton" />
+                     <String fx:value="smallButton" />
+                  </styleClass>
+               </Button>
+               <Label text="ELEMENT VALUE" />
             </GridPane>
-        </GridPane>
-    </VBox>
+            <StackPane alignment="CENTER_LEFT">
+               <HBox>
+                  <AutoFillTextAreaBox fx:id="taElementValue" layoutY="2.0" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="elementValueTextArea" HBox.hgrow="ALWAYS" StackPane.alignment="TOP_LEFT" />
+                  <Button fx:id="btnSelectCV" mnemonicParsing="false" onAction="#selectCV" GridPane.columnIndex="1">
+                     <graphic>
+                        <FontIcon iconLiteral="mdi-magnify" />
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="listActionButton" />
+                        <String fx:value="dimmedIcon" />
+                     </styleClass>
+                  </Button>
+               </HBox>
+               <ComboBox fx:id="cbElementValue" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="elementValueCombo" StackPane.alignment="TOP_LEFT" />
+               <ListView fx:id="lvAnyValues" styleClass="elementValueList" />
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </StackPane>
+         </VBox>
+         <VBox fx:id="attributesVB" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane styleClass="elementAttributesTitleBar">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <Label text="ELEMENT ATTRIBUTES" />
+               <Button fx:id="addAttributeButton" mnemonicParsing="false" onAction="#onAddAttribute" text="+ ADD ATTRIBUTE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                  <styleClass>
+                     <String fx:value="linkButton" />
+                     <String fx:value="smallButton" />
+                  </styleClass>
+               </Button>
+            </GridPane>
+            <TreeView id="xptolist" fx:id="attributesTreeView" styleClass="attributesList" VBox.vgrow="ALWAYS" />
+         </VBox>
+         <AceEditor fx:id="aceEditor" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="2"/>
+         <GridPane vgap="10.0" GridPane.rowSpan="2">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+               <RowConstraints maxHeight="145.0" minHeight="145.0" prefHeight="145.0" vgrow="NEVER" />
+               <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <Label styleClass="title6" text="ROOT ELEMENT" />
+               <TreeView fx:id="rootDocumentTreeView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <Label styleClass="title6" text="REQUIRED ELEMENTS" />
+               <TreeView fx:id="requiredElementsListView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <Label styleClass="title6" text="OPTIONAL ELEMENTS" />
+               <TreeView fx:id="optionalElementsTreeView" minHeight="0.0" styleClass="elementsList" VBox.vgrow="SOMETIMES" />
+            </VBox>
+         </GridPane>
+      </GridPane>
+   </VBox>
 </AnchorPane>

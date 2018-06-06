@@ -16,16 +16,20 @@ public interface MenuListener {
         EXPORT_OPEN_FILES_TO_ZIP,
         SAVE,
         SAVE_AS,
+        SAVE_AS_TEMPLATE,
         QUIT,
         NEW_SEARCH,
         SAVED_SEARCH,
         CONTROLLED_VOCABULARIES,
         DIRECTORY_CRAWLING,
         HELP,
+        SELECT_CV_ELEMENT,
+        SELECT_CV_ATTRIBUTE,
         SELECT_ELEMENT,
         SELECT_ATTRIBUTE,
         SELECT_SEARCH_FILTER_ELEMENTS,
         SEARCH_RESULT_SELECTED,
-        ADD_ELEMENT_ANY_VALUE
+        ADD_ELEMENT_ANY_VALUE,
+        ABOUT
     }
 }

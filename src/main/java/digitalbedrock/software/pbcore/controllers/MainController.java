@@ -105,6 +105,9 @@ public class MainController extends AbsController implements FileChangedListener
             case SAVE_AS:
                 saveDocumentAs();
                 break;
+            case SAVE_AS_TEMPLATE:
+                saveDocumentAsTemplate();
+                break;
             case EXPORT_OPEN_FILES_TO_ZIP:
                 exportOpenFiles(true);
                 break;
@@ -275,6 +278,12 @@ public class MainController extends AbsController implements FileChangedListener
         }
     }
 
+    private void saveDocumentAsTemplate() {
+        if (currentSavableTabListener != null) {
+            currentSavableTabListener.saveDocumentAsTemplate();
+        }
+    }
+
     private void showTab(String token, File file, PBCoreElement pbCoreElement) {
         showTab(token, file, pbCoreElement, false);
     }
@@ -439,7 +448,7 @@ public class MainController extends AbsController implements FileChangedListener
         final MenuBar menuBar = new MenuBar();
         final Menu file = new Menu("File");
         final MenuItem open = new MenuItem("Open...");
-        open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.META_DOWN));
+        open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         open.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Document");
@@ -451,23 +460,23 @@ public class MainController extends AbsController implements FileChangedListener
         });
 
         final MenuItem newd = new MenuItem("New Description Document");
-        newd.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.META_DOWN));
+        newd.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         newd.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_DESCRIPTION_DOCUMENT));
 
         final MenuItem newi = new MenuItem("New Instantiation Document");
-        newi.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.META_DOWN));
+        newi.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN));
         newi.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_INSTANTIATION_DOCUMENT));
 
         final MenuItem newc = new MenuItem("New Collection");
-        newc.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
+        newc.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         newc.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.NEW_COLLECTION));
 
         final MenuItem batch = new MenuItem("Batch edit open documents");
-        batch.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.META_DOWN));
+        batch.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN));
         batch.setOnAction(e -> menuOptionSelected(MenuOption.BATCH_EDIT));
 
         final MenuItem importFromCsv = new MenuItem("Convert CSV file to Xml");
-        importFromCsv.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN));
+        importFromCsv.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
         importFromCsv.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Document To Import");
@@ -481,28 +490,32 @@ public class MainController extends AbsController implements FileChangedListener
         });
 
         final MenuItem exportToCsv = new MenuItem("Convert open files to CSV file");
-        exportToCsv.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.META_DOWN));
+        exportToCsv.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN));
         exportToCsv.setOnAction(e -> {
             menuOptionSelected(EXPORT_OPEN_FILES_TO_CSV);
         });
         exportToCsv.disableProperty().bind(nonExportableProperty);
 
         final MenuItem export = new MenuItem("Export open files to ZIP");
-        export.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.META_DOWN));
+        export.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         export.setOnAction(e -> menuOptionSelected(MenuOption.EXPORT_OPEN_FILES_TO_ZIP));
 
         final MenuItem save = new MenuItem("Save");
-        save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.META_DOWN));
+        save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        save.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE));
 
         final MenuItem saveas = new MenuItem("Save as...");
-        save.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE));
-        saveas.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
+        saveas.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         saveas.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE_AS));
 
+        final MenuItem saveAsTemplate = new MenuItem("Save as template");
+        saveAsTemplate.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
+        saveAsTemplate.setOnAction(e -> menuOptionSelected(MenuListener.MenuOption.SAVE_AS_TEMPLATE));
+
         final MenuItem quit = new MenuItem("Quit");
-        quit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.META_DOWN));
+        quit.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
         quit.setOnAction(e -> menuOptionSelected(MenuOption.QUIT));
-        file.getItems().addAll(open, new SeparatorMenuItem(), newd, newi, newc, new SeparatorMenuItem(), importFromCsv, exportToCsv, new SeparatorMenuItem(), batch, export, new SeparatorMenuItem(), save, saveas, new SeparatorMenuItem(), quit);
+        file.getItems().addAll(open, new SeparatorMenuItem(), newd, newi, newc, new SeparatorMenuItem(), importFromCsv, exportToCsv, new SeparatorMenuItem(), batch, export, new SeparatorMenuItem(), save, saveas, saveAsTemplate, new SeparatorMenuItem(), quit);
 
         search = new Menu("Search");
         onSavedSearchesUpdated();
@@ -512,14 +525,17 @@ public class MainController extends AbsController implements FileChangedListener
         final Menu settings = new Menu("Settings");
         final MenuItem cv = new MenuItem("Controlled Vocabularies");
         final MenuItem folders = new MenuItem("Directory Crawling");
-        cv.setAccelerator(new KeyCodeCombination(KeyCode.V, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
+        cv.setAccelerator(new KeyCodeCombination(KeyCode.V, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         cv.setOnAction(e -> menuOptionSelected(MenuOption.CONTROLLED_VOCABULARIES));
         folders.setOnAction(e -> menuOptionSelected(MenuOption.DIRECTORY_CRAWLING));
-        folders.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN));
+        folders.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         settings.getItems().addAll(cv, folders);
 
         final Menu help = new Menu("Help");
-        help.setDisable(true);
+        //help.setDisable(true);
+        final MenuItem aboutItem = new MenuItem("About PBCore...");
+        aboutItem.setOnAction(e -> menuOptionSelected(MenuOption.ABOUT));
+        help.getItems().addAll(aboutItem);
 
         menuBar.getMenus().addAll(file, search, settings, help);
         if (MainApp.getInstance().getRegistry().isMac()) {
@@ -546,8 +562,8 @@ public class MainController extends AbsController implements FileChangedListener
                     spinnerLayer.setVisible(false);
                 })));
         timeline.play();
-        final KeyCombination keyCombSingle = new KeyCodeCombination(KeyCode.W, KeyCombination.META_DOWN);
-        final KeyCombination keyCombAll = new KeyCodeCombination(KeyCode.W, KeyCombination.SHIFT_DOWN, KeyCombination.META_DOWN);
+        final KeyCombination keyCombSingle = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
+        final KeyCombination keyCombAll = new KeyCodeCombination(KeyCode.W, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN);
         tabPane.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (keyCombSingle.match(event)) {
                 if (tabPane.selectionModelProperty().getValue().getSelectedItem().getOnCloseRequest() != null) {
@@ -572,15 +588,17 @@ public class MainController extends AbsController implements FileChangedListener
     }
 
     @Override
-    public void searchResultSelected(HitDocument hitDocument) {
-        showTab(null, new File(hitDocument.getFilepath()), hitDocument.getPbCoreElement().copy());
+    public void searchResultSelected(List<HitDocument> hitDocuments) {
+        for (HitDocument hitDocument : hitDocuments) {
+            showTab(null, new File(hitDocument.getFilepath()), hitDocument.getPbCoreElement().copy());
+        }
     }
 
     @Override
     public void onSavedSearchesUpdated() {
         search.getItems().clear();
         final MenuItem newSearch = new MenuItem("New Search");
-        newSearch.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN));
+        newSearch.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
         newSearch.setOnAction(e -> menuOptionSelected(MenuOption.NEW_SEARCH));
         search.getItems().addAll(newSearch, new SeparatorMenuItem());
         Registry registry = MainApp.getInstance().getRegistry();
@@ -596,7 +614,7 @@ public class MainController extends AbsController implements FileChangedListener
             }
             MenuItem menuItem = new MenuItem(terms.toString());
             KeyCode keyCode = KeyCode.valueOf("DIGIT" + String.valueOf(counter.getAndIncrement()));
-            menuItem.setAccelerator(new KeyCodeCombination(keyCode, KeyCombination.META_DOWN, KeyCombination.ALT_DOWN, KeyCombination.SHIFT_DOWN));
+            menuItem.setAccelerator(new KeyCodeCombination(keyCode, KeyCombination.CONTROL_DOWN, KeyCombination.ALT_DOWN, KeyCombination.SHIFT_DOWN));
             menuItem.setOnAction(e -> menuOptionSelected(MenuOption.SAVED_SEARCH, luceneEngineSearchFilters));
             return menuItem;
         }).forEachOrdered(menuItem -> search.getItems().add(menuItem));

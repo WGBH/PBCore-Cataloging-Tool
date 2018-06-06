@@ -66,13 +66,13 @@ public class PBCoreElement extends IPBCore implements Serializable {
         this.pathRepresentation = pathRepresentation;
     }
 
-    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name,  String tooltip, boolean required, boolean repeatable, boolean supportsChildElements, boolean anyElement, String description, String value, PBCoreElementType elementType,
-            boolean supportsAttributes,
-            boolean valid, boolean fatalError,
-            int sequence,
-            ElementValueRestrictionType elementValueRestrictionType,
-            String patternToFollow,
-            List<String> enumerationValues, boolean hasChildElements, boolean choice) {
+    public PBCoreElement(String fullPath, String pathRepresentation, String screenName, String name, String tooltip, boolean required, boolean repeatable, boolean supportsChildElements, boolean anyElement, String description, String value, PBCoreElementType elementType,
+                         boolean supportsAttributes,
+                         boolean valid, boolean fatalError,
+                         int sequence,
+                         ElementValueRestrictionType elementValueRestrictionType,
+                         String patternToFollow,
+                         List<String> enumerationValues, boolean hasChildElements, boolean choice) {
         this();
         this.fullPath = fullPath;
         this.pathRepresentation = pathRepresentation;
@@ -286,17 +286,21 @@ public class PBCoreElement extends IPBCore implements Serializable {
     }
 
     public PBCoreElement copy(boolean withOptionalAttributes) {
-        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name,tooltip, required, repeatable, supportsChildElements, anyElement, description, getValue(), elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
+        return copy(withOptionalAttributes, true);
+    }
+
+    public PBCoreElement copy(boolean withOptionalAttributes, boolean withValues) {
+        PBCoreElement pbCoreElement = new PBCoreElement(fullPath, pathRepresentation, screenName, name, tooltip, required, repeatable, supportsChildElements, anyElement, description, withValues ? getValue() : null, elementType, supportsAttributes, isValid(), isFatalError(), sequence, elementValueRestrictionType, patternToFollow, enumerationValues, hasChildElements, choice);
         pbCoreElement.setAnyValues(new ArrayList<>(getAnyValues()));
         boolean validAttributes = true;
         for (PBCoreElement subElement : subElements) {
-            PBCoreElement copy = subElement.copy(withOptionalAttributes);
+            PBCoreElement copy = subElement.copy(withOptionalAttributes, withValues);
             pbCoreElement.addSubElement(copy);
             validAttributes = validAttributes && copy.isValidAttributes();
         }
         for (PBCoreAttribute attribute : attributes) {
             if (attribute.isRequired() || withOptionalAttributes) {
-                pbCoreElement.addAttribute(attribute.copy());
+                pbCoreElement.addAttribute(attribute.copy(withValues));
                 validAttributes = validAttributes && (!attribute.isRequired() || (attribute.getValue() != null && !attribute.getValue().trim().isEmpty()));
             }
         }
@@ -419,7 +423,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
             setValidAttributes(attributes.stream()
                     .noneMatch(pbCoreAttribute
                             -> pbCoreAttribute.isRequired()
-                    && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty())));
+                            && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty())));
         }
         this.validProperty.setValue((isAnyElement() || (!isRequired() && !isSupportsChildElements()) || valid) && !isFatalError());
     }

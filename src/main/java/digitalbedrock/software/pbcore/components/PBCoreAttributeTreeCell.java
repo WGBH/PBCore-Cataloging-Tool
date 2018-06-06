@@ -11,9 +11,12 @@ import java.io.IOException;
 public class PBCoreAttributeTreeCell extends TreeCell<PBCoreAttribute> {
 
     private final AttributeTreeCellListener attributeTreeCellListener;
+    private final DocumentAttributeItemController.DocumentAttributeSelectCVListener listener;
 
-    public PBCoreAttributeTreeCell(AttributeTreeCellListener attributeTreeCellListener) {
+    public PBCoreAttributeTreeCell(AttributeTreeCellListener attributeTreeCellListener, DocumentAttributeItemController.DocumentAttributeSelectCVListener listener) {
         this.attributeTreeCellListener = attributeTreeCellListener;
+        this.listener = listener;
+
     }
 
     @Override
@@ -26,7 +29,7 @@ public class PBCoreAttributeTreeCell extends TreeCell<PBCoreAttribute> {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/document_attribute_list_item.fxml"));
                 Node graphic = loader.load();
                 DocumentAttributeItemController controller = loader.getController();
-                controller.bind(attribute, attributeTreeCellListener);
+                controller.bind(attribute, attributeTreeCellListener, listener);
                 setGraphic(graphic);
             } catch (IOException exc) {
                 throw new RuntimeException(exc);

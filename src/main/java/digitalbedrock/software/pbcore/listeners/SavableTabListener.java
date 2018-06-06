@@ -8,6 +8,8 @@ public interface SavableTabListener {
 
     void saveDocumentAs();
 
+    void saveDocumentAsTemplate();
+
     void addBatchUpdate(PBCoreElement pbCoreElement);
 
     boolean isExportable();

@@ -26,6 +26,8 @@ public class ElementSelectorController extends AbsController {
     @FXML
     private Button btnAdd;
     @FXML
+    private Button btnAddAndClose;
+    @FXML
     private Label lblElementAlreadyAdded;
     @FXML
     private Label lblChoice;
@@ -34,6 +36,7 @@ public class ElementSelectorController extends AbsController {
     private TreeView<PBCoreElement> treeElements;
 
     private PBCoreElement selectedElement;
+    private int index;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,32 +47,40 @@ public class ElementSelectorController extends AbsController {
                 return;
             }
             PBCoreElement value = newValue.getValue();
-            lblDescription.setText(value.getDescription());
-            lblOptional.setText(value.isRequired() ? "required" : "optional");
-            String repeatable = value.isRepeatable() ? ", repeatable" : "";
-            String choice = value.isChoice() ? ", choice" : "";
-            lblRepeatable.setText(repeatable + choice);
-            lblElementAlreadyAdded.setText("Element already added");
-            lblElementAlreadyAdded.setVisible(false);
-            btnAdd.setDisable(false);
-            if (!newValue.getValue().isRepeatable() && selectedElement.getName().equals(newValue.getParent().getValue().getName()) && containsSubElement(selectedElement, value)) {
-                btnAdd.setDisable(true);
-                lblElementAlreadyAdded.setVisible(true);
-            }
-            lblChoice.setVisible(false);
-            if (value.isChoice()) {
-                btnAdd.setDisable(true);
-                lblChoice.setVisible(true);
-            }
-            if (selectedElement.isChoice()) {
-                if (!containsSubElement(selectedElement, value)) {
-                    lblElementAlreadyAdded.setText("Since an element of another type is already added, you cannot use an element of this type.");
-                    lblElementAlreadyAdded.setVisible(true);
-                    btnAdd.setDisable(true);
-                }
-            }
+            updateElementUI(value, newValue.getParent().getValue());
         };
         treeElements.getSelectionModel().selectedItemProperty().addListener(listener);
+    }
+
+    private void updateElementUI(PBCoreElement value, PBCoreElement parent) {
+        lblDescription.setText(value.getDescription());
+        lblOptional.setText(value.isRequired() ? "required" : "optional");
+        String repeatable = value.isRepeatable() ? ", repeatable" : "";
+        String choice = value.isChoice() ? ", choice" : "";
+        lblRepeatable.setText(repeatable + choice);
+        lblElementAlreadyAdded.setText("Element already added");
+        lblElementAlreadyAdded.setVisible(false);
+        btnAdd.setDisable(false);
+        btnAddAndClose.setDisable(false);
+        if (!value.isRepeatable() && selectedElement.getName().equals(parent.getName()) && containsSubElement(selectedElement, value)) {
+            btnAdd.setDisable(true);
+            btnAddAndClose.setDisable(true);
+            lblElementAlreadyAdded.setVisible(true);
+        }
+        lblChoice.setVisible(false);
+        if (value.isChoice()) {
+            btnAdd.setDisable(true);
+            btnAddAndClose.setDisable(true);
+            lblChoice.setVisible(true);
+        }
+        if (selectedElement.isChoice()) {
+            if (!containsSubElement(selectedElement, value)) {
+                lblElementAlreadyAdded.setText("Since an element of another type is already added, you cannot use an element of this type.");
+                lblElementAlreadyAdded.setVisible(true);
+                btnAdd.setDisable(true);
+                btnAddAndClose.setDisable(true);
+            }
+        }
     }
 
     private boolean containsSubElement(PBCoreElement pbCoreElement, PBCoreElement value) {
@@ -87,26 +98,34 @@ public class ElementSelectorController extends AbsController {
 
     public void setElementSelectionListener(String treeViewId, int index, ElementSelectionListener elementSelectionListener) {
         btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            elementSelectionListener.onElementSelected(treeViewId, index, null);
+            elementSelectionListener.onElementSelected(treeViewId, index, null, true);
         });
-        btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            TreeItem<PBCoreElement> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            PBCoreElement selectedPBCoreElement = selectedItem.getValue().copy();
-            TreeItem<PBCoreElement> item = selectedItem;
-            while (item.getParent() != null) {
-                if (item.getValue().isChoice()) {
-                    selectedPBCoreElement = processChoiceElement(selectedPBCoreElement, item);
-                } else {
-                    selectedPBCoreElement = item.getValue().copy();
-                }
-                item = item.getParent();
+        btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> onAdd(treeViewId, elementSelectionListener, false));
+        btnAddAndClose.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> onAdd(treeViewId, elementSelectionListener, true));
+        this.index = index;
+    }
+
+    private void onAdd(String treeViewId, ElementSelectionListener elementSelectionListener, boolean close) {
+        TreeItem<PBCoreElement> selectedItem = treeElements.getSelectionModel().getSelectedItem();
+        PBCoreElement selectedPBCoreElement = selectedItem.getValue().copy();
+        TreeItem<PBCoreElement> item = selectedItem;
+        while (item.getParent() != null) {
+            if (item.getValue().isChoice()) {
+                selectedPBCoreElement = processChoiceElement(selectedPBCoreElement, item);
+            } else {
+                selectedPBCoreElement = item.getValue().copy();
             }
-            selectedPBCoreElement.clearOptionalSubElements(selectedItem.getValue());
-            if (!selectedPBCoreElement.isRequired()) {
-                item.getValue().addSubElement(selectedPBCoreElement);
-            }
-            elementSelectionListener.onElementSelected(treeViewId, index, item.getParent() == null ? selectedPBCoreElement.copy(false) : item.getValue().copy(false));
-        });
+            item = item.getParent();
+        }
+        selectedPBCoreElement.clearOptionalSubElements(selectedItem.getValue());
+        if (!selectedPBCoreElement.isRequired()) {
+            item.getValue().addSubElement(selectedPBCoreElement);
+        }
+        PBCoreElement pbCoreElement = item.getParent() == null ? selectedPBCoreElement.copy(false) : item.getValue().copy(false);
+        elementSelectionListener.onElementSelected(treeViewId, index++, pbCoreElement, close);
+        if (!close) {
+            updateElementUI(pbCoreElement, item.getParent() == null ? null : item.getParent().getValue());
+        }
     }
 
     private PBCoreElement processChoiceElement(PBCoreElement selectedPBCoreElement, TreeItem<PBCoreElement> item) {

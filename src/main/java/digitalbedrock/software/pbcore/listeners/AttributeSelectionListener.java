@@ -4,5 +4,5 @@ import digitalbedrock.software.pbcore.core.models.entity.PBCoreAttribute;
 
 public interface AttributeSelectionListener {
 
-    void onAttributeSelected(PBCoreAttribute pbCoreAttribute);
+    void onAttributeSelected(PBCoreAttribute pbCoreAttribute, boolean close);
 }

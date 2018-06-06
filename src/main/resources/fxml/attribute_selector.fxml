@@ -72,12 +72,13 @@
             </Label>
             <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0"
                   GridPane.columnIndex="1">
-                <Button fx:id="btnCancel" mnemonicParsing="false" styleClass="defaultButton" text="CANCEL"/>
+                <Button fx:id="btnCancel" mnemonicParsing="false" styleClass="defaultButton" text="CANCEL" />
                 <Button fx:id="btnAdd" mnemonicParsing="false" styleClass="primaryButton" text="ADD">
                     <HBox.margin>
-                        <Insets left="10.0"/>
+                        <Insets left="10.0" right="10.0" />
                     </HBox.margin>
                 </Button>
+                <Button fx:id="btnAddAndClose" mnemonicParsing="false" styleClass="primaryButton" text="ADD AND CLOSE" />
             </HBox>
         </GridPane>
     </VBox>

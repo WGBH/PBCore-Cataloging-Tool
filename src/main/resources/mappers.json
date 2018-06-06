@@ -1,0 +1,180 @@
+[
+  {
+    "name": "AssetType",
+    "elementFullPath": "pbcoreDescriptionDocument/pbcoreAssetType",
+    "attributes": [
+      {
+        "name": "@source_AssetType",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetType/source"
+      },
+      {
+        "name": "@ref_AssetType",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetType/ref"
+      },
+      {
+        "name": "@version_AssetType",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetType/version"
+      },
+      {
+        "name": "@annotation_AssetType",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetType/annotation"
+      }
+    ]
+  },
+  {
+    "name": "AssetDate",
+    "elementFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate",
+    "attributes": [
+      {
+        "name": "@dateType_AssetDate",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate/dateType"
+      },
+      {
+        "name": "@source_AssetDate",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate/source"
+      },
+      {
+        "name": "@ref_AssetDate",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate/ref"
+      },
+      {
+        "name": "@version_AssetDate",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate/version"
+      },
+      {
+        "name": "@annotation_AssetDate",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreAssetDate/annotation"
+      }
+    ]
+  },
+  {
+    "name": "Identifier",
+    "elementFullPath": "pbcoreDescriptionDocument/pbcoreIdentifier",
+    "attributes": [
+      {
+        "name": "@source_Identifier",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreIdentifier/source"
+      },
+      {
+        "name": "@ref_Identifier",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreIdentifier/ref"
+      },
+      {
+        "name": "@version_Identifier",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreIdentifier/version"
+      },
+      {
+        "name": "@annotation_Identifier",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreIdentifier/annotation"
+      }
+    ]
+  },
+  {
+    "name": "Title",
+    "elementFullPath": "pbcoreDescriptionDocument/pbcoreTitle",
+    "attributes": [
+      {
+        "name": "@titleType_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/titleType"
+      },
+      {
+        "name": "@titleTypeSource_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/titleTypeSource"
+      },
+      {
+        "name": "@titleTypeRef_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/titleTypeRef"
+      },
+      {
+        "name": "@titleTypeVersion_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/titleTypeVersion"
+      },
+      {
+        "name": "@titleTypeAnnotation_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/titleTypeAnnotation"
+      },
+      {
+        "name": "@source_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/source"
+      },
+      {
+        "name": "@ref_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/ref"
+      },
+      {
+        "name": "@version_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/version"
+      },
+      {
+        "name": "@annotation_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/annotation"
+      },
+      {
+        "name": "@startTime_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/startTime"
+      },
+      {
+        "name": "@endTime_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/endTime"
+      },
+      {
+        "name": "@timeAnnotation_Title",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreTitle/timeAnnotation"
+      }
+    ]
+  },
+  {
+    "name": "Subject",
+    "elementFullPath": "pbcoreDescriptionDocument/pbcoreSubject",
+    "attributes": [
+      {
+        "name": "@subjectType_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/subjectType"
+      },
+      {
+        "name": "@subjectTypeSource_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/subjectTypeSource"
+      },
+      {
+        "name": "@subjectTypeRef_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/subjectTypeRef"
+      },
+      {
+        "name": "@subjectTypeVersion_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/subjectTypeVersion"
+      },
+      {
+        "name": "@subjectTypeAnnotation_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/subjectTypeAnnotation"
+      },
+      {
+        "name": "@source_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/source"
+      },
+      {
+        "name": "@ref_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/ref"
+      },
+      {
+        "name": "@version_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/version"
+      },
+      {
+        "name": "@annotation_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/annotation"
+      },
+      {
+        "name": "@startTime_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/startTime"
+      },
+      {
+        "name": "@endTime_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/endTime"
+      },
+      {
+        "name": "@timeAnnotation_Subject",
+        "attributeFullPath": "pbcoreDescriptionDocument/pbcoreSubject/timeAnnotation"
+      }
+    ]
+  }
+]

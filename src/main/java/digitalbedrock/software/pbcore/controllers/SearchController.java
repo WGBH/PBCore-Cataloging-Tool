@@ -12,22 +12,29 @@ import digitalbedrock.software.pbcore.parsers.CSVPBCoreParser;
 import digitalbedrock.software.pbcore.utils.PBCoreUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +74,10 @@ public class SearchController extends AbsController {
     private Button btnExportSearchToCsv;
     @FXML
     private Label previewItemsSubTitle;
+    @FXML
+    private Button btnShowInExplorer;
+    @FXML
+    private Button btnSearch;
 
     private final int offset = 0;
     private static final int MAX_RESULTS = 10;
@@ -115,20 +126,23 @@ public class SearchController extends AbsController {
                 }
             }
         });
-        listViewHits.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
+        listViewHits.getSelectionModel().getSelectedItems().addListener((ListChangeListener<HitDocument>) c -> {
+            if (c.getList() == null || c.getList().isEmpty() || c.getList().size() > 1) {
                 lblNoFileSelected.setVisible(true);
                 treeViewPreview.setVisible(false);
                 stackPaneInstatiationPreview.setVisible(false);
                 buttonCloseInstatiationPreview.setVisible(false);
                 previewItemsSubTitle.setVisible(false);
+                lblNoFileSelected.setText(c.getList() == null || c.getList().isEmpty() ? "No File Selected" : "Multiple Files selected");
+                btnShowInExplorer.setDisable(c.getList() == null || c.getList().isEmpty());
             } else {
+                btnShowInExplorer.setDisable(false);
+                HitDocument newValue = c.getList().get(0);
                 lblNoFileSelected.setVisible(false);
                 treeViewPreview.setVisible(true);
                 stackPaneInstatiationPreview.setVisible(false);
                 buttonCloseInstatiationPreview.setVisible(false);
                 previewItemsSubTitle.setVisible(false);
-
                 treeViewPreview.setItems(FXCollections.emptyObservableList());
                 List<IPBCore> flatList = new ArrayList<>();
                 AtomicInteger index = new AtomicInteger(0);
@@ -140,6 +154,7 @@ public class SearchController extends AbsController {
                 treeViewPreview.setItems(FXCollections.observableArrayList(flatList));
             }
         });
+        listViewHits.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         buttonCloseInstatiationPreview.setOnAction(event -> {
             stackPaneInstatiationPreview.setVisible(false);
             treeViewPreview.setVisible(true);
@@ -309,12 +324,15 @@ public class SearchController extends AbsController {
         new Thread(new Task<Object>() {
             @Override
             protected Object call() throws Exception {
+
                 spinnerLayer.setVisible(true);
+                btnSearch.setDisable(true);
                 Map.Entry<Long, List<HitDocument>> search = luceneEngine.search(andOperators, pagination.getCurrentPageIndex(), MAX_RESULTS);
                 Platform.runLater(() -> {
                     int i = (int) roundUp(search.getKey().intValue(), MAX_RESULTS);
                     pagination.setPageCount(i == 0 ? 1 : i);
                     listViewHits.setItems(FXCollections.observableArrayList(search.getValue()));
+                    btnSearch.setDisable(false);
                     spinnerLayer.setVisible(false);
                     MainApp.getInstance().getRegistry().addRecentSearch(andOperators);
                     lblTotalResults.setText("(" + search.getKey() + " files)");
@@ -367,10 +385,21 @@ public class SearchController extends AbsController {
 
     @FXML
     public void onFileSelected(ActionEvent actionEvent) {
-        HitDocument selectedItem = listViewHits.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            menuOptionSelected(MenuOption.SEARCH_RESULT_SELECTED, selectedItem);
+        spinnerLayer.setVisible(true);
+        List<HitDocument> selectedItems = listViewHits.getSelectionModel().getSelectedItems();
+        if (selectedItems != null) {
+            if (selectedItems.size() >= 10) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Open files");
+                alert.setContentText("You have selected " + selectedItems.size() + " files to open and it can take a while to open this many files, do you want to proceed?");
+                alert.setHeaderText(null);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    menuOptionSelected(MenuOption.SEARCH_RESULT_SELECTED, selectedItems);
+                }
+            }
         }
+        spinnerLayer.setVisible(false);
     }
 
     public void setFilters(List<LuceneEngineSearchFilter> filters) {
@@ -380,4 +409,37 @@ public class SearchController extends AbsController {
         reloadElementsCount();
         filters.forEach(filter -> lvSearchOptions.getItems().add(filter));
     }
+
+    @FXML
+    public void showInExplorer(ActionEvent actionEvent) {
+        List<HitDocument> selectedItems = listViewHits.getSelectionModel().getSelectedItems();
+        if (selectedItems != null) {
+            for (HitDocument selectedItem : selectedItems) {
+                if (PBCoreUtils.isWindows()) {
+                    try {
+                        Runtime.getRuntime().exec("explorer.exe /select," + selectedItem.getFilepath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (PBCoreUtils.isMac()) {
+                    try {
+                        Runtime.getRuntime().exec("open --reveal " + selectedItem.getFilepath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                        try {
+                            File file = new File(selectedItem.getFilepath());
+                            desktop.open(file.getParentFile());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -7,6 +7,7 @@ import digitalbedrock.software.pbcore.MainApp;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.core.models.NewDocumentType;
 import digitalbedrock.software.pbcore.core.models.document.PbcoreDescriptionDocumentType;
+import digitalbedrock.software.pbcore.lucene.LuceneFileIndexer;
 import digitalbedrock.software.pbcore.utils.Registry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -369,6 +370,35 @@ public class PBCoreStructure {
         FileWriter fileWriter = new FileWriter(file);
         StreamResult result = new StreamResult(fileWriter);
         transformer.transform(source, result);
+
+        //only process final files, ignore our temp files
+        if (file.getAbsolutePath().endsWith(".xml")) {
+            LuceneFileIndexer.getInstance().startFileIndexing(file.getAbsolutePath());
+        }
+    }
+
+    public void saveFileAsTemplate(PBCoreElement pbCoreElement, File file) throws ParserConfigurationException, TransformerException, IOException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+
+        Element element = processElement(doc, pbCoreElement, false);
+
+        doc.appendChild(element);
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        DOMSource source = new DOMSource(doc);
+        FileWriter fileWriter = new FileWriter(file);
+        StreamResult result = new StreamResult(fileWriter);
+        transformer.transform(source, result);
+
+        //only process final files, ignore our temp files
+        if (file.getAbsolutePath().endsWith(".xml")) {
+            LuceneFileIndexer.getInstance().startFileIndexing(file.getAbsolutePath());
+        }
     }
 
     public void saveFilesToZip(Map<String, PBCoreElement> pbCoreElement, File file) throws ParserConfigurationException, TransformerException, IOException {
@@ -402,8 +432,12 @@ public class PBCoreStructure {
     }
 
     private Element processElement(Document doc, PBCoreElement value) {
+        return processElement(doc, value, true);
+    }
+
+    private Element processElement(Document doc, PBCoreElement value, boolean includeValues) {
         Element element = doc.createElement(value.getName());
-        if (!value.isAnyElement()) {
+        if (!value.isAnyElement() && includeValues) {
             element.appendChild(doc.createTextNode(value.getValue() == null ? "" : value.getValue()));
         } else {
             value.getAnyValues().stream().map((s) -> s == null || s.getValue() == null || s.getValue().trim().isEmpty() ? "" : s.getValue()).forEachOrdered((valueStr) -> {
@@ -418,8 +452,32 @@ public class PBCoreStructure {
                 }
             });
         }
-        value.getAttributes().forEach(pbCoreAttribute -> element.setAttribute(pbCoreAttribute.getName(), pbCoreAttribute.getValue()));
-        value.getOrderedSubElements().forEach(pbCoreElement -> element.appendChild(processElement(doc, pbCoreElement)));
+        List<String> attrsToAdd = Arrays.asList("xmlns",
+                "xsi:schemaLocation",
+                "xmlns:xsi");
+        value.getAttributes().forEach(pbCoreAttribute -> element.setAttribute(pbCoreAttribute.getName(), !includeValues && !attrsToAdd.contains(pbCoreAttribute.getName()) ? null : pbCoreAttribute.getValue()));
+        value.getOrderedSubElements().forEach(pbCoreElement -> element.appendChild(processElement(doc, pbCoreElement, includeValues)));
         return element;
+    }
+
+    public void updateSourceAttributeOnElement(PBCoreElement value, CVTerm item) {
+        PBCoreAttribute pbCoreAttribute1 = value.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals("source")).findFirst().orElse(null);
+        if (item != null) {
+            if (pbCoreAttribute1 != null) {
+                pbCoreAttribute1.setValue(item.getSource());
+            } else {
+                PBCoreElement element = PBCoreStructure.getInstance().getElement(value.getFullPath());
+                PBCoreAttribute sourceAttr = element.getAttributes().stream().filter(pbCoreAttribute -> pbCoreAttribute.getName().equals("source")).findFirst().orElse(null);
+                if (sourceAttr != null) {
+                    sourceAttr = sourceAttr.copy();
+                    sourceAttr.setValue(item.getSource());
+                }
+                value.addAttribute(sourceAttr);
+            }
+        }/* else {
+            if (pbCoreAttribute1 != null) {
+                pbCoreAttribute1.setValue(null);
+            }
+        }*/
     }
 }

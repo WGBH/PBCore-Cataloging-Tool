@@ -3,6 +3,7 @@ package digitalbedrock.software.pbcore;
 import digitalbedrock.software.pbcore.controllers.*;
 import digitalbedrock.software.pbcore.core.Settings;
 import digitalbedrock.software.pbcore.core.models.FolderModel;
+import digitalbedrock.software.pbcore.core.models.entity.PBCoreAttribute;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreElement;
 import digitalbedrock.software.pbcore.core.models.entity.PBCoreStructure;
 import digitalbedrock.software.pbcore.listeners.*;
@@ -159,6 +160,28 @@ public class MainApp extends Application {
         }
     }
 
+
+    private void showAbout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"));
+            Parent tabs = loader.load();
+
+            final BorderPane borderPane = new BorderPane();
+            loader.getController();
+            borderPane.setCenter(tabs);
+
+            Scene settingsScene = new Scene(borderPane);
+            Stage settingsWindow = new Stage();
+            settingsWindow.initOwner(settingsScene.getWindow());
+            settingsWindow.initModality(Modality.APPLICATION_MODAL);
+            settingsWindow.setTitle("About");
+            settingsWindow.setScene(settingsScene);
+            settingsWindow.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void showSelectAttribute(PBCoreElement pbCoreElement, AttributeSelectionListener attributeSelectionListener) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/attribute_selector.fxml"));
@@ -172,11 +195,13 @@ public class MainApp extends Application {
             searchWindow.setTitle("Add new attribute");
             searchWindow.setScene(searchScene);
             searchWindow.show();
-            controller.setAttributeSelectionListener(element -> {
+            controller.setAttributeSelectionListener((element, close) -> {
                 if (attributeSelectionListener != null) {
-                    attributeSelectionListener.onAttributeSelected(element);
+                    attributeSelectionListener.onAttributeSelected(element, close);
                 }
-                searchWindow.close();
+                if (close) {
+                    searchWindow.close();
+                }
             });
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,11 +245,39 @@ public class MainApp extends Application {
             selectElementWindow.setTitle("Add new element");
             selectElementWindow.setScene(searchScene);
             selectElementWindow.show();
-            controller.setElementSelectionListener(treeViewId, index, (treeViewId1, index1, element) -> {
+            controller.setElementSelectionListener(treeViewId, index, (treeViewId1, index1, element, close) -> {
                 if (elementSelectionListener != null) {
-                    elementSelectionListener.onElementSelected(treeViewId, index, element);
+                    elementSelectionListener.onElementSelected(treeViewId, index, element, close);
+                }
+                if (close) {
+                    selectElementWindow.close();
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showSelectCV(boolean attr, String key, CVSelectionListener cvSelectionListener) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cv_selector.fxml"));
+            Parent parent = loader.load();
+            CVSelectorController controller = loader.getController();
+            controller.setKey(attr, key);
+            Scene searchScene = new Scene(parent);
+            Stage selectElementWindow = new Stage();
+            selectElementWindow.initOwner(stage);
+            selectElementWindow.initOwner(searchScene.getWindow());
+            selectElementWindow.initModality(Modality.APPLICATION_MODAL);
+            selectElementWindow.setTitle("Add new element");
+            selectElementWindow.setScene(searchScene);
+            selectElementWindow.show();
+            controller.setCVSelectionListener((key1, cvTerm, attr1) -> {
+                if (cvSelectionListener != null) {
+                    cvSelectionListener.onCVSelected(key1, cvTerm, attr1);
                 }
                 selectElementWindow.close();
+
             });
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -263,6 +316,7 @@ public class MainApp extends Application {
             case NEW_INSTANTIATION_DOCUMENT:
             case SAVE:
             case SAVE_AS:
+            case SAVE_AS_TEMPLATE:
             case CONVERT_FROM_CSV:
             case EXPORT_SEARCHED_FILES_TO_CSV:
             case NEW_COLLECTION:
@@ -275,6 +329,9 @@ public class MainApp extends Application {
                 break;
             case NEW_SEARCH:
                 showSearch();
+                break;
+            case ABOUT:
+                showAbout();
                 break;
             case SAVED_SEARCH:
                 List<LuceneEngineSearchFilter> filters = new ArrayList<>();
@@ -299,6 +356,12 @@ public class MainApp extends Application {
             case SELECT_ELEMENT:
                 showSelectElement((String) objects[0], (int) objects[1], (PBCoreElement) objects[2], (ElementSelectionListener) objects[3]);
                 break;
+            case SELECT_CV_ELEMENT:
+                showSelectCV(false, ((PBCoreElement) objects[0]).getName(), (CVSelectionListener) objects[1]);
+                break;
+            case SELECT_CV_ATTRIBUTE:
+                showSelectCV(true, ((PBCoreAttribute) objects[0]).getName(), (CVSelectionListener) objects[1]);
+                break;
             case SELECT_ATTRIBUTE:
                 showSelectAttribute((PBCoreElement) objects[0], (AttributeSelectionListener) objects[1]);
                 break;
@@ -307,7 +370,7 @@ public class MainApp extends Application {
                 break;
             case SEARCH_RESULT_SELECTED:
                 if (searchResultListener != null) {
-                    searchResultListener.searchResultSelected((HitDocument) objects[0]);
+                    searchResultListener.searchResultSelected((List<HitDocument>) objects[0]);
                 }
                 break;
         }

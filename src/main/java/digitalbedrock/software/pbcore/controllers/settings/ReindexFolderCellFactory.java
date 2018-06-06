@@ -27,7 +27,6 @@ public class ReindexFolderCellFactory implements Callback<TableColumn<FolderMode
                     setGraphic(null);
                     setText(null);
                 } else {
-                    System.out.println("update" + item);
                     FolderModel model = MainApp.getInstance().getRegistry().getSettings().getFolders().get(getIndex());
                     model.indexingProperty().addListener((observable, oldValue, newValue) -> {
                         System.out.println("indexing: " + newValue);

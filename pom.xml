@@ -81,7 +81,7 @@
                             <executable>${java.home}/../bin/javapackager</executable>
                             <arguments>
                                 <argument>-createjar</argument>
-                                <argument>-nocss2bin</argument>  
+                                <argument>-nocss2bin</argument>
                                 <argument>-appclass</argument>
                                 <argument>${mainClass}</argument>
                                 <argument>-srcdir</argument>
@@ -165,14 +165,14 @@
                     <execution>
                         <id>default-cli</id>
                         <goals>
-                            <goal>exec</goal>                            
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
                             <executable>${java.home}/bin/java</executable>
                             <commandlineArgs>${runfx.args}</commandlineArgs>
                         </configuration>
                     </execution>
-                </executions>  
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

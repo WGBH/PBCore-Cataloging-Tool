@@ -21,6 +21,7 @@ public final class Settings implements Serializable {
     private final List<FolderModel> folders = new ArrayList<>();
 
     private final List<String> savedSearches = new ArrayList<>();
+    private boolean firstTimeInstructionsShown = false;
 
     public Settings() {
     }
@@ -72,5 +73,17 @@ public final class Settings implements Serializable {
             folderModel1.setScheduled(model.isScheduled());
         }
         notifyObservers();
+    }
+
+    public boolean isFileInFolder(String file) {
+        return folders.stream().filter(folderModel -> file.contains(folderModel.getFolderPath())).findFirst().orElse(null) != null;
+    }
+
+    public boolean isFirstTimeInstructionsShown() {
+        return firstTimeInstructionsShown;
+    }
+
+    public void markFirstTimeInstructionsShown() {
+        firstTimeInstructionsShown = true;
     }
 }

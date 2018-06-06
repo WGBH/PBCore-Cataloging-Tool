@@ -41,9 +41,17 @@ public class LuceneEngine {
         }
     }
 
-    public static void deleteIndexesForFile(IndexWriter writer, String folderPath) {
+    public static void deleteIndexesForFolder(IndexWriter writer, String folderPath) {
         try {
             writer.deleteDocuments(new TermQuery(new Term(BASE_DIR_PATH, folderPath.toLowerCase())));
+            writer.commit();
+        } catch (IOException ex) {
+        }
+    }
+
+    public static void deleteIndexesForFile(IndexWriter writer, String filePath) {
+        try {
+            writer.deleteDocuments(new TermQuery(new Term(FILEPATH, filePath.toLowerCase())));
             writer.commit();
         } catch (IOException ex) {
         }

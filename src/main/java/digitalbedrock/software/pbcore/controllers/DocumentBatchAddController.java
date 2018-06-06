@@ -1,15 +1,13 @@
 package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
+import digitalbedrock.software.pbcore.components.AutoFillTextAreaBox;
 import digitalbedrock.software.pbcore.components.PBCoreAnyValueListCell;
 import digitalbedrock.software.pbcore.components.PBCoreAttributeTreeCell;
 import digitalbedrock.software.pbcore.components.PBCoreTreeCell;
 import digitalbedrock.software.pbcore.core.models.*;
 import digitalbedrock.software.pbcore.core.models.entity.*;
-import digitalbedrock.software.pbcore.listeners.AddElementAnyValueListener;
-import digitalbedrock.software.pbcore.listeners.AttributeSelectionListener;
-import digitalbedrock.software.pbcore.listeners.BatchFinishedListener;
-import digitalbedrock.software.pbcore.listeners.ElementSelectionListener;
+import digitalbedrock.software.pbcore.listeners.*;
 import digitalbedrock.software.pbcore.utils.Registry;
 import digitalbedrock.software.pbcore.utils.StringUtils;
 import javafx.beans.property.ObjectProperty;
@@ -20,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
-import np.com.ngopal.control.AutoFillTextBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
@@ -29,7 +26,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DocumentBatchAddController extends AbsController implements ElementSelectionListener, AttributeSelectionListener, PBCoreAttributeTreeCell.AttributeTreeCellListener {
+public class DocumentBatchAddController extends AbsController implements ElementSelectionListener, AttributeSelectionListener, PBCoreAttributeTreeCell.AttributeTreeCellListener, CVSelectionListener {
 
     @FXML
     private ListView<PBCoreElementAnyValue> lvAnyValues;
@@ -42,7 +39,7 @@ public class DocumentBatchAddController extends AbsController implements Element
     @FXML
     private TreeView<PBCoreAttribute> attributesTreeView;
     @FXML
-    private AutoFillTextBox<CVTerm> taElementValue;
+    private AutoFillTextAreaBox<CVTerm> taElementValue;
     @FXML
     private ComboBox<String> cbElementValue;
     @FXML
@@ -57,6 +54,8 @@ public class DocumentBatchAddController extends AbsController implements Element
     private Button buttonSave;
     @FXML
     private Button addAnyValueButton;
+    @FXML
+    private Button btnSelectCV;
 
     private final ObjectProperty<PBCoreElement> selectedPBCoreElementProperty = new SimpleObjectProperty<>();
     private PBCoreElement rootElement;
@@ -85,6 +84,7 @@ public class DocumentBatchAddController extends AbsController implements Element
         updateXmlPreview();
         lvAnyValues.setVisible(false);
         taElementValue.setDisable(true);
+        taElementValue.getTextbox().setPromptText("no input required");
     }
 
     private void onAdd(String treeViewId, int index, PBCoreElement pbCoreElement) {
@@ -93,7 +93,7 @@ public class DocumentBatchAddController extends AbsController implements Element
 
     private void onDuplicate(int index, PBCoreElement pbCoreElement, TreeView<PBCoreElement> treeView) {
         TreeItem<PBCoreElement> selectedItem = treeView.getTreeItem(index);
-        PBCoreElement copy = pbCoreElement.copy(true);
+        PBCoreElement copy = pbCoreElement.copy(true, false);
         copy.valueProperty.addListener((observable, oldValue, newValue) -> updateXmlPreview());
         selectedItem.getParent().getValue().addSubElement(copy);
         TreeItem<PBCoreElement> itemToAdd;
@@ -182,6 +182,11 @@ public class DocumentBatchAddController extends AbsController implements Element
             requiredElementsListView.getSelectionModel().selectedItemProperty().removeListener(requiredListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
             taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            if (selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements()) {
+                taElementValue.getTextbox().setPromptText("no input required");
+            } else {
+                taElementValue.getTextbox().setPromptText("enter here...");
+            }
             setElementValueText(selectedPBCoreElementProperty.getValue());
             optionalElementsTreeView.getSelectionModel().clearSelection();
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().addListener(optionalListener);
@@ -193,6 +198,11 @@ public class DocumentBatchAddController extends AbsController implements Element
             rootDocumentTreeView.getSelectionModel().selectedItemProperty().removeListener(rootListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
             taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            if (selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements()) {
+                taElementValue.getTextbox().setPromptText("no input required");
+            } else {
+                taElementValue.getTextbox().setPromptText("enter here...");
+            }
             setElementValueText(selectedPBCoreElementProperty.getValue());
             optionalElementsTreeView.getSelectionModel().clearSelection();
             optionalElementsTreeView.getSelectionModel().selectedItemProperty().addListener(optionalListener);
@@ -204,6 +214,11 @@ public class DocumentBatchAddController extends AbsController implements Element
             rootDocumentTreeView.getSelectionModel().selectedItemProperty().removeListener(rootListener);
             selectedPBCoreElementProperty.setValue(newValue == null ? null : newValue.getValue());
             taElementValue.setDisable(selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements());
+            if (selectedPBCoreElementProperty.getValue() == null || selectedPBCoreElementProperty.getValue().isSupportsChildElements()) {
+                taElementValue.getTextbox().setPromptText("no input required");
+            } else {
+                taElementValue.getTextbox().setPromptText("enter here...");
+            }
             setElementValueText(selectedPBCoreElementProperty.getValue());
             requiredElementsListView.getSelectionModel().clearSelection();
             requiredElementsListView.getSelectionModel().selectedItemProperty().addListener(requiredListener);
@@ -331,8 +346,7 @@ public class DocumentBatchAddController extends AbsController implements Element
     }
 
     @Override
-    public void onElementSelected(String treeViewId, int index, PBCoreElement element) {
-
+    public void onElementSelected(String treeViewId, int index, PBCoreElement element, boolean close) {
         if (element == null) {
             return;
         }
@@ -369,26 +383,28 @@ public class DocumentBatchAddController extends AbsController implements Element
         pbCoreElementTreeItem.setExpanded(true);
         selectedItem.setExpanded(true);
         selectedItem.getChildren().add(Math.min(element.getSequence(), selectedItem.getChildren().isEmpty() ? 0 : selectedItem.getChildren().size() - 1), pbCoreElementTreeItem);
-        selectedPBCoreElementProperty.setValue(element);
-        setElementValueText(element);
-        updateXmlPreview();
-        switch (elementType) {
-            case REQUIRED:
-                requiredElementsListView.getSelectionModel().select(0);
-                rootDocumentTreeView.getSelectionModel().clearSelection();
-                optionalElementsTreeView.getSelectionModel().clearSelection();
-                break;
-            case OPTIONAL:
-                optionalElementsTreeView.getSelectionModel().select(0);
-                requiredElementsListView.getSelectionModel().clearSelection();
-                rootDocumentTreeView.getSelectionModel().clearSelection();
-                break;
+        if (close) {
+            selectedPBCoreElementProperty.setValue(element);
+            setElementValueText(element);
+            switch (elementType) {
+                case REQUIRED:
+                    requiredElementsListView.getSelectionModel().select(0);
+                    rootDocumentTreeView.getSelectionModel().clearSelection();
+                    optionalElementsTreeView.getSelectionModel().clearSelection();
+                    break;
+                case OPTIONAL:
+                    optionalElementsTreeView.getSelectionModel().select(0);
+                    requiredElementsListView.getSelectionModel().clearSelection();
+                    rootDocumentTreeView.getSelectionModel().clearSelection();
+                    break;
+            }
         }
+        updateXmlPreview();
         updateStatusBarLabel();
     }
 
     @Override
-    public void onAttributeSelected(PBCoreAttribute pbCoreAttribute) {
+    public void onAttributeSelected(PBCoreAttribute pbCoreAttribute, boolean close) {
         if (pbCoreAttribute == null) {
             return;
         }
@@ -462,6 +478,7 @@ public class DocumentBatchAddController extends AbsController implements Element
         initListSelectionListeners();
 
         selectedPBCoreElementProperty.addListener((observable, oldValue, newValue) -> {
+            btnSelectCV.setVisible(MainApp.getInstance().getRegistry().getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName()));
             attributesTreeView.setRoot(getAttributesTreeItem(newValue));
             addAttributeButton.setDisable(newValue == null || !newValue.isSupportsAttributes());
             if (newValue == null) {
@@ -530,6 +547,7 @@ public class DocumentBatchAddController extends AbsController implements Element
             @Override
             public void onDuplicate(int index, PBCoreElement pbCoreElement) {
                 DocumentBatchAddController.this.onDuplicate(index, pbCoreElement, requiredElementsListView);
+                requiredElementsListView.getSelectionModel().select(index + 1);
             }
         }));
         loadRequiredTreeData(rootElement);
@@ -551,26 +569,28 @@ public class DocumentBatchAddController extends AbsController implements Element
             @Override
             public void onDuplicate(int index, PBCoreElement pbCoreElement) {
                 DocumentBatchAddController.this.onDuplicate(index, pbCoreElement, optionalElementsTreeView);
+                optionalElementsTreeView.getSelectionModel().select(index + 1);
             }
         }));
         loadOptionalTreeData(rootElement);
 
         attributesTreeView.setShowRoot(false);
-        attributesTreeView.setCellFactory(lv -> new PBCoreAttributeTreeCell(DocumentBatchAddController.this));
+        attributesTreeView.setCellFactory(lv -> new PBCoreAttributeTreeCell(DocumentBatchAddController.this, (pbCoreAttribute, listener )-> menuOptionSelected(MenuOption.SELECT_CV_ATTRIBUTE, pbCoreAttribute, listener)));
 
         requiredElementsListView.getSelectionModel().selectedItemProperty().addListener(requiredListener);
         optionalElementsTreeView.getSelectionModel().selectedItemProperty().addListener(optionalListener);
 
         taElementValue.getTextbox().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (selectedPBCoreElementProperty.getValue() == null) {
+            PBCoreElement value = selectedPBCoreElementProperty.getValue();
+            if (value == null) {
                 return;
             }
-            buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(selectedPBCoreElementProperty.getValue().getValue(), newValue));
-            selectedPBCoreElementProperty.getValue().setValue(taElementValue.getText());
+            buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(value.getValue(), newValue));
+            value.setValue(taElementValue.getText());
             Registry registry = MainApp.getInstance().getRegistry();
-            if (registry.getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName())) {
+            if (registry.getControlledVocabularies().containsKey(value.getName())) {
                 List<CVTerm> suggestions = new ArrayList<>();
-                CV cv = registry.getControlledVocabularies().get(selectedPBCoreElementProperty.getValue().getName());
+                CV cv = registry.getControlledVocabularies().get(value.getName());
                 if (cv.isHasSubs()) {
                     cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
                         suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
@@ -578,23 +598,25 @@ public class DocumentBatchAddController extends AbsController implements Element
                 } else {
                     suggestions.addAll(cv.getTerms());
                 }
-                selectedPBCoreElementProperty.getValue().setValid(suggestions.stream().anyMatch(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())));
+                value.setValid(suggestions.stream().anyMatch(cvTerm -> cvTerm.getTerm().equalsIgnoreCase(taElementValue.getText())));
+                PBCoreStructure.getInstance().updateSourceAttributeOnElement(value, taElementValue.getItem());
+                attributesTreeView.setRoot(getAttributesTreeItem(value));
             } else {
-                if (!selectedPBCoreElementProperty.getValue().isHasChildElements()) {
-                    switch (selectedPBCoreElementProperty.getValue().getElementValueRestrictionType()) {
+                if (!value.isHasChildElements()) {
+                    switch (value.getElementValueRestrictionType()) {
                         case PATTERN:
-                            Pattern pattern = Pattern.compile(selectedPBCoreElementProperty.getValue().getPatternToFollow());
+                            Pattern pattern = Pattern.compile(value.getPatternToFollow());
                             String s = taElementValue.getText() == null ? "" : taElementValue.getText();
                             Matcher matcher = pattern.matcher(s);
-                            selectedPBCoreElementProperty.getValue().setValid(!s.trim().isEmpty() && matcher.matches());
+                            value.setValid(!s.trim().isEmpty() && matcher.matches());
                             break;
                         default:
-                            selectedPBCoreElementProperty.getValue().setValid(selectedPBCoreElementProperty.getValue().getValue() != null && !selectedPBCoreElementProperty.getValue().getValue().trim().isEmpty());
+                            value.setValid(value.getValue() != null && !value.getValue().trim().isEmpty());
                             break;
                     }
                 }
             }
-            updateInvalidIcon(!selectedPBCoreElementProperty.getValue().isValid(), selectedPBCoreElementProperty.getValue().isFatalError());
+            updateInvalidIcon(!value.isValid(), value.isFatalError());
         });
         cbElementValue.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (selectedPBCoreElementProperty.getValue() == null || newValue == null) {
@@ -604,6 +626,7 @@ public class DocumentBatchAddController extends AbsController implements Element
             selectedPBCoreElementProperty.getValue().setValid(true);
         });
         taElementValue.setDisable(true);
+        taElementValue.getTextbox().setPromptText("no input required");
         cbElementValue.setVisible(false);
         setElementValueText(selectedPBCoreElementProperty.getValue());
         updateXmlPreview();
@@ -638,7 +661,7 @@ public class DocumentBatchAddController extends AbsController implements Element
 
     @FXML
     public void saveFile(ActionEvent event) {
-        if(event == null && !buttonSave.isVisible()){
+        if (event == null && !buttonSave.isVisible()) {
             batchFinishedListener.onSaveBatch(requiredElementsListView.getRoot().getValue());
             return;
         }
@@ -667,5 +690,23 @@ public class DocumentBatchAddController extends AbsController implements Element
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @FXML
+    public void selectCV(ActionEvent actionEvent) {
+        if (MainApp.getInstance().getRegistry().getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName())) {
+            menuOptionSelected(MenuOption.SELECT_CV_ELEMENT, selectedPBCoreElementProperty.getValue(), DocumentBatchAddController.this);
+        }
+    }
+
+    @Override
+    public void onCVSelected(String key, CVTerm cvTerm, boolean attr) {
+        PBCoreElement value = selectedPBCoreElementProperty.getValue();
+        if (cvTerm != null && !attr && value != null && value.getName().equals(key)) {
+            value.setValue(cvTerm.getTerm());
+            PBCoreStructure.getInstance().updateSourceAttributeOnElement(value, cvTerm);
+            attributesTreeView.setRoot(getAttributesTreeItem(value));
+            setElementValueText(value);
+        }
     }
 }
