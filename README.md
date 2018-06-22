@@ -2,6 +2,10 @@
 
 Disclaimer:  
 
+Version 8b 6/22/2018
+-------------------
+Bug fixes & enhancements from user testing.
+
 Version 8  6/5/2018
 -------------------
 Bug fixes & enhancements from user testing.

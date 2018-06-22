@@ -533,9 +533,11 @@ public class MainController extends AbsController implements FileChangedListener
 
         final Menu help = new Menu("Help");
         //help.setDisable(true);
+        final MenuItem helpItem = new MenuItem("Help");
+        helpItem.setDisable(true);
         final MenuItem aboutItem = new MenuItem("About PBCore...");
         aboutItem.setOnAction(e -> menuOptionSelected(MenuOption.ABOUT));
-        help.getItems().addAll(aboutItem);
+        help.getItems().addAll(aboutItem, helpItem);
 
         menuBar.getMenus().addAll(file, search, settings, help);
         if (MainApp.getInstance().getRegistry().isMac()) {
