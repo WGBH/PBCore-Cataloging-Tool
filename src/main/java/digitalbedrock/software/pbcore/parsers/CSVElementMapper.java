@@ -14,9 +14,14 @@ public class CSVElementMapper {
     }
 
     public CSVElementMapper(String name, String elementFullPath, List<CSVAttributeMapper> attributes) {
+        this(name, elementFullPath, attributes, false);
+    }
+
+    public CSVElementMapper(String name, String elementFullPath, List<CSVAttributeMapper> attributes, boolean needsParentVerification) {
         this.name = name;
         this.elementFullPath = elementFullPath;
         this.attributes = attributes;
+        this.needsParentVerification = needsParentVerification;
     }
 
     public String getName() {

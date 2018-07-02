@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane id="MainUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="665.0" prefWidth="1280.0" styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.MainController">
     <stylesheets>
         <URL value="@../styles/style.css" />
@@ -23,7 +25,16 @@
                         <Label contentDisplay="CENTER" styleClass="copyright" text="WGBH Educational Foundation">
                      <VBox.margin>
                         <Insets bottom="5.0" />
-                     </VBox.margin></Label>
+                     </VBox.margin>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/neh_logo.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </ImageView>
                     </children>
                 </VBox>
             </children>

@@ -137,6 +137,7 @@ public class MainController extends AbsController implements FileChangedListener
             }
             int i = 1;
             for (PBCoreElement pbCoreElement : CSVPBCoreParser.parseFile(((File) object).getAbsolutePath())) {
+                pbCoreElement.clearAllEmptyElementsAndAttributes();
                 PBCoreStructure.getInstance().saveFile(pbCoreElement, new File(file.getAbsolutePath() + "/imported_from_csv_" + i++ + ".xml"));
             }
             alert = new Alert(Alert.AlertType.INFORMATION);
@@ -146,6 +147,7 @@ public class MainController extends AbsController implements FileChangedListener
             alert.showAndWait();
             spinnerLayer.setVisible(false);
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid file to import");
             alert.setHeaderText(null);

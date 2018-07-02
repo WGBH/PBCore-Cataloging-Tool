@@ -552,4 +552,24 @@ public class PBCoreElement extends IPBCore implements Serializable {
                 ", value=" + getValue() +
                 '}';
     }
+
+    public void clearAllEmptyElementsAndAttributes() {
+        List<PBCoreElement> collect = subElements.stream()
+                .filter(pbCoreElement -> (pbCoreElement.getValue() == null || pbCoreElement.getValue().isEmpty()) && !pbCoreElement.isHasChildElements() && (!pbCoreElement.isRequired() || hasAtLeastOneElementWithSameNameAndFilledValue(pbCoreElement.getName())))
+                .collect(Collectors.toList());
+
+        this.subElements.removeAll(collect);
+        this.subElements.forEach(PBCoreElement::clearAllEmptyElementsAndAttributes);
+        subElements.forEach(PBCoreElement::clearAllEmptyAttributes);
+        hasChildElements = !subElements.isEmpty();
+    }
+
+    public boolean hasAtLeastOneElementWithSameNameAndFilledValue(String name) {
+        return subElements.stream().anyMatch(pbe -> pbe.getName().equals(name) && pbe.getValue() != null && !pbe.getValue().isEmpty());
+    }
+
+    private static void clearAllEmptyAttributes(PBCoreElement pbCoreElement) {
+        List<PBCoreAttribute> collect = pbCoreElement.getAttributes().stream().filter(pba -> (pba.getValue() == null || pba.getValue().isEmpty()) && !pba.isRequired()).collect(Collectors.toList());
+        pbCoreElement.getAttributes().removeAll(collect);
+    }
 }

@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -78,6 +79,8 @@ public class SearchController extends AbsController {
     private Button btnShowInExplorer;
     @FXML
     private Button btnSearch;
+    @FXML
+    private Button btnOpen;
 
     private final int offset = 0;
     private static final int MAX_RESULTS = 10;
@@ -126,6 +129,7 @@ public class SearchController extends AbsController {
                 }
             }
         });
+        btnOpen.setDisable(true);
         listViewHits.getSelectionModel().getSelectedItems().addListener((ListChangeListener<HitDocument>) c -> {
             if (c.getList() == null || c.getList().isEmpty() || c.getList().size() > 1) {
                 lblNoFileSelected.setVisible(true);
@@ -135,7 +139,9 @@ public class SearchController extends AbsController {
                 previewItemsSubTitle.setVisible(false);
                 lblNoFileSelected.setText(c.getList() == null || c.getList().isEmpty() ? "No File Selected" : "Multiple Files selected");
                 btnShowInExplorer.setDisable(c.getList() == null || c.getList().isEmpty());
+                btnOpen.setDisable(c.getList() == null || c.getList().isEmpty());
             } else {
+                btnOpen.setDisable(false);
                 btnShowInExplorer.setDisable(false);
                 HitDocument newValue = c.getList().get(0);
                 lblNoFileSelected.setVisible(false);
@@ -187,6 +193,11 @@ public class SearchController extends AbsController {
             getInstantiationFlatTree(index, flatList, element1);
             treeViewInstatiationPreview.setItems(FXCollections.observableArrayList(flatList));
         }));
+        textFieldTerm.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                search(new ActionEvent());
+            }
+        });
     }
 
     private void getFlatTree(AtomicInteger index, List<IPBCore> listToAdd, PBCoreElement rootElement) {
@@ -303,6 +314,8 @@ public class SearchController extends AbsController {
 
     @FXML
     public void resetSearch(ActionEvent event) {
+        btnOpen.setDisable(true);
+        btnShowInExplorer.setDisable(true);
         textFieldTerm.setText(null);
         lvSearchOptions.getItems().clear();
         mainFilter.setAsAllElementsFilter();
@@ -397,6 +410,8 @@ public class SearchController extends AbsController {
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     menuOptionSelected(MenuOption.SEARCH_RESULT_SELECTED, selectedItems);
                 }
+            } else {
+                menuOptionSelected(MenuOption.SEARCH_RESULT_SELECTED, selectedItems);
             }
         }
         spinnerLayer.setVisible(false);

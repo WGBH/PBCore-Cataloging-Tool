@@ -2,6 +2,11 @@
 
 Disclaimer:  
 
+Version 8c 7/1/2018
+-------------------
+Corrections & improvements to CSV parser and minor UI updates.
+
+
 Version 8b 6/22/2018
 -------------------
 Bug fixes & enhancements from user testing.

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AboutUI" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0" styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
+<AnchorPane id="AboutUI" maxHeight="520.0" maxWidth="600.0" minHeight="520.0" minWidth="600.0" prefHeight="520.0" prefWidth="600.0" styleClass="sceneRoot" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SettingsController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,18 +28,35 @@
             <Label text="version 1.0" textFill="#333333">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
             <Label opacity="0.8" styleClass="copyright" text="This tool was developed by Digital Bedrock on behalf of WGBH as part of the PBCore Development and Training Project." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin></Label>
-            <Label layoutX="10.0" layoutY="236.0" opacity="0.8" styleClass="copyright" text="The PBCore Development and Training Project has been made possible in part by a major grant from the National Endowment for the Humanities: Exploring the human endeavor." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true" />
+            <Label layoutX="10.0" layoutY="236.0" opacity="0.8" styleClass="copyright" text="The PBCore Development and Training Project has been made possible in part by a major grant from the National Endowment for the Humanities: Exploring the human endeavor." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></Label>
             <Label layoutX="10.0" layoutY="184.0" opacity="0.8" styleClass="copyright" text="This PBCore Cataloging Tool has been made possible in part by the National Endowment for the Humanities: Exploring the human endeavor." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <Label layoutX="10.0" layoutY="218.0" opacity="0.8" styleClass="copyright" text="Any views, findings, conclusions, or recommendations expressed in this cataloging tool, do not necessarily represent those of the National Endowment for the Humanities." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true" />
+            <Label layoutX="10.0" layoutY="218.0" opacity="0.8" styleClass="copyright" text="Any views, findings, conclusions, or recommendations expressed in this cataloging tool, do not necessarily represent those of the National Endowment for the Humanities." textAlignment="CENTER" textFill="#5f5f5f" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></Label>
+            <ImageView fitHeight="40.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/neh_logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
          </children>
       </VBox>
    </children>

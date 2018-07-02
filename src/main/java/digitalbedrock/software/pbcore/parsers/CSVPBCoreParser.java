@@ -126,6 +126,7 @@ public class CSVPBCoreParser {
             while ((nextRecord = csvReader.readNext()) != null) {
                 PBCoreElement copy = PBCoreStructure.getInstance().getRootElement(NewDocumentType.DESCRIPTION_DOCUMENT).copy(true);
                 copy.clearOptionalSubElements();
+                List<PBCoreElement> elements = new ArrayList<>(copy.getSubElements());
                 copy.getSubElements().clear();
                 int c = 0;
                 for (String value : nextRecord) {
@@ -137,15 +138,39 @@ public class CSVPBCoreParser {
                     if (pbCoreElement == null) {
                         mapStringToPBCoreAttribute(copy, s, value, csvElementMappers);
                     } else {
-                        if (copy.getSubElements().stream().noneMatch(pbc -> pbc.getFullPath().equalsIgnoreCase(pbCoreElement.getFullPath()) && pbc.getIndex() == pbCoreElement.getIndex())) {
+                        int i1 = pbCoreElement.getFullPath().lastIndexOf("/");
+                        if (!pbCoreElement.getFullPath().substring(0, i1).equals(copy.getFullPath())) {
+                            pbCoreElement = getRootElementUntilCopyFullpath(copy.getFullPath(), pbCoreElement);
+                        }
+                        PBCoreElement finalPbCoreElement = pbCoreElement;
+                        if (copy.getSubElements().stream().noneMatch(pbc -> pbc.getFullPath().equalsIgnoreCase(finalPbCoreElement.getFullPath()) && pbc.getIndex() == finalPbCoreElement.getIndex())) {
                             copy.addSubElement(pbCoreElement);
                         }
                     }
                 }
+                elements.stream().filter(pbe -> pbe.isRequired() && !copy.hasAtLeastOneElementWithSameNameAndFilledValue(pbe.getName())).forEach(copy::addSubElement);
                 pbCoreElements.add(copy);
             }
         }
         return pbCoreElements;
+    }
+
+    private static PBCoreElement getRootElementUntilCopyFullpath(String copyFullPath, PBCoreElement pbCoreElement) {
+        PBCoreElement element = pbCoreElement;
+        int i1 = element.getFullPath().lastIndexOf("/");
+        while (i1 != -1) {
+            String str = element.getFullPath().substring(0, i1);
+            if (str.equals(copyFullPath)) {
+                break;
+            }
+            PBCoreElement elementToAdd = element;
+            element = PBCoreStructure.getInstance().getElement(str).copy(false);
+            element.clearAllEmptyElementsAndAttributes();
+            element.addSubElement(elementToAdd);
+            i1 = element.getFullPath().lastIndexOf("/");
+        }
+        return element;
+
     }
 
     private static PBCoreElement mapStringToPBCoreElement(PBCoreElement rootElement, String key, String value, List<CSVElementMapper> mappers) {
@@ -155,9 +180,17 @@ public class CSVPBCoreParser {
         int index = -1;
         for (String s : strings) {
             if (key.startsWith(s)) {
-                index = Integer.parseInt(key.split(s)[1]);
-                string = s;
-                break;
+                try {
+                    String[] split = key.split(s);
+                    if (split.length < 2) {
+                        index = 1;
+                    } else {
+                        index = Integer.parseInt(key.split(s)[1]);
+                    }
+                    string = s;
+                    break;
+                } catch (NumberFormatException e) {
+                }
             }
         }
         String finalString = string;
@@ -171,10 +204,13 @@ public class CSVPBCoreParser {
                 PBCoreElement element1 = PBCoreStructure.getInstance().getElement(csvElementMapper.getElementFullPath()).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
+                //element.setIndex(index);
+                element1.setIndex(index);
                 element.addSubElement(element1);
                 return element;
             } else {
-                element = PBCoreStructure.getInstance().getElement(csvElementMapper.getElementFullPath()).copy(false);
+                PBCoreElement element1 = PBCoreStructure.getInstance().getElement(csvElementMapper.getElementFullPath());
+                element = element1.copy(false);
             }
         }
         if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
@@ -191,7 +227,8 @@ public class CSVPBCoreParser {
     private static PBCoreElement verifyElement(PBCoreElement rootElement, String fullPathToVerify) {
         PBCoreElement element = rootElement.getSubElements().stream().filter(pbc -> pbc.getFullPath().equalsIgnoreCase(fullPathToVerify)).findFirst().orElse(null);
         if (element == null) {
-            element = PBCoreStructure.getInstance().getElement(fullPathToVerify).copy(false);
+            PBCoreElement element1 = PBCoreStructure.getInstance().getElement(fullPathToVerify);
+            element = element1.copy(false);
             element.getSubElements().clear();
             element.getAttributes().clear();
         }
@@ -205,7 +242,8 @@ public class CSVPBCoreParser {
             if (pbCoreAttribute != null) {
                 pbCoreAttribute.setValue(value);
             } else {
-                PBCoreAttribute pbCoreAttribute1 = PBCoreStructure.getInstance().getElement(elem).getAttributes().stream().filter(at -> at.getFullPath().equals(attr)).findFirst().orElse(null).copy();
+                PBCoreAttribute pbCoreAttribute2 = PBCoreStructure.getInstance().getElement(elem).getAttributes().stream().filter(at -> at.getFullPath().equals(attr)).findFirst().orElse(null);
+                PBCoreAttribute pbCoreAttribute1 = pbCoreAttribute2.copy();
                 pbCoreAttribute1.setValue(value);
                 element.addAttribute(pbCoreAttribute1);
             }
@@ -220,9 +258,17 @@ public class CSVPBCoreParser {
         int index = -1;
         for (String s : strings) {
             if (key.startsWith(s)) {
-                index = Integer.parseInt(key.split(s)[1]);
-                string = s;
-                break;
+                try {
+                    String[] split = key.split(s);
+                    if (split.length < 2) {
+                        index = 1;
+                    } else {
+                        index = Integer.parseInt(key.split(s)[1]);
+                    }
+                    string = s;
+                    break;
+                } catch (NumberFormatException e) {
+                }
             }
         }
         String finalString = string;
@@ -246,9 +292,12 @@ public class CSVPBCoreParser {
         int index = -1;
         for (String s : strings) {
             if (key.startsWith(s)) {
-                index = Integer.parseInt(key.split(s)[1]);
-                string = s;
-                break;
+                try {
+                    index = Integer.parseInt(key.split(s)[1]);
+                    string = s;
+                    break;
+                } catch (NumberFormatException e) {
+                }
             }
         }
         String finalString = string;

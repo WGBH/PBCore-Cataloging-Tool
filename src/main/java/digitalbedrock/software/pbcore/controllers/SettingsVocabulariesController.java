@@ -479,7 +479,7 @@ public class SettingsVocabulariesController extends AbsController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Exportation successful");
         alert.setHeaderText(null);
-        alert.setContentText("Exportation completed sucessfully");
+        alert.setContentText("Export completed successfully");
         alert.showAndWait();
     }
 
