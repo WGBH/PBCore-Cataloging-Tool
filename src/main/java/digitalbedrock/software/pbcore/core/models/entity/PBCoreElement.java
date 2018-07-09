@@ -555,13 +555,31 @@ public class PBCoreElement extends IPBCore implements Serializable {
 
     public void clearAllEmptyElementsAndAttributes() {
         List<PBCoreElement> collect = subElements.stream()
-                .filter(pbCoreElement -> (pbCoreElement.getValue() == null || pbCoreElement.getValue().isEmpty()) && !pbCoreElement.isHasChildElements() && (!pbCoreElement.isRequired() || hasAtLeastOneElementWithSameNameAndFilledValue(pbCoreElement.getName())))
+                .filter(PBCoreElement::canBeRemoved)
                 .collect(Collectors.toList());
 
         this.subElements.removeAll(collect);
         this.subElements.forEach(PBCoreElement::clearAllEmptyElementsAndAttributes);
         subElements.forEach(PBCoreElement::clearAllEmptyAttributes);
         hasChildElements = !subElements.isEmpty();
+    }
+
+    private boolean canBeRemoved() {
+        return (this.getValue() == null || this.getValue().isEmpty())
+                && (!this.isHasChildElements() || !hasAtLeastOneChildElementWithFilledValue())
+                && (!this.isRequired() || hasAtLeastOneElementWithSameNameAndFilledValue(this.getName()));
+    }
+
+    private boolean hasAtLeastOneChildElementWithFilledValue() {
+        List<PBCoreElement> pbCoreElementsToProcess = new ArrayList<>(subElements);
+        while (!pbCoreElementsToProcess.isEmpty()) {
+            PBCoreElement remove = pbCoreElementsToProcess.remove(0);
+            if (remove.getValue() != null && !remove.getValue().isEmpty()) {
+                return true;
+            }
+            pbCoreElementsToProcess.addAll(remove.getSubElements());
+        }
+        return false;
     }
 
     public boolean hasAtLeastOneElementWithSameNameAndFilledValue(String name) {

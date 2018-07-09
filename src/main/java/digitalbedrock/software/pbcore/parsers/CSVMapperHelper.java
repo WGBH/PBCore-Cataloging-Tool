@@ -416,7 +416,7 @@ public class CSVMapperHelper {
     private static final String INSTANTIATION_DIMENSIONS = "Dimensions";
     private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_DIMENSIONS = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationDimensions";
     private static final String UNITSOF_MEASURE_INSTANTIATION_DIMENSIONS_ATTR = "@unitsOfMeasure_Dimensions";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_DIMENSIONS_UNITSOFMEASURE = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationDimensions/unitsofMeasure";
+    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_DIMENSIONS_UNITSOFMEASURE = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationDimensions/unitsOfMeasure";
     private static final String SOURCE_INSTANTIATION_DIMENSIONS_ATTR = "@source_Dimensions";
     private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_INSTANTIATION_DIMENSIONS_SOURCE = "pbcoreDescriptionDocument/pbcoreInstantiation/instantiationDimensions/source";
     private static final String REF_INSTANTIATION_DIMENSIONS_ATTR = "@ref_Dimensions";

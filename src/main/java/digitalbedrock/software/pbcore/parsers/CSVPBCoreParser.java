@@ -34,12 +34,16 @@ public class CSVPBCoreParser {
             Map<String, Integer> map = new HashMap<>();
             List<String> records = new ArrayList<>();
 
-            mapPbCoreElements.entrySet().stream().map((stringPBCoreElementEntry) -> {
+            final boolean[] first = {true};
+            mapPbCoreElements.entrySet().stream().peek((stringPBCoreElementEntry) -> {
                 int c = 0;
                 PBCoreElement pbCoreElement = stringPBCoreElementEntry.getValue();
                 setIndexesForElement(pbCoreElement);
                 String[] headerRecord = getHeaderRecords(pbCoreElement, csvElementMappers);
-                csvWriter.writeNext(headerRecord);
+                if (first[0]) {
+                    csvWriter.writeNext(headerRecord);
+                    first[0] = false;
+                }
                 for (String s : headerRecord) {
                     PBCoreElement pbCoreE = mapPBCoreElementToString(pbCoreElement, s, csvElementMappers);
                     if (pbCoreE == null) {
@@ -56,7 +60,6 @@ public class CSVPBCoreParser {
                     }
                     c++;
                 }
-                return stringPBCoreElementEntry;
             }).forEachOrdered((_item) -> {
                 csvWriter.writeNext(records.toArray(new String[records.size()]));
             });
@@ -152,7 +155,30 @@ public class CSVPBCoreParser {
                 pbCoreElements.add(copy);
             }
         }
+        fillAllElementsWithRequiredSubElementsAndAttributes(pbCoreElements);
         return pbCoreElements;
+    }
+
+    private static void fillAllElementsWithRequiredSubElementsAndAttributes(List<PBCoreElement> pbCoreElements) {
+        List<PBCoreElement> elementsToProcess = new ArrayList<>(pbCoreElements);
+        while (!elementsToProcess.isEmpty()) {
+            PBCoreElement pbCoreElement = elementsToProcess.remove(0);
+            PBCoreElement elementFromStructure = PBCoreStructure.getInstance().getElement(pbCoreElement.getFullPath());
+
+            for (PBCoreElement coreElement : elementFromStructure.getRequiredSubElements()) {
+                if (pbCoreElement.getRequiredSubElements().stream().noneMatch(pbe -> pbe.getFullPath().equals(coreElement.getFullPath()))) {
+                    pbCoreElement.addSubElement(coreElement.copy(false));
+                }
+            }
+
+            List<PBCoreAttribute> collect = elementFromStructure.getAttributes().stream().filter(PBCoreAttribute::isRequired).collect(Collectors.toList());
+            for (PBCoreAttribute pbCoreAttribute : collect) {
+                if (pbCoreElement.getAttributes().stream().noneMatch(pba -> pba.getFullPath().equals(pbCoreAttribute.getFullPath()))) {
+                    pbCoreElement.addAttribute(pbCoreAttribute.copy(false));
+                }
+            }
+            elementsToProcess.addAll(pbCoreElement.getOrderedSubElements());
+        }
     }
 
     private static PBCoreElement getRootElementUntilCopyFullpath(String copyFullPath, PBCoreElement pbCoreElement) {
@@ -197,15 +223,15 @@ public class CSVPBCoreParser {
         CSVElementMapper csvElementMapper = mappers.stream().filter(em -> em.getName().equals(finalString)).findFirst().orElse(null);
         if (csvElementMapper != null) {
             if (csvElementMapper.isNeedsParentVerification()) {
-                element = verifyElement(rootElement, csvElementMapper.getParentElementFullPath());
+                element = verifyElement(rootElement, csvElementMapper.getParentElementFullPath(), index);
                 if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
                     return null;
                 }
                 PBCoreElement element1 = PBCoreStructure.getInstance().getElement(csvElementMapper.getElementFullPath()).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
-                //element.setIndex(index);
                 element1.setIndex(index);
+                element.setIndex(index);
                 element.addSubElement(element1);
                 return element;
             } else {
@@ -224,8 +250,8 @@ public class CSVPBCoreParser {
         return element;
     }
 
-    private static PBCoreElement verifyElement(PBCoreElement rootElement, String fullPathToVerify) {
-        PBCoreElement element = rootElement.getSubElements().stream().filter(pbc -> pbc.getFullPath().equalsIgnoreCase(fullPathToVerify)).findFirst().orElse(null);
+    private static PBCoreElement verifyElement(PBCoreElement rootElement, String fullPathToVerify, int index) {
+        PBCoreElement element = rootElement.getSubElements().stream().filter(pbc -> pbc.getFullPath().equalsIgnoreCase(fullPathToVerify) && pbc.getIndex() == index).findFirst().orElse(null);
         if (element == null) {
             PBCoreElement element1 = PBCoreStructure.getInstance().getElement(fullPathToVerify);
             element = element1.copy(false);
@@ -320,18 +346,18 @@ public class CSVPBCoreParser {
         List<String> split = new ArrayList<>(Arrays.asList(fullpath.split("/")));
         List<PBCoreElement> elementsToProcess = Arrays.asList(pbCoreElement);
         PBCoreElement pbCoreElementToReturn = null;
-        while (!split.isEmpty() && (pbCoreElementToReturn == null || index != pbCoreElementToReturn.getIndex())) {
+        while (!split.isEmpty() && (pbCoreElementToReturn == null || !pbCoreElementToReturn.getFullPath().equals(fullpath) || index != pbCoreElementToReturn.getIndex())) {
             String remove = split.remove(0);
             List<PBCoreElement> collect = elementsToProcess.stream()
                     .filter(pbce
                             -> pbce.getName()
                             .equals(remove))
                     .collect(Collectors.toList());
-            if (split.isEmpty() && index > -1) {
-                pbCoreElementToReturn = collect.isEmpty()
-                        ? null
-                        : collect.stream().filter(pbce -> pbce.getIndex() == index).findFirst().orElse(null);
-            } else {
+            pbCoreElementToReturn = collect.isEmpty()
+                    ? null
+                    : collect.stream().filter(pbce -> pbce.getIndex() == index).findFirst().orElse(null);
+
+            if (pbCoreElementToReturn == null) {
                 pbCoreElementToReturn = collect.isEmpty()
                         ? null
                         : collect.get(0);
@@ -351,9 +377,12 @@ public class CSVPBCoreParser {
         int index = -1;
         for (String s : strings) {
             if (key.startsWith(s)) {
-                index = Integer.parseInt(key.split(s)[1]);
-                string = s;
-                break;
+                try {
+                    index = Integer.parseInt(key.split(s)[1]);
+                    string = s;
+                    break;
+                } catch (NumberFormatException e) {
+                }
             }
         }
         String finalString = string;
