@@ -555,13 +555,19 @@ public class PBCoreElement extends IPBCore implements Serializable {
 
     public void clearAllEmptyElementsAndAttributes() {
         List<PBCoreElement> collect = subElements.stream()
-                .filter(PBCoreElement::canBeRemoved)
+                .filter(pbe -> pbe.canBeRemoved(subElements))
                 .collect(Collectors.toList());
 
         this.subElements.removeAll(collect);
         this.subElements.forEach(PBCoreElement::clearAllEmptyElementsAndAttributes);
         subElements.forEach(PBCoreElement::clearAllEmptyAttributes);
         hasChildElements = !subElements.isEmpty();
+    }
+
+    private boolean canBeRemoved(List<PBCoreElement> subElements) {
+        return (this.getValue() == null || this.getValue().isEmpty())
+                && (!this.isHasChildElements() || !hasAtLeastOneChildElementWithFilledValue())
+                && (!this.isRequired() || hasAtLeastOneElementWithSameNameAndFilledValue(subElements, this.getName()));
     }
 
     private boolean canBeRemoved() {
@@ -582,6 +588,9 @@ public class PBCoreElement extends IPBCore implements Serializable {
         return false;
     }
 
+    public boolean hasAtLeastOneElementWithSameNameAndFilledValue(List<PBCoreElement> subElements, String name) {
+        return subElements.stream().anyMatch(pbe -> pbe.getName().equals(name) && pbe.getValue() != null && !pbe.getValue().isEmpty());
+    }
     public boolean hasAtLeastOneElementWithSameNameAndFilledValue(String name) {
         return subElements.stream().anyMatch(pbe -> pbe.getName().equals(name) && pbe.getValue() != null && !pbe.getValue().isEmpty());
     }

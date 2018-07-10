@@ -2,6 +2,10 @@
 
 Disclaimer:  
 
+Version 8e 7/10/2018
+-------------------
+Corrections to CSV parser
+
 Version 8d 7/9/2018
 -------------------
 Corrections & improvements to CSV parser.

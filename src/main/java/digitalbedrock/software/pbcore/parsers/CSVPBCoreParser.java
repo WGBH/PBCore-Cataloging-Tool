@@ -27,40 +27,25 @@ public class CSVPBCoreParser {
                         CSVWriter.DEFAULT_QUOTE_CHARACTER,
                         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                         CSVWriter.DEFAULT_LINE_END)) {
-            //String[] headerRecord = HEADER_RECORDS;
-            //csvWriter.writeNext(headerRecord);
+            final String[] headerRecord = getHeaderRecords(csvElementMappers);
 
-
-            Map<String, Integer> map = new HashMap<>();
-            List<String> records = new ArrayList<>();
-
-            final boolean[] first = {true};
-            mapPbCoreElements.entrySet().stream().peek((stringPBCoreElementEntry) -> {
-                int c = 0;
-                PBCoreElement pbCoreElement = stringPBCoreElementEntry.getValue();
+            csvWriter.writeNext(headerRecord);
+            mapPbCoreElements.forEach((key, pbCoreElement) -> {
+                List<String> records = new ArrayList<>();
                 setIndexesForElement(pbCoreElement);
-                String[] headerRecord = getHeaderRecords(pbCoreElement, csvElementMappers);
-                if (first[0]) {
-                    csvWriter.writeNext(headerRecord);
-                    first[0] = false;
-                }
                 for (String s : headerRecord) {
                     PBCoreElement pbCoreE = mapPBCoreElementToString(pbCoreElement, s, csvElementMappers);
                     if (pbCoreE == null) {
                         PBCoreAttribute pbCoreAttribute = mapPBCoreAttributeString(pbCoreElement, s, csvElementMappers);
                         if (pbCoreAttribute != null) {
-                            //records[c] = pbCoreAttribute.getValue();
                             records.add(pbCoreAttribute.getValue());
                         } else {
                             records.add("");
                         }
                     } else {
                         records.add(pbCoreE.getValue());
-                        //records[c] = pbCoreE.getValue();
                     }
-                    c++;
                 }
-            }).forEachOrdered((_item) -> {
                 csvWriter.writeNext(records.toArray(new String[records.size()]));
             });
         } catch (IOException e) {
@@ -93,23 +78,17 @@ public class CSVPBCoreParser {
         }
     }
 
-    private static String[] getHeaderRecords(PBCoreElement pbCoreElement, List<CSVElementMapper> csvElementMappers) {
+    private static String[] getHeaderRecords(List<CSVElementMapper> csvElementMappers) {
         List<String> headers = new ArrayList<>();
-        List<PBCoreElement> elements = new ArrayList<>();
-        elements.add(pbCoreElement);
         Map<String, Integer> map = new HashMap<>();
         csvElementMappers.forEach(em -> map.put(em.getName(), 1));
-        while (!elements.isEmpty()) {
-            PBCoreElement coreElement = elements.remove(0);
-            CSVElementMapper csvElementMapper = csvElementMappers.stream().filter(em -> em.getElementFullPath().equals(coreElement.getFullPath())).findFirst().orElse(null);
-            if (csvElementMapper != null) {
-                int index = map.get(csvElementMapper.getName());
-                headers.add(csvElementMapper.getName() + index);
-                csvElementMapper.getAttributes().forEach(am -> headers.add(am.getName() + index));
-                map.put(csvElementMapper.getName(), map.get(csvElementMapper.getName()) + 1);
-            }
-            elements.addAll(coreElement.getSubElements());
-        }
+        csvElementMappers.forEach(csvElementMapper -> {
+            int index = map.get(csvElementMapper.getName());
+            headers.add(csvElementMapper.getName() + index);
+            csvElementMapper.getAttributes().forEach(am -> headers.add(am.getName() + index));
+            map.put(csvElementMapper.getName(), map.get(csvElementMapper.getName()) + 1);
+
+        });
         return headers.toArray(new String[headers.size()]);
     }
 
@@ -136,7 +115,7 @@ public class CSVPBCoreParser {
                     if (mappedFullPaths.size() <= c) {
                         break;
                     }
-                    String s = mappedFullPaths.get(c++);
+                    String s = mappedFullPaths.get(c++).replaceAll("\uFEFF", "");
                     PBCoreElement pbCoreElement = mapStringToPBCoreElement(copy, s, value, csvElementMappers);
                     if (pbCoreElement == null) {
                         mapStringToPBCoreAttribute(copy, s, value, csvElementMappers);
@@ -224,9 +203,9 @@ public class CSVPBCoreParser {
         if (csvElementMapper != null) {
             if (csvElementMapper.isNeedsParentVerification()) {
                 element = verifyElement(rootElement, csvElementMapper.getParentElementFullPath(), index);
-                if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+                /*if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
                     return null;
-                }
+                }*/
                 PBCoreElement element1 = PBCoreStructure.getInstance().getElement(csvElementMapper.getElementFullPath()).copy(false);
                 element1.setValue(value);
                 element1.setValid(element1.getValue() != null && !element1.getValue().trim().isEmpty());
@@ -239,9 +218,9 @@ public class CSVPBCoreParser {
                 element = element1.copy(false);
             }
         }
-        if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
-            return null;
-        }
+//        if (element != null && !element.isRequired() && (value == null || value.trim().isEmpty())) {
+//            return null;
+//        }
         if (element != null) {
             element.setValue(value);
             element.setValid(element.getValue() != null && !element.getValue().trim().isEmpty());
