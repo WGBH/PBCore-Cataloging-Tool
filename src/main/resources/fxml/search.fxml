@@ -19,194 +19,182 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane id="SearchUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="dialogRoot"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="digitalbedrock.software.pbcore.controllers.SearchController">
+<AnchorPane id="SearchUI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="dialogRoot" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digitalbedrock.software.pbcore.controllers.SearchController">
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <stylesheets>
-      <URL value="@../styles/style.css"/>
+      <URL value="@../styles/style.css" />
    </stylesheets>
-   <StackPane layoutX="20.0" layoutY="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <VBox>
+   <StackPane layoutX="20.0" layoutY="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox maxWidth="1.7976931348623157E308">
          <GridPane hgap="25.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" percentWidth="25.0" />
+               <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER"/>
-               <RowConstraints vgrow="ALWAYS"/>
+               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+               <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
             <VBox.margin>
-               <Insets/>
+               <Insets />
             </VBox.margin>
             <VBox GridPane.rowIndex="1">
                <Label styleClass="formLabel" text="Keyword">
                   <VBox.margin>
-                     <Insets bottom="5.0"/>
+                     <Insets bottom="5.0" />
                   </VBox.margin>
                </Label>
                <GridPane>
                   <VBox.margin>
-                     <Insets bottom="10.0"/>
+                     <Insets bottom="10.0" />
                   </VBox.margin>
                   <columnConstraints>
-                     <ColumnConstraints hgrow="ALWAYS"/>
-                     <ColumnConstraints hgrow="SOMETIMES"/>
+                     <ColumnConstraints hgrow="ALWAYS" />
+                     <ColumnConstraints hgrow="SOMETIMES" />
                   </columnConstraints>
                   <rowConstraints>
-                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
-                  <TextField fx:id="textFieldTerm" minWidth="150.0"/>
+                  <TextField fx:id="textFieldTerm" minWidth="150.0" />
                   <Button mnemonicParsing="false" onAction="#selectMainFilterElements" GridPane.columnIndex="1">
                      <graphic>
-                        <FontIcon iconLiteral="mdi-filter-outline"/>
+                        <FontIcon iconLiteral="mdi-filter-outline" />
                      </graphic>
                      <styleClass>
-                        <String fx:value="listActionButton"/>
-                        <String fx:value="dimmedIcon"/>
+                        <String fx:value="listActionButton" />
+                        <String fx:value="dimmedIcon" />
                      </styleClass>
                   </Button>
                   <HBox alignment="CENTER_LEFT" fillHeight="false" GridPane.rowIndex="1">
                      <Label alignment="CENTER" text="E" textAlignment="CENTER">
                         <styleClass>
-                           <String fx:value="fieldType"/>
-                           <String fx:value="elem"/>
+                           <String fx:value="fieldType" />
+                           <String fx:value="elem" />
                         </styleClass>
                         <HBox.margin>
-                           <Insets left="5.0" right="5.0"/>
+                           <Insets left="5.0" right="5.0" />
                         </HBox.margin>
                      </Label>
                      <Label fx:id="lblElementsCount">
                         <HBox.margin>
-                           <Insets right="10.0"/>
+                           <Insets right="10.0" />
                         </HBox.margin>
                         <styleClass>
-                           <String fx:value="paragraphSmall"/>
-                           <String fx:value="dimmedText"/>
+                           <String fx:value="paragraphSmall" />
+                           <String fx:value="dimmedText" />
                         </styleClass>
                      </Label>
                      <Label alignment="CENTER" text="A" textAlignment="CENTER">
                         <styleClass>
-                           <String fx:value="fieldType"/>
-                           <String fx:value="attr"/>
+                           <String fx:value="fieldType" />
+                           <String fx:value="attr" />
                         </styleClass>
                         <HBox.margin>
-                           <Insets right="5.0"/>
+                           <Insets right="5.0" />
                         </HBox.margin>
                      </Label>
                      <Label fx:id="lblAttributesCount">
                         <styleClass>
-                           <String fx:value="paragraphSmall"/>
-                           <String fx:value="dimmedText"/>
+                           <String fx:value="paragraphSmall" />
+                           <String fx:value="dimmedText" />
                         </styleClass>
                      </Label>
                   </HBox>
                </GridPane>
                <Button mnemonicParsing="false" onAction="#addCondition" styleClass="linkButton" text="add condition">
                   <VBox.margin>
-                     <Insets/>
+                     <Insets />
                   </VBox.margin>
                </Button>
-               <ListView fx:id="lvSearchOptions" prefHeight="200.0" prefWidth="200.0" styleClass="searchConditionList"
-                         VBox.vgrow="ALWAYS">
+               <ListView fx:id="lvSearchOptions" prefHeight="200.0" prefWidth="200.0" styleClass="searchConditionList" VBox.vgrow="ALWAYS">
                   <VBox.margin>
-                     <Insets bottom="15.0"/>
+                     <Insets bottom="15.0" />
                   </VBox.margin>
                </ListView>
                <GridPane hgap="10.0">
                   <columnConstraints>
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"/>
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"/>
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                   </columnConstraints>
                   <rowConstraints>
-                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   </rowConstraints>
-                  <Button fx:id="btnSearch" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search"
-                          styleClass="primaryButton" text="SEARCH" GridPane.columnIndex="1"/>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#resetSearch"
-                          styleClass="defaultButton" text="RESET SEARCH"/>
+                  <Button fx:id="btnSearch" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" styleClass="primaryButton" text="SEARCH" GridPane.columnIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#resetSearch" styleClass="defaultButton" text="RESET SEARCH" />
                </GridPane>
             </VBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <padding>
-                  <Insets top="1.0"/>
+                  <Insets top="1.0" />
                </padding>
                <Label styleClass="title4" text="SEARCH">
                   <HBox.margin>
-                     <Insets/>
+                     <Insets />
                   </HBox.margin>
                   <font>
-                     <Font name="SF Pro Display Regular" size="13.0"/>
+                     <Font name="SF Pro Display Regular" size="13.0" />
                   </font>
                </Label>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <padding>
-                  <Insets top="1.0"/>
+                  <Insets top="1.0" />
                </padding>
                <Label styleClass="title4" text="RESULTS">
                   <HBox.margin>
-                     <Insets/>
+                     <Insets />
                   </HBox.margin>
                </Label>
                <Label fx:id="lblTotalResults" styleClass="formLabel" text="(0 files)">
                   <HBox.margin>
-                     <Insets left="10.0"/>
+                     <Insets left="10.0" />
                   </HBox.margin>
                </Label>
             </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <ListView fx:id="listViewHits" prefHeight="200.0" prefWidth="200.0" styleClass="searchResultsList"
-                         VBox.vgrow="ALWAYS"/>
-               <Pagination fx:id="pagination"/>
+               <ListView fx:id="listViewHits" prefHeight="200.0" prefWidth="200.0" styleClass="searchResultsList" VBox.vgrow="ALWAYS" />
+               <Pagination fx:id="pagination" />
             </VBox>
-            <Label fx:id="lblNoFileSelected" text="No File selected" GridPane.columnIndex="2"
-                   GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
-            <ListView fx:id="treeViewPreview" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"
-                      styleClass="previewElementList" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label fx:id="lblNoFileSelected" text="No File selected" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ListView fx:id="treeViewPreview" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" styleClass="previewElementList" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <GridPane GridPane.columnIndex="2">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="buttonCloseInstatiationPreview" mnemonicParsing="false"
-                          styleClass="closePreviewItemButton" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
-                          GridPane.valignment="TOP">
+                  <Button fx:id="buttonCloseInstatiationPreview" mnemonicParsing="false" styleClass="closePreviewItemButton" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                      <graphic>
-                        <FontIcon iconLiteral="mdi-chevron-left"/>
+                        <FontIcon iconLiteral="mdi-chevron-left" />
                      </graphic>
                   </Button>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <padding>
-                        <Insets top="1.0"/>
+                        <Insets top="1.0" />
                      </padding>
                      <children>
                         <Label styleClass="title4" text="PREVIEW">
                            <HBox.margin>
-                              <Insets/>
+                              <Insets />
                            </HBox.margin>
                            <font>
-                              <Font name="SF Pro Display Regular" size="13.0"/>
+                              <Font name="SF Pro Display Regular" size="13.0" />
                            </font>
                         </Label>
                         <Label fx:id="previewItemsSubTitle" text="/ ITEMS">
                            <HBox.margin>
-                              <Insets left="5.0"/>
+                              <Insets left="5.0" />
                            </HBox.margin>
                            <styleClass>
-                              <String fx:value="title4"/>
-                              <String fx:value="mutedText"/>
+                              <String fx:value="title4" />
+                              <String fx:value="mutedText" />
                            </styleClass>
                         </Label>
                      </children>
@@ -215,39 +203,32 @@
             </GridPane>
             <StackPane fx:id="stackPaneInstatiationPreview" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <ListView fx:id="treeViewInstatiationPreview" maxHeight="1.7976931348623157E308" prefHeight="200.0"
-                            prefWidth="200.0" styleClass="previewElementList"/>
+                  <ListView fx:id="treeViewInstatiationPreview" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" styleClass="previewElementList" />
                </children>
             </StackPane>
          </GridPane>
-         <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0"
-               VBox.vgrow="NEVER">
-            <Button fx:id="btnShowInExplorer" disable="true" mnemonicParsing="false" onAction="#showInExplorer"
-                    styleClass="defaultButton" text="OPEN IN ENCLOSING FOLDER"/>
-            <Button fx:id="btnExportSearchToCsv" disable="true" mnemonicParsing="false" onAction="#onExportSearchToCsv"
-                    styleClass="defaultButton" text="EXPORT SEARCH TO CSV">
+         <HBox alignment="BOTTOM_RIGHT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+            <Button fx:id="btnShowInExplorer" disable="true" mnemonicParsing="false" onAction="#showInExplorer" styleClass="primaryButton" text="OPEN IN ENCLOSING FOLDER" />
+            <Button fx:id="btnExportSearchToCsv" disable="true" mnemonicParsing="false" onAction="#onExportSearchToCsv" styleClass="defaultButton" text="EXPORT SEARCH TO CSV">
                <HBox.margin>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
             <Button mnemonicParsing="false" onAction="#onCancel" styleClass="defaultButton" text="CANCEL">
                <HBox.margin>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#onFileSelected" styleClass="primaryButton"
-                    text="OPEN">
+            <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#onFileSelected" styleClass="primaryButton" text="OPEN">
                <HBox.margin>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
          </HBox>
       </VBox>
-      <AnchorPane fx:id="spinnerLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                  visible="false">
-         <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0">
-            <ProgressIndicator/>
+      <AnchorPane fx:id="spinnerLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false">
+         <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ProgressIndicator />
          </VBox>
       </AnchorPane>
    </StackPane>

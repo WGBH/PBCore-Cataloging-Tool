@@ -55,6 +55,9 @@
     default-button-bg-color: #ffffff;
     default-button-text-color: #434343;
 
+    inverse-button-bg-color: #ffffff;
+    inverse-button-text-color: #434343;
+
     primary-button-bg-color: #007aff;
     primary-button-text-color: #ffffff;
 
@@ -559,6 +562,14 @@
     -fx-min-width: 80px;
 }
 
+.inverseButton {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-background-color: inverse-button-bg-color;
+    -fx-text-fill: inverse-button-text-color;
+    -fx-min-width: 80px;
+}
+
 .primaryButton {
     -fx-padding: 5px 10px;
     -fx-font-size: 13px;
@@ -598,7 +609,6 @@
     -fx-padding: 10px 15px;
     -fx-font-size: 16px;
 }
-
 
 #DocumentUI .statusBar {
     -fx-background-color: gray-bg;

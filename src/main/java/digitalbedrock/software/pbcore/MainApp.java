@@ -269,7 +269,7 @@ public class MainApp extends Application {
             selectElementWindow.initOwner(stage);
             selectElementWindow.initOwner(searchScene.getWindow());
             selectElementWindow.initModality(Modality.APPLICATION_MODAL);
-            selectElementWindow.setTitle("Add new element");
+            selectElementWindow.setTitle("Select controlled vocabulary term");
             selectElementWindow.setScene(searchScene);
             selectElementWindow.show();
             controller.setCVSelectionListener((key1, cvTerm, attr1) -> {

@@ -137,17 +137,17 @@ public class CSVMapperHelper {
     private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_DESCRIPTION_VERSION = "pbcoreDescriptionDocument/pbcoreDescription/version";
     private static final String ANNOTATION_DESCRIPTION_ATTR = "@annotation_Description";
     private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_DESCRIPTION_ANNOTATION = "pbcoreDescriptionDocument/pbcoreDescription/annotation";
-
-    private static final String SOURCE = "Source";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE = "pbcoreDescriptionDocument/pbcoreSource";
-    private static final String SOURCE_SOURCE_ATTR = "@source_Source";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_SOURCE = "pbcoreDescriptionDocument/pbcoreSource/source";
-    private static final String REF_SOURCE_ATTR = "@ref_Source";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_REF = "pbcoreDescriptionDocument/pbcoreSource/ref";
-    private static final String VERSION_SOURCE_ATTR = "@version_Source";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_VERSION = "pbcoreDescriptionDocument/pbcoreSource/version";
-    private static final String ANNOTATION_SOURCE_ATTR = "@annotation_Source";
-    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_ANNOTATION = "pbcoreDescriptionDocument/pbcoreSource/annotation";
+//
+//    private static final String SOURCE = "Source";
+//    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE = "pbcoreDescriptionDocument/pbcoreSource";
+//    private static final String SOURCE_SOURCE_ATTR = "@source_Source";
+//    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_SOURCE = "pbcoreDescriptionDocument/pbcoreSource/source";
+//    private static final String REF_SOURCE_ATTR = "@ref_Source";
+//    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_REF = "pbcoreDescriptionDocument/pbcoreSource/ref";
+//    private static final String VERSION_SOURCE_ATTR = "@version_Source";
+//    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_VERSION = "pbcoreDescriptionDocument/pbcoreSource/version";
+//    private static final String ANNOTATION_SOURCE_ATTR = "@annotation_Source";
+//    private static final String PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_ANNOTATION = "pbcoreDescriptionDocument/pbcoreSource/annotation";
 
 
     private static final String GENRE = "Genre";
@@ -729,12 +729,12 @@ public class CSVMapperHelper {
                 new CSVAttributeMapper(ANNOTATION_DESCRIPTION_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_DESCRIPTION_ANNOTATION)
         ));
 
-        CSVElementMapper sourceElementMapper = new CSVElementMapper(SOURCE, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE, Arrays.asList(
-                new CSVAttributeMapper(SOURCE_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_SOURCE),
-                new CSVAttributeMapper(REF_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_REF),
-                new CSVAttributeMapper(VERSION_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_VERSION),
-                new CSVAttributeMapper(ANNOTATION_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_ANNOTATION)
-        ));
+//        CSVElementMapper sourceElementMapper = new CSVElementMapper(SOURCE, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE, Arrays.asList(
+//                new CSVAttributeMapper(SOURCE_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_SOURCE),
+//                new CSVAttributeMapper(REF_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_REF),
+//                new CSVAttributeMapper(VERSION_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_VERSION),
+//                new CSVAttributeMapper(ANNOTATION_SOURCE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_SOURCE_ANNOTATION)
+//        ));
 
         CSVElementMapper genreElementMapper = new CSVElementMapper(GENRE, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_GENRE, Arrays.asList(
                 new CSVAttributeMapper(SOURCE_GENRE_ATTR, PBCORE_DESCRIPTION_DOCUMENT_PBCORE_GENRE_SOURCE),
@@ -1078,7 +1078,7 @@ public class CSVMapperHelper {
                 titleElementMapper,
                 subjectElementMapper,
                 descriptionElementMapper,
-                sourceElementMapper,
+//                sourceElementMapper,
                 genreElementMapper,
                 relationTypeElementMapper,
                 relationIdentifierElementMapper,

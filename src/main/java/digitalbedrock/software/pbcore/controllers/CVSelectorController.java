@@ -1,6 +1,7 @@
 package digitalbedrock.software.pbcore.controllers;
 
 import digitalbedrock.software.pbcore.MainApp;
+import digitalbedrock.software.pbcore.core.models.CVBase;
 import digitalbedrock.software.pbcore.core.models.CVTerm;
 import digitalbedrock.software.pbcore.listeners.CVSelectionListener;
 import javafx.beans.value.ChangeListener;
@@ -9,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CVSelectorController extends AbsController {
@@ -50,6 +53,12 @@ public class CVSelectorController extends AbsController {
     private TreeItem<CVTerm> getTreeItem(String key) {
         TreeItem<CVTerm> pbCoreElementTreeItem = new TreeItem<>();
         MainApp.getInstance().getRegistry().getControlledVocabularies().get(key).getTerms().forEach(cvTerm -> pbCoreElementTreeItem.getChildren().add(new TreeItem<>(cvTerm)));
+        HashMap<String, CVBase> subs = MainApp.getInstance().getRegistry().getControlledVocabularies().get(key).getSubs();
+        if (subs != null) {
+            for (Map.Entry<String, CVBase> stringCVBaseEntry : subs.entrySet()) {
+                stringCVBaseEntry.getValue().getTerms().forEach(cvTerm -> pbCoreElementTreeItem.getChildren().add(new TreeItem<>(cvTerm)));
+            }
+        }
         return pbCoreElementTreeItem;
     }
 
