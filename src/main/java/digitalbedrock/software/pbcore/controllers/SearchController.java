@@ -384,16 +384,34 @@ public class SearchController extends AbsController {
             spinnerLayer.setVisible(false);
             return;
         }
+        exportFullSearch(file);
+    }
 
-        Map<String, PBCoreElement> mapPBCoreElements = PBCoreUtils.convertToDescriptionDocsMap(listViewHits.getItems());
-        CSVPBCoreParser.writeFile(mapPBCoreElements, file.getAbsolutePath());
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Documents exported");
-        alert.setContentText("Documents exported to csv successfully");
-        alert.setHeaderText(null);
-        alert.getButtonTypes().setAll(new ButtonType("Ok"));
-        alert.showAndWait();
-        spinnerLayer.setVisible(false);
+    private void exportFullSearch(File file) {
+        LuceneEngine luceneEngine = new LuceneEngine();
+        List<LuceneEngineSearchFilter> andOperators = new ArrayList<>();
+        andOperators.add(mainFilter);
+        andOperators.addAll(lvSearchOptions.getItems());
+        new Thread(new Task<Object>() {
+            @Override
+            protected Object call() throws Exception {
+                spinnerLayer.setVisible(true);
+                btnSearch.setDisable(true);
+                Map.Entry<Long, List<HitDocument>> search = luceneEngine.search(andOperators, 0, -1);
+                Map<String, PBCoreElement> mapPBCoreElements = PBCoreUtils.convertToDescriptionDocsMap(search.getValue());
+                CSVPBCoreParser.writeFile(mapPBCoreElements, file.getAbsolutePath());
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Documents exported");
+                    alert.setContentText("Documents exported to csv successfully");
+                    alert.setHeaderText(null);
+                    alert.getButtonTypes().setAll(new ButtonType("Ok"));
+                    alert.showAndWait();
+                    spinnerLayer.setVisible(false);
+                });
+                return null;
+            }
+        }).start();
     }
 
     @FXML

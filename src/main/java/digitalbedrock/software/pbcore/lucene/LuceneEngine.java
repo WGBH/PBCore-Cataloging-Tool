@@ -109,7 +109,12 @@ public class LuceneEngine {
             if (andOperators.isEmpty()) {
                 TopScoreDocCollector collector = TopScoreDocCollector.create(maxResults);
                 searcher.search(new MatchAllDocsQuery(), collector);
-                TopDocs topDocs = collector.topDocs(offset, maxResults);
+                TopDocs topDocs;
+                if (maxResults > 0) {
+                    topDocs = collector.topDocs(offset, maxResults);
+                } else {
+                    topDocs = collector.topDocs();
+                }
                 hits = topDocs.scoreDocs;
                 totalResults = topDocs.totalHits;
             } else {
@@ -126,7 +131,12 @@ public class LuceneEngine {
                 });
                 TopScoreDocCollector collector = TopScoreDocCollector.create(100000);
                 searcher.search(builder.build(), collector);
-                TopDocs topDocs = collector.topDocs(offset * maxResults, maxResults);
+                TopDocs topDocs;
+                if (maxResults > 0) {
+                    topDocs = collector.topDocs(offset * maxResults, maxResults);
+                } else {
+                    topDocs = collector.topDocs();
+                }
                 hits = topDocs.scoreDocs;
                 totalResults = topDocs.totalHits;
             }
