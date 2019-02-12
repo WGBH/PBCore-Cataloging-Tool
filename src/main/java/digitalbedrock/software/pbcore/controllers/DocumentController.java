@@ -91,6 +91,15 @@ public class DocumentController extends AbsController implements ElementSelectio
     @FXML
     private Button btnSelectCV;
 
+    @FXML
+    private FontIcon expandOptionalIcon;
+    @FXML
+    private FontIcon expandRequiredIcon;
+
+
+    private boolean optionalExpanded = true;
+    private boolean requiredExpanded = true;
+
     private final ObjectProperty<PBCoreElement> selectedPBCoreElementProperty = new SimpleObjectProperty<>();
     private PBCoreElement rootElement;
 
@@ -518,7 +527,9 @@ public class DocumentController extends AbsController implements ElementSelectio
         statusBarDocumentType.setText(rootElement.getScreenName().toUpperCase());
 
         selectedPBCoreElementProperty.addListener((observable, oldValue, newValue) -> {
-            btnSelectCV.setVisible(MainApp.getInstance().getRegistry().getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName()));
+            if (selectedPBCoreElementProperty.getValue() != null) {
+                btnSelectCV.setVisible(MainApp.getInstance().getRegistry().getControlledVocabularies().containsKey(selectedPBCoreElementProperty.getValue().getName()));
+            }
             attributesTreeView.setRoot(getAttributesTreeItem(newValue));
             addAttributeButton.setDisable(newValue == null || !newValue.isSupportsAttributes());
             if (newValue == null) {
@@ -929,6 +940,35 @@ public class DocumentController extends AbsController implements ElementSelectio
     public void onShow() {
         aceEditor.reload();
         Platform.runLater(() -> taElementValue.requestFocus());
+    }
+
+    @FXML
+    public void onExpandOptional(ActionEvent actionEvent) {
+        optionalExpanded = !optionalExpanded;
+        TreeItem<PBCoreElement> root = optionalElementsTreeView.getRoot();
+        for (TreeItem<?> child : root.getChildren()) {
+            expandCollapseTreeView(child, optionalExpanded);
+        }
+        expandOptionalIcon.setIconLiteral(optionalExpanded ? "mdi-arrow-down" : "mdi-arrow-left");
+    }
+
+    @FXML
+    public void onExpandRequired(ActionEvent actionEvent) {
+        requiredExpanded = !requiredExpanded;
+        TreeItem<PBCoreElement> root = requiredElementsListView.getRoot();
+        for (TreeItem<?> child : root.getChildren()) {
+            expandCollapseTreeView(child, requiredExpanded);
+        }
+        expandRequiredIcon.setIconLiteral(requiredExpanded ? "mdi-arrow-down" : "mdi-arrow-left");
+    }
+
+    private void expandCollapseTreeView(TreeItem<?> item, boolean expand) {
+        if (item != null && !item.isLeaf()) {
+            item.setExpanded(expand);
+            for (TreeItem<?> child : item.getChildren()) {
+                expandCollapseTreeView(child, expand);
+            }
+        }
     }
 
     @FXML

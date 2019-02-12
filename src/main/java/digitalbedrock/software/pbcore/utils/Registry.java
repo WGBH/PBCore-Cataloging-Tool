@@ -437,10 +437,10 @@ public class Registry implements Observer {
         }
     }
 
-    public void createNewVocabulariesAggregator(String name) {
+    public void createNewVocabulariesAggregator(String name, boolean attribute) {
         CV cv = new CV();
         cv.setCustom(true);
-        cv.setAttribute(true);
+        cv.setAttribute(attribute);
         getControlledVocabularies().put(name, cv);
         try {
             saveVocabulariesFile();
