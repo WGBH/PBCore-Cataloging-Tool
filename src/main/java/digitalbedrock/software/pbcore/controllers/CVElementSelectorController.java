@@ -91,7 +91,7 @@ public class CVElementSelectorController extends AbsController {
         });
         btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             TreeItem<PBCoreElement> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            MainApp.getInstance().getRegistry().createNewVocabulariesAggregator(selectedItem.getValue().getName());
+            MainApp.getInstance().getRegistry().createNewVocabulariesAggregator(selectedItem.getValue().getName(), false);
             elementSelectionListener.onElementSelected(null, 0, null, false);
         });
     }

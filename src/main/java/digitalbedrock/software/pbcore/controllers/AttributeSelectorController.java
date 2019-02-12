@@ -85,7 +85,7 @@ public class AttributeSelectorController extends AbsController {
             attributeSelectionListener.onAttributeSelected(copy, close);
         }
         if (!close) {
-            currentPbCoreElement.addAttribute(copy);
+            //currentPbCoreElement.addAttribute(copy);
             updateAttributeUI(copy);
         }
     }

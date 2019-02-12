@@ -2,6 +2,10 @@
 
 Disclaimer:  
 
+Version 8h 02/12/2019
+-------------------
+Bug fixes: minor UI tweaks.
+
 Version 8g 8/1/2018
 -------------------
 Bug fixes: exporting search results. Minor UI tweaks.

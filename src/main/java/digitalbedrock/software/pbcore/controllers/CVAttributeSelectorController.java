@@ -61,7 +61,7 @@ public class CVAttributeSelectorController extends AbsController {
         btnCancel.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> attributeSelectionListener.onAttributeSelected(null, true));
         btnAdd.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             TreeItem<PBCoreAttribute> selectedItem = treeElements.getSelectionModel().getSelectedItem();
-            MainApp.getInstance().getRegistry().createNewVocabulariesAggregator(selectedItem.getValue().getName());
+            MainApp.getInstance().getRegistry().createNewVocabulariesAggregator(selectedItem.getValue().getName(), true);
             attributeSelectionListener.onAttributeSelected(null, true);
         });
     }
