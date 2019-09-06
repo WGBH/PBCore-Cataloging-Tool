@@ -170,7 +170,7 @@ public class PBCoreElement extends IPBCore implements Serializable {
         } else {
             setValidAttributes(attributes.stream()
                     .noneMatch(pbCoreAttribute -> pbCoreAttribute.isRequired() && (pbCoreAttribute.getValue() == null || pbCoreAttribute.getValue().trim().isEmpty()))
-                    && (!isRequired() || (newValue != null && !newValue.trim().isEmpty())));
+                    /*&& (!isRequired() || (newValue != null && !newValue.trim().isEmpty()))*/);
         }
     }
 
