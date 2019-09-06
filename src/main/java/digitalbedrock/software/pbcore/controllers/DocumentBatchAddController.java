@@ -438,31 +438,7 @@ public class DocumentBatchAddController extends AbsController implements Element
     }
 
     private void updateStatusBarLabel(boolean valid, boolean fatalError) {
-        invalidDocumentIcon.getStyleClass().remove("panicIcon");
-        invalidDocumentIcon.getStyleClass().remove("niceIcon");
-        invalidDocumentIcon.getStyleClass().remove("warningIcon");
-        documentValidationLbl.getStyleClass().remove("panicText");
-        documentValidationLbl.getStyleClass().remove("niceText");
-        documentValidationLbl.getStyleClass().remove("warningText");
-
-        if (valid) {
-            documentValidationLbl.setText("");
-            invalidDocumentIcon.getStyleClass().add("niceIcon");
-            invalidDocumentIcon.setIconCode(MaterialDesign.MDI_CHECK_CIRCLE);
-            documentValidationLbl.getStyleClass().add("niceText");
-        } else {
-            if (fatalError) {
-                documentValidationLbl.setText("Invalid file: missing mandatory values");
-                invalidDocumentIcon.getStyleClass().add("panicIcon");
-                invalidDocumentIcon.setIconCode(MaterialDesign.MDI_ALERT_CIRCLE);
-                documentValidationLbl.getStyleClass().add("panicText");
-            } else {
-                documentValidationLbl.setText("Some elements are missing their respective values");
-                invalidDocumentIcon.getStyleClass().add("warningIcon");
-                invalidDocumentIcon.setIconCode(MaterialDesign.MDI_ALERT);
-                documentValidationLbl.getStyleClass().add("warningText");
-            }
-        }
+        DocumentController.updateStatusBarLabel(valid, fatalError, invalidDocumentIcon, documentValidationLbl);
     }
 
     public void initializeDocument(BatchFinishedListener batchFinishedListener) {
@@ -602,19 +578,7 @@ public class DocumentBatchAddController extends AbsController implements Element
                 PBCoreStructure.getInstance().updateSourceAttributeOnElement(value, taElementValue.getItem());
                 attributesTreeView.setRoot(getAttributesTreeItem(value));
             } else {
-                if (!value.isHasChildElements()) {
-                    switch (value.getElementValueRestrictionType()) {
-                        case PATTERN:
-                            Pattern pattern = Pattern.compile(value.getPatternToFollow());
-                            String s = taElementValue.getText() == null ? "" : taElementValue.getText();
-                            Matcher matcher = pattern.matcher(s);
-                            value.setValid(!s.trim().isEmpty() && matcher.matches());
-                            break;
-                        default:
-                            value.setValid(value.getValue() != null && !value.getValue().trim().isEmpty());
-                            break;
-                    }
-                }
+                DocumentController.validateChildElements(value, taElementValue);
             }
             updateInvalidIcon(!value.isValid(), value.isFatalError());
         });

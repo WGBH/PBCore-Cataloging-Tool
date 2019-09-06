@@ -2,6 +2,10 @@
 
 Disclaimer:  
 
+Version 8i 09/06/2019
+-------------------
+Bug fixes: minor UI tweaks. Bug regarding the validation of elements with attributes.
+
 Version 8h 02/12/2019
 -------------------
 Bug fixes: minor UI tweaks.

@@ -327,7 +327,7 @@ public class DocumentController extends AbsController implements ElementSelectio
             invalidValueIcon.getStyleClass().add("warningIcon");
             invalidValueIcon.setIconCode(MaterialDesign.MDI_ALERT);
             invalidValueIcon.setOnMouseEntered(null);
-            invalidValueIcon.setOnMouseEntered(null);
+            invalidValueIcon.setOnMouseExited(null);
         }
     }
 
@@ -488,12 +488,12 @@ public class DocumentController extends AbsController implements ElementSelectio
     }
 
     private void updateStatusBarLabel(boolean valid, boolean fatalError) {
-        invalidDocumentIcon.getStyleClass().remove("panicIcon");
-        invalidDocumentIcon.getStyleClass().remove("niceIcon");
-        invalidDocumentIcon.getStyleClass().remove("warningIcon");
-        documentValidationLbl.getStyleClass().remove("panicText");
-        documentValidationLbl.getStyleClass().remove("niceText");
-        documentValidationLbl.getStyleClass().remove("warningText");
+        updateStatusBarLabel(valid, fatalError, invalidDocumentIcon, documentValidationLbl);
+    }
+
+    static void updateStatusBarLabel(boolean valid, boolean fatalError, FontIcon invalidDocumentIcon, Label documentValidationLbl) {
+        invalidDocumentIcon.getStyleClass().clear();
+        documentValidationLbl.getStyleClass().clear();
 
         if (valid) {
             documentValidationLbl.setText("");
@@ -636,16 +636,14 @@ public class DocumentController extends AbsController implements ElementSelectio
             if (value == null) {
                 return;
             }
-            buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(value, newValue));
+            buttonSave.setVisible(buttonSave.isVisible() || !Objects.equals(value.valueProperty.get(), newValue));
             value.setValue(taElementValue.getText());
             Registry registry = MainApp.getInstance().getRegistry();
             if (registry.getControlledVocabularies().containsKey(value.getName())) {
                 List<CVTerm> suggestions = new ArrayList<>();
                 CV cv = registry.getControlledVocabularies().get(value.getName());
                 if (cv.isHasSubs()) {
-                    cv.getSubs().entrySet().forEach((stringCVBaseEntry) -> {
-                        suggestions.addAll(stringCVBaseEntry.getValue().getTerms());
-                    });
+                    cv.getSubs().forEach((key, value1) -> suggestions.addAll(value1.getTerms()));
                 } else {
                     suggestions.addAll(cv.getTerms());
                 }
@@ -654,19 +652,7 @@ public class DocumentController extends AbsController implements ElementSelectio
                 attributesTreeView.setRoot(getAttributesTreeItem(selectedPBCoreElementProperty.getValue()));
                 //updateXmlPreview();
             } else {
-                if (!value.isHasChildElements()) {
-                    switch (value.getElementValueRestrictionType()) {
-                        case PATTERN:
-                            Pattern pattern = Pattern.compile(value.getPatternToFollow());
-                            String s = taElementValue.getText() == null ? "" : taElementValue.getText();
-                            Matcher matcher = pattern.matcher(s);
-                            value.setValid(!s.trim().isEmpty() && matcher.matches());
-                            break;
-                        default:
-                            value.setValid(value.getValue() != null && !value.getValue().trim().isEmpty());
-                            break;
-                    }
-                }
+                validateChildElements(value, taElementValue);
             }
             updateInvalidIcon(!value.isValid(), value.isFatalError());
         });
@@ -736,17 +722,31 @@ public class DocumentController extends AbsController implements ElementSelectio
         });
     }
 
+    static void validateChildElements(PBCoreElement value, AutoFillTextAreaBox<CVTerm> taElementValue) {
+        if (!value.isHasChildElements()) {
+            switch (value.getElementValueRestrictionType()) {
+                case PATTERN:
+                    Pattern pattern = Pattern.compile(value.getPatternToFollow());
+                    String s = taElementValue.getText() == null ? "" : taElementValue.getText();
+                    Matcher matcher = pattern.matcher(s);
+                    value.setValid(!s.trim().isEmpty() && matcher.matches());
+                    break;
+                default:
+                    value.setValid(value.getValue() != null && !value.getValue().trim().isEmpty());
+                    break;
+            }
+        }
+    }
+
     @FXML
     void saveFile(ActionEvent event) {
         saveDocument();
-        btnShowInExplorer.setDisable(false);
     }
 
     @Override
     public void saveDocument() {
         if (buttonSave.isVisible()) {
             saveDocument(false);
-            btnShowInExplorer.setDisable(false);
         }
     }
 
@@ -827,11 +827,11 @@ public class DocumentController extends AbsController implements ElementSelectio
                 }
                 buttonSave.setVisible(false);
                 this.currentId = file.getAbsolutePath();
+                btnShowInExplorer.setDisable(false);
             } catch (ParserConfigurationException | IOException | TransformerException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
