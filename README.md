@@ -2,6 +2,10 @@
 
 Disclaimer:  
 
+Version 8j 10/09/2019
+-------------------
+Bug fixes: incorrect character enconding on Windows. Forcing UTF-8.
+
 Version 8i 09/06/2019
 -------------------
 Bug fixes: minor UI tweaks. Bug regarding the validation of elements with attributes.

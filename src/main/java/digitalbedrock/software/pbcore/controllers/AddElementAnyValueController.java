@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -44,7 +45,9 @@ public class AddElementAnyValueController extends AbsController {
             DocumentBuilder builder;
             try {
                 builder = factory.newDocumentBuilder();
-                builder.parse(new InputSource(new StringReader(text)));
+                InputSource inputSource = new InputSource(new StringReader(text));
+                inputSource.setEncoding("UTF-8");
+                builder.parse(inputSource);
                 pbCoreElementAnyValue.setValue(text);
                 lblAttributeAlreadyAdded.setVisible(false);
                 addAnyValueListener.onValueAdded(pbCoreElementAnyValue);

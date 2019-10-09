@@ -43,9 +43,12 @@ public class ElementVisualLayoutItemController {
                 try {
                     StringWriter stringWriter = new StringWriter();
                     builder = factory.newDocumentBuilder();
-                    Document document = builder.parse(new InputSource(new StringReader(valueStr)));
+                    InputSource inputSource = new InputSource(new StringReader(valueStr));
+                    inputSource.setEncoding("UTF-8");
+                    Document document = builder.parse(inputSource);
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
+                    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
                     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
                     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");

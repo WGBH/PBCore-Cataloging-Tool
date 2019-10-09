@@ -225,6 +225,7 @@ public class PBCoreStructure {
                                     Document document = elementNSImpl.getOwnerDocument();
                                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                                     Transformer transformer = transformerFactory.newTransformer();
+                                    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
                                     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
                                     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                                     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -304,6 +305,7 @@ public class PBCoreStructure {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -364,6 +366,7 @@ public class PBCoreStructure {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         DOMSource source = new DOMSource(doc);
@@ -388,6 +391,7 @@ public class PBCoreStructure {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         DOMSource source = new DOMSource(doc);
@@ -415,6 +419,7 @@ public class PBCoreStructure {
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             DOMSource source = new DOMSource(doc);
@@ -445,7 +450,9 @@ public class PBCoreStructure {
                 DocumentBuilder builder;
                 try {
                     builder = factory.newDocumentBuilder();
-                    Document document = builder.parse(new InputSource(new StringReader(valueStr)));
+                    InputSource inputSource = new InputSource(new StringReader(valueStr));
+                    inputSource.setEncoding("UTF-8");
+                    Document document = builder.parse(inputSource);
                     element.appendChild(doc.importNode(document.getDocumentElement(), true));
                 } catch (Exception e) {
                     e.printStackTrace();
