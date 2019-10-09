@@ -20,6 +20,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Level;
@@ -67,7 +68,7 @@ public class Registry implements Observer {
         File file = new File(System.getProperty("java.io.tmpdir") + ACE_EDITOR_FOLDER + ACE_EDITOR_HTML_FILE);
         if (!file.exists()) {
             InputStream aceEditorTxt = Thread.currentThread().getContextClassLoader().getResourceAsStream("aceeditor.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(aceEditorTxt));
+            BufferedReader br = new BufferedReader(new InputStreamReader(aceEditorTxt, StandardCharsets.UTF_8));
             String line;
             try {
                 while ((line = br.readLine()) != null) {

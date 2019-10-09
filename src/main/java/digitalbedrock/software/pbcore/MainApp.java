@@ -23,9 +23,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,6 +62,14 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            System.setProperty("file.encoding","UTF-8");
+            Field charset = Charset.class.getDeclaredField("defaultCharset");
+            charset.setAccessible(true);
+            charset.set(null,null);
+//            System.out.println("Default Locale:   " + Locale.getDefault());
+//            System.out.println("Default Charset:  " + Charset.defaultCharset());
+//            System.out.println("file.encoding;    " + System.getProperty("file.encoding"));
+//            System.out.println("sun.jnu.encoding: " + System.getProperty("sun.jnu.encoding"));
             stage = primaryStage;
             stage.setTitle("PBCore Cataloging Tool");
 

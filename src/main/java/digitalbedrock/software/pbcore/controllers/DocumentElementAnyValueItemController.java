@@ -34,7 +34,9 @@ public class DocumentElementAnyValueItemController {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new InputSource(new StringReader(valueStr)));
+            InputSource inputSource = new InputSource(new StringReader(valueStr));
+            inputSource.setEncoding("UTF-8");
+            Document document = builder.parse(inputSource);
             taValue.setText(document.getDocumentElement().getTagName());
         } catch (Exception e) {
             taValue.setText(valueStr.length() < 20 ? valueStr : valueStr.substring(0, 20));

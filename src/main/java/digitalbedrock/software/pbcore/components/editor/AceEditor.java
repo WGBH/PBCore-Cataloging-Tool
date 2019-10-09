@@ -213,6 +213,7 @@ public class AceEditor extends AnchorPane {
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             DOMSource source = new DOMSource(doc);
@@ -259,7 +260,9 @@ public class AceEditor extends AnchorPane {
                 DocumentBuilder builder;
                 try {
                     builder = factory.newDocumentBuilder();
-                    Document document = builder.parse(new InputSource(new StringReader(valueStr)));
+                    InputSource inputSource = new InputSource(new StringReader(valueStr));
+                    inputSource.setEncoding("UTF-8");
+                    Document document = builder.parse(inputSource);
                     element.appendChild(doc.importNode(document.getDocumentElement(), true));
                 } catch (Exception e) {
                     e.printStackTrace();
